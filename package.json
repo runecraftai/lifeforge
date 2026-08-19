@@ -22,11 +22,11 @@
     "./tools"
   ],
   "scripts": {
-    "forge": "tsx --tsconfig=./tools/tsconfig.json tools/src/index.ts",
-    "build": "turbo build --filter=\"./packages/*\" && turbo build --continue",
+    "forge": "env-cmd -f env/.env tsx --tsconfig=./tools/tsconfig.json tools/src/index.ts",
+    "build": "env-cmd -f env/.env turbo build --filter=\"./packages/*\" && turbo build --continue",
     "lint": "prettier --check . && eslint .",
     "fix": "prettier --write ./ && pnpm lint",
-    "test": "turbo test",
+    "test": "env-cmd -f env/.env turbo test",
     "postinstall": "turbo build --filter=\"./packages/*\"",
     "typecheck": "turbo typecheck"
   },
@@ -87,6 +87,7 @@
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
+    "env-cmd": "^11.0.0",
     "i18next": "^26.3.6",
     "i18next-http-backend": "^2.7.3",
     "lodash": "^4.17.21",
