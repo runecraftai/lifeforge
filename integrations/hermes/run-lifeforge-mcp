@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+CFG=${LIFEFORGE_ENV_FILE:-"$HOME/.config/personal-os/lifeforge.env"}
+ROOT=${LIFEFORGE_ROOT:-"$HOME/.local/share/personal-os/lifeforge"}
+set -a
+. "$CFG"
+set +a
+exec "$ROOT/node_modules/.bin/tsx" "$HOME/.hermes/skills/personal-os/lifeforge-mcp.ts"
