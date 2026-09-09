@@ -5,6 +5,7 @@ import dashboard from '@/system/dashboard/manifest'
 import documentation from '@/system/documentation/manifest'
 import moduleManager from '@/system/moduleManager/manifest'
 import personalization from '@/system/personalization/manifest'
+import todo from '@/pages/manifest'
 
 export const CORE_MODULES = [
   accountSettings,
@@ -13,5 +14,6 @@ export const CORE_MODULES = [
   dashboard,
   documentation,
   personalization,
-  moduleManager
+  moduleManager,
+  todo
 ]
