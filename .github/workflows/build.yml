@@ -11,7 +11,7 @@ permissions:
 jobs:
   build-backend:
     name: Build Backend
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
@@ -31,7 +31,7 @@ jobs:
 
   build-frontend:
     name: Build Frontend
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
@@ -48,7 +48,7 @@ jobs:
 
   build-summary:
     name: Build Summary
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-24.04
     needs: [build-backend, build-frontend]
     if: always() && github.event_name == 'pull_request'
 
