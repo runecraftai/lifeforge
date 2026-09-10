@@ -52,4 +52,40 @@ describe('auth cookie options', () => {
       maxAge: 0
     })
   })
+
+  it('keeps Lax for non-loopback cross-origin requests', () => {
+    vi.stubEnv('NODE_ENV', 'development')
+
+    expect(
+      getCookieOptions(request('api.example.com', 'http://evil.com'))
+    ).toMatchObject({
+      secure: false,
+      sameSite: 'lax',
+      path: '/auth'
+    })
+  })
+
+  it('keeps Lax for same loopback host with a different port', () => {
+    vi.stubEnv('NODE_ENV', 'development')
+
+    expect(
+      getCookieOptions(request('localhost', 'http://localhost:5173'))
+    ).toMatchObject({
+      secure: false,
+      sameSite: 'lax',
+      path: '/auth'
+    })
+  })
+
+  it('allows IPv6 loopback cross-host to send the refresh cookie', () => {
+    vi.stubEnv('NODE_ENV', 'development')
+
+    expect(
+      getCookieOptions(request('::1', 'http://localhost:5173'))
+    ).toMatchObject({
+      secure: true,
+      sameSite: 'none',
+      path: '/auth'
+    })
+  })
 })
