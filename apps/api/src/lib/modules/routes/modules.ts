@@ -68,10 +68,12 @@ export const uninstall = forge
       return response.ok({ success: true })
     } catch (error) {
       let errorMessage = 'Uninstall failed'
+
       if (error instanceof Error) {
-        const stderr = (error as any).stderr?.toString().trim()
+        const stderr = (error as { stderr?: Buffer }).stderr?.toString().trim()
         errorMessage = stderr || error.message
       }
+
       return response.ok({
         success: false,
         error: errorMessage
