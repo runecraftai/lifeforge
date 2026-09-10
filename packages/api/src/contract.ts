@@ -2762,6 +2762,48 @@ export const contract = {
         }
       }
     },
+    "uninstall": {
+      "method": "post",
+      "description": "Uninstall an installed module",
+      "noAuth": false,
+      "encrypted": true,
+      "isDownloadable": false,
+      "media": null,
+      "input": {
+        "body": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "moduleName": {
+              "type": "string",
+              "pattern": "^@lifeforge\\/[a-z0-9-_]+--[a-z0-9-_]+$"
+            }
+          },
+          "required": [
+            "moduleName"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "success": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "success"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
     "widgets": {
       "method": "get",
       "description": "Get all available widgets configuration",
