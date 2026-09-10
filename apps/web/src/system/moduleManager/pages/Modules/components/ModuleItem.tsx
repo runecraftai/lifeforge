@@ -1,10 +1,28 @@
 import { useTranslation } from 'react-i18next'
 
 import type { Module } from '@lifeforge/configs'
-import { Box, Card, Flex, Icon, Text, colorWithOpacity } from '@lifeforge/ui'
+import {
+  Box,
+  Card,
+  ConfirmationModal,
+  ContextMenu,
+  ContextMenuItem,
+  Flex,
+  Icon,
+  Text,
+  colorWithOpacity,
+  useModalStore
+} from '@lifeforge/ui'
 
-function ModuleItem({ module }: { module: Module }) {
-  const moduleKey = module.name
+function ModuleItem({
+  module,
+  onUninstall
+}: {
+  module: Module
+  onUninstall: (moduleName: string) => Promise<void>
+}) {
+  // Module name format: @lifeforge/lifeforge--wallet -> lifeforge--wallet
+  const moduleKey = module.name.replace('@lifeforge/', '')
 
   const { t, i18n } = useTranslation([
     `apps.${moduleKey}`,
@@ -14,6 +32,21 @@ function ModuleItem({ module }: { module: Module }) {
   const translatedTitle = i18n.exists(`apps.${moduleKey}:title`)
     ? t(`apps.${moduleKey}:title`)
     : module.displayName
+
+  const { open } = useModalStore()
+
+  function handleUninstall() {
+    open(ConfirmationModal, {
+      title: t('common.module-manager:modals.uninstall.title', {
+        module: translatedTitle
+      }),
+      description: t('common.module-manager:modals.uninstall.description', {
+        module: translatedTitle
+      }),
+      confirmationButton: 'delete',
+      onConfirm: () => onUninstall(module.name)
+    })
+  }
 
   return (
     <Card gap="md" minWidth="0">
@@ -40,6 +73,15 @@ function ModuleItem({ module }: { module: Module }) {
               v{module.version}
             </Text>
           </Box>
+          <ContextMenu>
+            <ContextMenuItem
+              dangerous
+              icon="tabler:trash"
+              label="uninstall"
+              namespace="common.module-manager"
+              onClick={handleUninstall}
+            />
+          </ContextMenu>
         </Flex>
       </Flex>
       <Text as="p" color="muted" leading="relaxed" lineClamp={2}>
