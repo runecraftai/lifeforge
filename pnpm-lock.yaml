@@ -515,6 +515,27 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ui
 
+  modules/lifeforge--squad-backlog:
+    dependencies:
+      '@lifeforge/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
+      '@lifeforge/federation':
+        specifier: workspace:*
+        version: link:../../packages/federation
+      '@lifeforge/server-utils':
+        specifier: workspace:*
+        version: link:../../packages/server-utils
+      '@lifeforge/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      express:
+        specifier: ^4.21.2
+        version: 4.22.2(supports-color@10.2.2)
+
   modules/lifeforge--todo-list:
     dependencies:
       '@lifeforge/api':
