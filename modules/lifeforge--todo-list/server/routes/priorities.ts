@@ -3,6 +3,12 @@ import z from 'zod'
 import forge from '../forge'
 import todoListSchemas from '../schema'
 
+const priorityInput = todoListSchemas.priorities.omit({
+  id: true,
+  collectionId: true,
+  collectionName: true
+})
+
 export const list = forge
   .query({
     description: 'Get all todo priorities',
@@ -20,7 +26,7 @@ export const create = forge
   .mutation({
     description: 'Create a new priority level',
     input: {
-      body: todoListSchemas.priorities
+      body: priorityInput
     },
     output: {
       CREATED: todoListSchemas.priorities
@@ -39,7 +45,7 @@ export const update = forge
       query: z.object({
         id: z.string()
       }),
-      body: todoListSchemas.priorities
+      body: priorityInput
     },
     existenceCheck: {
       query: { id: 'priorities' }
