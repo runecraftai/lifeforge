@@ -83,7 +83,9 @@ function TaskItem({
         }}
       />
       <button
+        aria-label={`Edit ${entry.summary}`}
         className="absolute top-0 left-0 size-full"
+        style={{ inset: 0, position: 'absolute' }}
         onClick={() => {
           if (!isInDashboardWidget) {
             setModifyTaskWindowOpenType('update')

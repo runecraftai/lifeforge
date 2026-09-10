@@ -26,6 +26,8 @@ async function getProxyPB() {
   return proxyPB
 }
 
+// Kept for direct PocketBase collection clients, including Hermes deployments
+// configured with the LifeForge API host.
 router.use(
   '/api/collections/todo_list__entries/records',
   async (req, res, next) => {

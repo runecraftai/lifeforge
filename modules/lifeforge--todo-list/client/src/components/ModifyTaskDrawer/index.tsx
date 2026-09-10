@@ -52,7 +52,7 @@ function ModifyTaskDrawer() {
   >(openType)
 
   const summaryInputRef = useRef<HTMLInputElement>(null)
-  const ref = useRef<HTMLInputElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   async function handleSubmit() {
     if (openType === null) return
@@ -82,6 +82,7 @@ function ModifyTaskDrawer() {
             })
       ).mutate(task)
 
+      setInnerOpenType(null)
       setOpenType(null)
       setSelectedTask(null)
 
@@ -174,6 +175,16 @@ function ModifyTaskDrawer() {
           ? 'z-9995 opacity-100 [transition:z-index_0s_linear_0s,opacity_0.1s_linear_0s]'
           : 'z-[-1] opacity-0 [transition:z-index_0.1s_linear_0.2s,opacity_0.1s_linear_0.1s]'
       )}
+      style={{
+        backgroundColor:
+          'color-mix(in srgb, var(--color-bg-900) 20%, transparent)',
+        inset: 0,
+        opacity: innerOpenType !== null ? 1 : 0,
+        pointerEvents: innerOpenType !== null ? 'auto' : 'none',
+        position: 'fixed',
+        transition: 'opacity 100ms ease-in-out',
+        zIndex: innerOpenType !== null ? 9995 : -1
+      }}
     >
       <button
         className="absolute top-0 left-0 size-full"
@@ -185,6 +196,18 @@ function ModifyTaskDrawer() {
           innerOpenType !== null && 'translate-x-0',
           innerOpenType === null && 'translate-x-full'
         )}
+        style={{
+          backgroundColor: 'var(--color-bg-100)',
+          height: '100%',
+          padding: '2rem',
+          position: 'absolute',
+          right: 0,
+          top: 0,
+          transform:
+            innerOpenType !== null ? 'translateX(0)' : 'translateX(100%)',
+          transition: 'transform 300ms ease-in-out',
+          width: 'min(40rem, 100%)'
+        }}
       >
         <Scrollbar>
           <div className="flex-between mb-8 flex">

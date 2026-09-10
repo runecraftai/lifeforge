@@ -189,6 +189,9 @@ export const create = forge
     description: 'Create a new todo',
     input: {
       body: todoListSchemas.entries.omit({
+        id: true,
+        collectionId: true,
+        collectionName: true,
         completed_at: true,
         done: true,
         created: true,
@@ -230,6 +233,9 @@ export const update = forge
         id: z.string()
       }),
       body: todoListSchemas.entries.omit({
+        id: true,
+        collectionId: true,
+        collectionName: true,
         completed_at: true,
         done: true,
         created: true,

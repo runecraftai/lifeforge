@@ -35,15 +35,6 @@ export const contract = {
             },
             "priority": {
               "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "collectionId": {
-              "type": "string"
-            },
-            "collectionName": {
-              "type": "string"
             }
           },
           "required": [
@@ -53,10 +44,7 @@ export const contract = {
             "due_date_has_time",
             "list",
             "tags",
-            "priority",
-            "id",
-            "collectionId",
-            "collectionName"
+            "priority"
           ],
           "additionalProperties": false
         }
@@ -546,15 +534,6 @@ export const contract = {
             },
             "priority": {
               "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "collectionId": {
-              "type": "string"
-            },
-            "collectionName": {
-              "type": "string"
             }
           },
           "required": [
@@ -564,10 +543,7 @@ export const contract = {
             "due_date_has_time",
             "list",
             "tags",
-            "priority",
-            "id",
-            "collectionId",
-            "collectionName"
+            "priority"
           ],
           "additionalProperties": false
         }
