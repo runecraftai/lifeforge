@@ -14,7 +14,8 @@ export function SidebarItemContent({
   hasContextMenu,
   hasCancelButton,
   namespace,
-  hasSubsection
+  hasSubsection,
+  isMenuOpen
 }: {
   label: string | React.ReactElement
   sidebarExpanded: boolean
@@ -24,6 +25,7 @@ export function SidebarItemContent({
   hasCancelButton?: boolean
   namespace?: string | false
   hasSubsection: boolean
+  isMenuOpen?: boolean
 }) {
   const { t } = useModuleTranslation(
     namespace === false
@@ -111,7 +113,7 @@ export function SidebarItemContent({
               pr="sm"
               size="sm"
               style={{
-                display: hasCancelButton ? 'none' : undefined
+                display: hasCancelButton || isMenuOpen ? 'none' : undefined
               }}
             >
               {number.toLocaleString()}

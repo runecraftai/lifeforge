@@ -88,6 +88,7 @@ export function SidebarItem({
 }: SidebarItemProps) {
   const { setIsSidebarOpen } = useModuleSidebarState()
   const [subsectionExpanded, setSubsectionExpanded] = useState(active ?? false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleNavigation = useCallback(() => {
     if (onClick === 'expand' && subsection?.length) {
@@ -128,6 +129,7 @@ export function SidebarItem({
                     p: 'sm'
                   }
                 }}
+                onOpenChange={setIsMenuOpen}
               >
                 {contextMenuItems}
               </ContextMenu>
@@ -166,6 +168,7 @@ export function SidebarItem({
           hasContextMenu={contextMenuItems !== undefined}
           hasSubsection={subsection !== undefined}
           isMainSidebarItem={false}
+          isMenuOpen={isMenuOpen}
           label={label}
           namespace={namespace}
           number={number}
