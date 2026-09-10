@@ -18,7 +18,7 @@
   "empty": {
     "welcome": {
       "title": "Welcome to LifeForge!",
-      "description": "Get started by installing some modules from Forgistry."
+      "description": "Add widgets from the dashboard menu to get started."
     },
     "notFound": {
       "title": "Widget Not Found",

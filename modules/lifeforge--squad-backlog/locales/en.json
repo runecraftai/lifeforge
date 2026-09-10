@@ -1,0 +1,16 @@
+{
+  "title": "Squad Backlog",
+  "description": "Kanban board mirroring Squad's task backlog",
+  "buttons": {
+    "refresh": "Refresh",
+    "start": "Start",
+    "complete": "Complete",
+    "reopen": "Reopen",
+    "unblock": "Unblock",
+    "release": "Release",
+    "block": "Block",
+    "hold": "Hold",
+    "apply": "Apply",
+    "cancel": "Cancel"
+  }
+}

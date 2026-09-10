@@ -8,6 +8,6 @@ export default {
   },
   name: 'todo',
   icon: 'tabler:checklist',
-  category: 'PRODUCTIVITY',
+  category: 'Productivity',
   APIKeyAccess: {}
 } satisfies ModuleGroup['items'][number]

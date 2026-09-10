@@ -12,8 +12,7 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
-const RECORDS_URL =
-  'http://127.0.0.1:3636/api/collections/todo_list__entries/records'
+const RECORDS_URL = `${import.meta.env.VITE_API_HOST || ''}/api/collections/todo_list__entries/records`
 
 type TodoItem = {
   id: string
@@ -60,7 +59,9 @@ function TodoList() {
       const result = await request<RecordsResponse>(RECORDS_URL)
       setItems(result.items ?? [])
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : 'Unable to load tasks.')
+      setError(
+        loadError instanceof Error ? loadError.message : 'Unable to load tasks.'
+      )
     } finally {
       setLoading(false)
     }
@@ -72,6 +73,7 @@ function TodoList() {
 
   async function createTask() {
     const summary = newSummary.trim()
+
     if (!summary) return
 
     setSaving(true)
@@ -88,7 +90,11 @@ function TodoList() {
       setItems(current => [...current, item])
       setNewSummary('')
     } catch (createError) {
-      setError(createError instanceof Error ? createError.message : 'Unable to create task.')
+      setError(
+        createError instanceof Error
+          ? createError.message
+          : 'Unable to create task.'
+      )
     } finally {
       setSaving(false)
     }
@@ -102,9 +108,15 @@ function TodoList() {
         method: 'PATCH',
         body: JSON.stringify(updates)
       })
-      setItems(current => current.map(currentItem => currentItem.id === id ? item : currentItem))
+      setItems(current =>
+        current.map(currentItem => (currentItem.id === id ? item : currentItem))
+      )
     } catch (updateError) {
-      setError(updateError instanceof Error ? updateError.message : 'Unable to update task.')
+      setError(
+        updateError instanceof Error
+          ? updateError.message
+          : 'Unable to update task.'
+      )
       await loadItems()
     }
   }
@@ -116,14 +128,22 @@ function TodoList() {
       await request<void>(`${RECORDS_URL}/${id}`, { method: 'DELETE' })
       setItems(current => current.filter(item => item.id !== id))
     } catch (deleteError) {
-      setError(deleteError instanceof Error ? deleteError.message : 'Unable to delete task.')
+      setError(
+        deleteError instanceof Error
+          ? deleteError.message
+          : 'Unable to delete task.'
+      )
     }
   }
 
   return (
-    <Flex direction="column" flex="1" mb="2xl" overflow="auto">
-      <ModuleHeader icon="tabler:checklist" title="Todo List" />
-      <Flex direction="column" gap="lg" maxWidth="48rem" width="100%">
+    <Flex direction="column" flex="1" mb="2xl" minHeight="0" overflow="auto">
+      <ModuleHeader
+        icon="tabler:checklist"
+        namespace="common.todo"
+        title="todo"
+      />
+      <Flex direction="column" gap="lg" maxWidth="48rem" px="md" width="100%">
         <Flex align="end" gap="md">
           <TextInput
             label="New task"
@@ -148,7 +168,11 @@ function TodoList() {
           <Card>
             <Flex align="center" gap="md" justify="between">
               <Text color="orange-500">{error}</Text>
-              <Button namespace={false} variant="secondary" onClick={() => void loadItems()}>
+              <Button
+                namespace={false}
+                variant="secondary"
+                onClick={() => void loadItems()}
+              >
                 Retry
               </Button>
             </Flex>
@@ -159,7 +183,7 @@ function TodoList() {
           <LoadingScreen message="Loading tasks..." />
         ) : items.length === 0 ? (
           <Card>
-            <Text color="gray-500">No tasks yet.</Text>
+            <Text color="muted">No tasks yet.</Text>
           </Card>
         ) : (
           <Flex
@@ -180,18 +204,26 @@ function TodoList() {
                     namespace={false}
                     placeholder="Task summary"
                     size="small"
-                    variant="plain"
                     style={{ flex: 1, minWidth: 0 }}
                     value={item.summary}
-                    onChange={summary => {
-                      setItems(current => current.map(currentItem => currentItem.id === item.id ? { ...currentItem, summary } : currentItem))
-                    }}
+                    variant="plain"
                     onBlur={() => {
                       const summary = item.summary.trim()
+
                       if (summary) void updateTask(item.id, { summary })
+                    }}
+                    onChange={summary => {
+                      setItems(current =>
+                        current.map(currentItem =>
+                          currentItem.id === item.id
+                            ? { ...currentItem, summary }
+                            : currentItem
+                        )
+                      )
                     }}
                     onEnter={() => {
                       const summary = item.summary.trim()
+
                       if (summary) void updateTask(item.id, { summary })
                     }}
                   />

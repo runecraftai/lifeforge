@@ -4,8 +4,7 @@ import type { Module } from '@lifeforge/configs'
 import { Box, Card, Flex, Icon, Text, colorWithOpacity } from '@lifeforge/ui'
 
 function ModuleItem({ module }: { module: Module }) {
-  // Module name format: @lifeforge/lifeforge--wallet -> lifeforge--wallet
-  const moduleKey = module.name.replace('@lifeforge/', '')
+  const moduleKey = module.name
 
   const { t, i18n } = useTranslation([
     `apps.${moduleKey}`,
