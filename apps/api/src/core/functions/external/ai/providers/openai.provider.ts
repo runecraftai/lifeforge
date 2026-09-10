@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import OpenAI from 'openai'
 import z from 'zod'
 
-import { AIProvider } from './index'
+import type { AIProvider } from './index'
 
 const logger = createServiceLogger('AI')
 

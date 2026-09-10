@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import { ClientError } from '@lifeforge/server-utils'
 
 import { AES_ALGORITHM } from '../constants'
-import { EncryptedPayload } from '../types'
+import type { EncryptedPayload } from '../types'
 import decryptAESKey from './decryptAESKey'
 
 /**
