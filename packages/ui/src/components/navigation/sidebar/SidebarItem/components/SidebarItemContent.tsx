@@ -1,12 +1,9 @@
 import _ from 'lodash'
-import { useState } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
 
-import { ContextMenu } from '@/components/overlays'
 import { Box, Flex, Text } from '@/components/primitives'
 
-import { SidebarActionButton } from './SidebarActionButton'
 import * as styles from './SidebarItemContent.css'
 
 export function SidebarItemContent({
@@ -14,26 +11,21 @@ export function SidebarItemContent({
   sidebarExpanded,
   isMainSidebarItem,
   number,
-  contextMenuItems,
-  active,
-  onCancelButtonClick,
+  hasContextMenu,
+  hasCancelButton,
   namespace,
-  actionButtonProps,
-  hasSubsection
+  hasSubsection,
+  isMenuOpen
 }: {
   label: string | React.ReactElement
   sidebarExpanded: boolean
   isMainSidebarItem: boolean
   number?: number
-  contextMenuItems?: React.ReactElement
-  active: boolean
-  onCancelButtonClick?: () => void
+  hasContextMenu?: boolean
+  hasCancelButton?: boolean
   namespace?: string | false
-  actionButtonProps?: {
-    icon: string
-    onClick: () => void
-  }
   hasSubsection: boolean
+  isMenuOpen?: boolean
 }) {
   const { t } = useModuleTranslation(
     namespace === false
@@ -42,8 +34,6 @@ export function SidebarItemContent({
         ? [namespace, 'common.sidebar']
         : ['common.sidebar']
   )
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <>
@@ -116,19 +106,14 @@ export function SidebarItemContent({
             <Text
               as="span"
               className={
-                !isMenuOpen &&
-                !(onCancelButtonClick !== undefined && active) &&
-                contextMenuItems !== undefined
+                !hasCancelButton && hasContextMenu
                   ? styles.numberBadgeGroupHoverHide
                   : undefined
               }
               pr="sm"
               size="sm"
               style={{
-                display:
-                  isMenuOpen || (onCancelButtonClick !== undefined && active)
-                    ? 'none'
-                    : undefined
+                display: hasCancelButton || isMenuOpen ? 'none' : undefined
               }}
             >
               {number.toLocaleString()}
@@ -136,25 +121,6 @@ export function SidebarItemContent({
           </Box>
         )}
       </Flex>
-      {actionButtonProps && (
-        <SidebarActionButton
-          icon={actionButtonProps.icon}
-          onClick={actionButtonProps.onClick}
-        />
-      )}
-      {!active && contextMenuItems !== undefined && (
-        <ContextMenu
-          componentProps={{
-            button: {
-              className: styles.contextMenuGroupHoverShow,
-              p: 'sm'
-            }
-          }}
-          onOpenChange={setIsMenuOpen}
-        >
-          {contextMenuItems}
-        </ContextMenu>
-      )}
     </>
   )
 }

@@ -87,7 +87,7 @@ function ModifyTaskDrawer() {
       setSelectedTask(null)
 
       await queryClient.invalidateQueries({
-        queryKey: ['todoList']
+        queryKey: forgeAPI.key
       })
     } catch {
       toast.error('Error')
@@ -112,7 +112,7 @@ function ModifyTaskDrawer() {
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['todoList']
+            queryKey: forgeAPI.key
           })
           setOpenType(null)
           setSelectedTask(null)

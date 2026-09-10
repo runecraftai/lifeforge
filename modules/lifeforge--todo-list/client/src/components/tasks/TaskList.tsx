@@ -1,4 +1,4 @@
-import { Scrollbar } from '@lifeforge/ui'
+import { Box, Scrollbar, Stack } from '@lifeforge/ui'
 
 import type { TodoListEntry } from '@/providers/TodoListProvider'
 
@@ -6,15 +6,15 @@ import TaskItem from './TaskItem'
 
 function TaskList({ entries }: { entries: TodoListEntry[] }) {
   return (
-    <div className="mt-4 flex flex-1 flex-col">
+    <Box flex="1" minHeight="0" mt="md">
       <Scrollbar>
-        <ul className="flex flex-1 flex-col gap-3 px-4 pb-8">
+        <Stack as="ul" flex="1" gap="sm" pb="xl" px="md">
           {entries.map(entry => (
             <TaskItem key={entry.id} entry={entry} />
           ))}
-        </ul>
+        </Stack>
       </Scrollbar>
-    </div>
+    </Box>
   )
 }
 

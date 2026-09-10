@@ -73,21 +73,25 @@ export function MainSidebarItem({
 
   return (
     <>
-      <SidebarItemWrapper active={active} onClick={handleNavigation}>
+      <SidebarItemWrapper
+        active={active}
+        trailing={
+          sidebarExpanded && subsection !== undefined ? (
+            <SidebarItemSubsectionExpandIcon
+              subsectionExpanded={subsectionExpanded}
+              toggleSubsection={handleToggleSubsection}
+            />
+          ) : undefined
+        }
+        onClick={handleNavigation}
+      >
         <SidebarItemIcon active={active} icon={icon} />
         <SidebarItemContent
-          active={active}
           hasSubsection={subsection !== undefined}
           isMainSidebarItem={true}
           label={label}
           sidebarExpanded={sidebarExpanded}
         />
-        {sidebarExpanded && subsection !== undefined && (
-          <SidebarItemSubsectionExpandIcon
-            subsectionExpanded={subsectionExpanded}
-            toggleSubsection={handleToggleSubsection}
-          />
-        )}
       </SidebarItemWrapper>
       {subsection !== undefined && (
         <SidebarItemSubsection

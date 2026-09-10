@@ -1,5 +1,11 @@
 import { useModuleTranslation } from '@lifeforge/localization'
-import { Button, TagsFilter, useModuleSidebarState } from '@lifeforge/ui'
+import {
+  Button,
+  Flex,
+  TagsFilter,
+  Text,
+  useModuleSidebarState
+} from '@lifeforge/ui'
 
 import { useTodoListContext } from '@/providers/TodoListProvider'
 
@@ -27,9 +33,9 @@ function Header() {
   const tags = tagsListQuery.data ?? []
 
   return (
-    <div className="flex-between flex px-4">
-      <div className="space-y-3">
-        <h1 className="text-3xl font-semibold md:text-4xl">
+    <Flex align="center" justify="between" px="md">
+      <Flex direction="column" gap="sm">
+        <Text as="h1" size={{ base: '3xl', md: '4xl' }} weight="semibold">
           {`${t(
             `headers.${(() => {
               const status = filter.status
@@ -46,8 +52,10 @@ function Header() {
               return status === 'today' ? 'todays' : status
             })().toLowerCase()}Tasks`
           )}`.trim()}{' '}
-          <span className="text-bg-500 text-base">({entries.length})</span>
-        </h1>
+          <Text as="span" color="muted" size="base">
+            ({entries.length})
+          </Text>
+        </Text>
         <TagsFilter
           availableFilters={{
             list: {
@@ -86,10 +94,10 @@ function Header() {
             priority: setFilter.bind(null, 'priority')
           }}
         />
-      </div>
-      <div className="flex items-center gap-6">
+      </Flex>
+      <Flex align="center" gap="lg">
         <Button
-          className="hidden sm:flex"
+          display={{ base: 'none', sm: 'flex' }}
           icon="tabler:plus"
           tProps={{ item: t('items.task') }}
           onClick={() => {
@@ -100,15 +108,15 @@ function Header() {
           new
         </Button>
         <Button
-          className="xl:hidden"
+          display={{ base: 'flex', xl: 'none' }}
           icon="tabler:menu"
           variant="plain"
           onClick={() => {
             setIsSidebarOpen(true)
           }}
         />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
 

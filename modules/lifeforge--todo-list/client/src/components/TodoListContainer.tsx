@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import { useLocation, useSearchParams } from 'react-router'
 
 import {
+  Box,
   EmptyStateScreen,
   FAB,
+  Flex,
   SearchInput,
   WithQuery,
   toast
@@ -84,19 +86,27 @@ function TodoListContainer() {
 
   return (
     <>
-      <div className="flex size-full min-h-0 flex-1">
+      <Flex flex="1" height="100%" minHeight="0" width="100%">
         <Sidebar />
-        <div className="relative z-10 flex h-full flex-1 flex-col xl:ml-8">
+        <Flex
+          direction="column"
+          flex="1"
+          height="100%"
+          ml={{ base: 'none', xl: 'xl' }}
+          position="relative"
+          width="100%"
+          zIndex="10"
+        >
           <Header />
-          <div className="w-full px-4">
+          <Box px="md" width="100%">
             <SearchInput
-              className="mt-4"
               debounceMs={300}
+              mt="md"
               searchTarget="task"
               value={searchQuery}
               onChange={setSearchQuery}
             />
-          </div>
+          </Box>
           <WithQuery query={entriesQuery}>
             {() =>
               filteredEntries.length > 0 ? (
@@ -111,8 +121,8 @@ function TodoListContainer() {
               )
             }
           </WithQuery>
-        </div>
-      </div>
+        </Flex>
+      </Flex>
       <ModifyTaskDrawer />
       {(entriesQuery.data ?? []).length > 0 && (
         <FAB
