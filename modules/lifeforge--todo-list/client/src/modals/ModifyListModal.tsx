@@ -1,11 +1,25 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
 
-import type { InferInput } from '@lifeforge/api'
-import { FormModal, defineForm, toast } from '@lifeforge/ui'
+import { type InferInput, useForgeMutation } from '@lifeforge/api'
+import {
+  ColorField,
+  FormModal,
+  IconField,
+  TextField,
+  createDefaultValues
+} from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 
 import type { TodoListList } from '../providers/TodoListProvider'
+
+const schema = z.object({
+  name: z.string().min(1, 'Required'),
+  icon: z.string().min(1, 'Required'),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex color')
+})
 
 function ModifyListModal({
   data: { type, initialData },
@@ -17,72 +31,64 @@ function ModifyListModal({
   }
   onClose: () => void
 }) {
-  const queryClient = useQueryClient()
+  const createMutation = useForgeMutation(forgeAPI.lists.create, {
+    action: 'create',
+    queryKey: forgeAPI.key
+  })
 
-  const mutation = useMutation(
-    (type === 'create'
-      ? forgeAPI.lists.create
-      : forgeAPI.lists.update.input({
-          id: initialData?.id || ''
-        })
-    ).mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ['todoList', 'lists']
-        })
-      },
-      onError: error => {
-        toast.error(`Failed to ${type} list: ${error.message}`)
-      }
-    })
+  const updateMutation = useForgeMutation(
+    forgeAPI.lists.update.input({ id: initialData?.id || '' }),
+    {
+      action: 'update',
+      queryKey: forgeAPI.key
+    }
   )
 
-  const { formProps } = defineForm<
-    InferInput<(typeof forgeAPI.lists)[typeof type]>['body']
-  >({
-    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-    namespace: 'apps.todoList',
-    title: `list.${type}`,
-    onClose,
-    submitButton: type
+  const form = useForm({
+    defaultValues: {
+      ...createDefaultValues(schema),
+      ...(initialData ?? { color: '#FFFFFF' })
+    },
+    resolver: zodResolver(schema)
   })
-    .typesMap({
-      name: 'text',
-      icon: 'icon',
-      color: 'color'
-    })
-    .setupFields({
-      name: {
-        required: true,
-        label: 'List name',
-        icon: 'tabler:list',
-        placeholder: 'List name',
-        type: 'text'
-      },
-      icon: {
-        required: true,
-        label: 'List icon',
-        type: 'icon'
-      },
-      color: {
-        required: true,
-        label: 'List color',
-        type: 'color'
-      }
-    })
-    .initialData(
-      initialData ?? {
-        name: '',
-        icon: '',
-        color: '#FFFFFF'
-      }
-    )
-    .onSubmit(async data => {
-      await mutation.mutateAsync(data)
-    })
-    .build()
 
-  return <FormModal {...formProps} />
+  return (
+    <FormModal
+      form={form}
+      submissionConfig={{
+        template: type,
+        handler: async data => {
+          await (
+            type === 'create' ? createMutation : updateMutation
+          ).mutateAsync(
+            data as InferInput<typeof forgeAPI.lists.create>['body']
+          )
+        }
+      }}
+      uiConfig={{
+        icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+        namespace: 'apps.todoList',
+        title: `list.${type}`,
+        onClose
+      }}
+    >
+      <TextField
+        required
+        control={form.control}
+        icon="tabler:list"
+        label="listName"
+        name="name"
+        placeholder="List name"
+      />
+      <IconField required control={form.control} label="listIcon" name="icon" />
+      <ColorField
+        required
+        control={form.control}
+        label="listColor"
+        name="color"
+      />
+    </FormModal>
+  )
 }
 
 export default ModifyListModal

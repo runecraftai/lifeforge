@@ -1,11 +1,23 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
 
-import type { InferInput } from '@lifeforge/api'
-import { FormModal, defineForm, toast } from '@lifeforge/ui'
+import { type InferInput, useForgeMutation } from '@lifeforge/api'
+import {
+  ColorField,
+  FormModal,
+  TextField,
+  createDefaultValues
+} from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 
 import type { TodoListPriority } from '../providers/TodoListProvider'
+
+const schema = z.object({
+  name: z.string().min(1, 'Required'),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex color')
+})
 
 function ModifyPriorityModal({
   data: { type, initialData },
@@ -17,65 +29,63 @@ function ModifyPriorityModal({
   }
   onClose: () => void
 }) {
-  const queryClient = useQueryClient()
+  const createMutation = useForgeMutation(forgeAPI.priorities.create, {
+    action: 'create',
+    queryKey: forgeAPI.key
+  })
 
-  const mutation = useMutation(
-    (type === 'create'
-      ? forgeAPI.priorities.create
-      : forgeAPI.priorities.update.input({
-          id: initialData?.id || ''
-        })
-    ).mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ['todoList', 'priorities']
-        })
-      },
-      onError: error => {
-        toast.error(`Failed to ${type} priority: ${error.message}`)
-      }
-    })
+  const updateMutation = useForgeMutation(
+    forgeAPI.priorities.update.input({ id: initialData?.id || '' }),
+    {
+      action: 'update',
+      queryKey: forgeAPI.key
+    }
   )
 
-  const { formProps } = defineForm<
-    InferInput<(typeof forgeAPI.priorities)[typeof type]>['body']
-  >({
-    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-    namespace: 'apps.todoList',
-    title: `priority.${type}`,
-    onClose,
-    submitButton: type
+  const form = useForm({
+    defaultValues: {
+      ...createDefaultValues(schema),
+      ...(initialData ?? { color: '#FFFFFF' })
+    },
+    resolver: zodResolver(schema)
   })
-    .typesMap({
-      name: 'text',
-      color: 'color'
-    })
-    .setupFields({
-      name: {
-        required: true,
-        label: 'Priority name',
-        icon: 'tabler:sort-ascending-numbers',
-        placeholder: 'Priority name',
-        type: 'text'
-      },
-      color: {
-        required: true,
-        label: 'Priority color',
-        type: 'color'
-      }
-    })
-    .initialData(
-      initialData ?? {
-        name: '',
-        color: '#FFFFFF'
-      }
-    )
-    .onSubmit(async data => {
-      await mutation.mutateAsync(data)
-    })
-    .build()
 
-  return <FormModal {...formProps} />
+  return (
+    <FormModal
+      form={form}
+      submissionConfig={{
+        template: type,
+        handler: async data => {
+          await (
+            type === 'create' ? createMutation : updateMutation
+          ).mutateAsync(
+            data as InferInput<typeof forgeAPI.priorities.create>['body']
+          )
+        }
+      }}
+      uiConfig={{
+        icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+        namespace: 'apps.todoList',
+        title: `priority.${type}`,
+        onClose
+      }}
+    >
+      <TextField
+        required
+        control={form.control}
+        icon="tabler:sort-ascending-numbers"
+        label="priorityName"
+        name="name"
+        placeholder="Priority name"
+      />
+      <ColorField
+        required
+        control={form.control}
+        label="priorityColor"
+        name="color"
+      />
+    </FormModal>
+  )
 }
 
 export default ModifyPriorityModal
