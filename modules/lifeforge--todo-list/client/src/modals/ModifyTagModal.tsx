@@ -1,11 +1,17 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
 
-import type { InferInput } from '@lifeforge/api'
-import { FormModal, defineForm, toast } from '@lifeforge/ui'
+import { type InferInput, useForgeMutation } from '@lifeforge/api'
+import { FormModal, TextField, createDefaultValues } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 
 import type { TodoListTag } from '../providers/TodoListProvider'
+
+const schema = z.object({
+  name: z.string().min(1, 'Required')
+})
 
 function ModifyTagModal({
   data: { type, initialData },
@@ -17,54 +23,57 @@ function ModifyTagModal({
   }
   onClose: () => void
 }) {
-  const queryClient = useQueryClient()
+  const createMutation = useForgeMutation(forgeAPI.tags.create, {
+    action: 'create',
+    queryKey: forgeAPI.key
+  })
 
-  const mutation = useMutation(
-    (type === 'create'
-      ? forgeAPI.tags.create
-      : forgeAPI.tags.update.input({
-          id: initialData?.id || ''
-        })
-    ).mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ['todoList', 'tags']
-        })
-      },
-      onError: error => {
-        toast.error(`Failed to ${type} tag: ${error.message}`)
-      }
-    })
+  const updateMutation = useForgeMutation(
+    forgeAPI.tags.update.input({ id: initialData?.id || '' }),
+    {
+      action: 'update',
+      queryKey: forgeAPI.key
+    }
   )
 
-  const { formProps } = defineForm<
-    InferInput<(typeof forgeAPI.tags)[typeof type]>['body']
-  >({
-    icon: 'tabler:tag',
-    namespace: 'apps.todoList',
-    title: `tag.${type}`,
-    onClose,
-    submitButton: type
+  const form = useForm({
+    defaultValues: {
+      ...createDefaultValues(schema),
+      ...initialData
+    },
+    resolver: zodResolver(schema)
   })
-    .typesMap({
-      name: 'text',
-      color: 'color'
-    })
-    .setupFields({
-      name: {
-        required: true,
-        label: 'Tag name',
-        icon: 'tabler:tag',
-        placeholder: 'Tag name'
-      }
-    })
-    .initialData(initialData)
-    .onSubmit(async data => {
-      await mutation.mutateAsync(data)
-    })
-    .build()
 
-  return <FormModal {...formProps} />
+  return (
+    <FormModal
+      form={form}
+      submissionConfig={{
+        template: type,
+        handler: async data => {
+          await (
+            type === 'create' ? createMutation : updateMutation
+          ).mutateAsync(
+            data as InferInput<typeof forgeAPI.tags.create>['body']
+          )
+        }
+      }}
+      uiConfig={{
+        icon: 'tabler:tag',
+        namespace: 'apps.todoList',
+        title: `tag.${type}`,
+        onClose
+      }}
+    >
+      <TextField
+        required
+        control={form.control}
+        icon="tabler:tag"
+        label="tagName"
+        name="name"
+        placeholder="Tag name"
+      />
+    </FormModal>
+  )
 }
 
 export default ModifyTagModal

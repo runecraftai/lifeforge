@@ -1,10 +1,8 @@
 import { decrypt } from '@functions/auth/encryption'
 import { OAuth2Tokens } from 'arctic'
 
-import {
-  OAUTH_PROVIDER_CONFIGS,
-  ProviderConfig
-} from '../constants/oauth_providers'
+import { OAUTH_PROVIDER_CONFIGS } from '../constants/oauth_providers'
+import type { ProviderConfig } from '../constants/oauth_providers'
 import { getPB } from '../constants/pb'
 
 const MASTER_KEY = process.env.MASTER_KEY!

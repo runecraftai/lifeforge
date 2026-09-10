@@ -663,23 +663,11 @@ export const contract = {
             },
             "color": {
               "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "collectionId": {
-              "type": "string"
-            },
-            "collectionName": {
-              "type": "string"
             }
           },
           "required": [
             "name",
-            "color",
-            "id",
-            "collectionId",
-            "collectionName"
+            "color"
           ],
           "additionalProperties": false
         }
@@ -820,23 +808,11 @@ export const contract = {
             },
             "color": {
               "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "collectionId": {
-              "type": "string"
-            },
-            "collectionName": {
-              "type": "string"
             }
           },
           "required": [
             "name",
-            "color",
-            "id",
-            "collectionId",
-            "collectionName"
+            "color"
           ],
           "additionalProperties": false
         }
@@ -896,24 +872,12 @@ export const contract = {
             },
             "color": {
               "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "collectionId": {
-              "type": "string"
-            },
-            "collectionName": {
-              "type": "string"
             }
           },
           "required": [
             "name",
             "icon",
-            "color",
-            "id",
-            "collectionId",
-            "collectionName"
+            "color"
           ],
           "additionalProperties": false
         }
@@ -1065,24 +1029,12 @@ export const contract = {
             },
             "color": {
               "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "collectionId": {
-              "type": "string"
-            },
-            "collectionName": {
-              "type": "string"
             }
           },
           "required": [
             "name",
             "icon",
-            "color",
-            "id",
-            "collectionId",
-            "collectionName"
+            "color"
           ],
           "additionalProperties": false
         }
@@ -1140,22 +1092,10 @@ export const contract = {
           "properties": {
             "name": {
               "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "collectionId": {
-              "type": "string"
-            },
-            "collectionName": {
-              "type": "string"
             }
           },
           "required": [
-            "name",
-            "id",
-            "collectionId",
-            "collectionName"
+            "name"
           ],
           "additionalProperties": false
         }
@@ -1285,22 +1225,10 @@ export const contract = {
           "properties": {
             "name": {
               "type": "string"
-            },
-            "id": {
-              "type": "string"
-            },
-            "collectionId": {
-              "type": "string"
-            },
-            "collectionName": {
-              "type": "string"
             }
           },
           "required": [
-            "name",
-            "id",
-            "collectionId",
-            "collectionName"
+            "name"
           ],
           "additionalProperties": false
         }

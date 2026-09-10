@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 
 import { AES_ALGORITHM, IV_LENGTH } from '../constants'
-import { EncryptedResponse } from '../types'
+import type { EncryptedResponse } from '../types'
 
 /**
  * Encrypts data using AES-GCM with the provided key.
