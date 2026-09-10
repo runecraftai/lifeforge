@@ -1,10 +1,13 @@
 import { useCallback, useState } from 'react'
 
+import { ContextMenu } from '@/components/overlays'
 import { Box } from '@/components/primitives'
 import { useModuleSidebarState } from '@/providers'
 
+import { SidebarActionButton } from './components/SidebarActionButton'
 import { SidebarCancelButton } from './components/SidebarCancelButton'
 import { SidebarItemContent } from './components/SidebarItemContent'
+import * as styles from './components/SidebarItemContent.css'
 import { SidebarItemIcon } from './components/SidebarItemIcon'
 import { SidebarItemSubsection } from './components/SidebarItemSubsection'
 import { SidebarItemSubsectionExpandIcon } from './components/SidebarItemSubsectionExpandIcon'
@@ -109,6 +112,37 @@ export function SidebarItem({
       <SidebarItemWrapper
         active={active}
         className={classNames?.wrapper}
+        trailing={
+          <>
+            {actionButtonProps && (
+              <SidebarActionButton
+                icon={actionButtonProps.icon}
+                onClick={actionButtonProps.onClick}
+              />
+            )}
+            {!active && contextMenuItems !== undefined && (
+              <ContextMenu
+                componentProps={{
+                  button: {
+                    className: styles.contextMenuGroupHoverShow,
+                    p: 'sm'
+                  }
+                }}
+              >
+                {contextMenuItems}
+              </ContextMenu>
+            )}
+            {active && onCancelButtonClick !== undefined && (
+              <SidebarCancelButton onClick={onCancelButtonClick} />
+            )}
+            {subsection !== undefined && (
+              <SidebarItemSubsectionExpandIcon
+                subsectionExpanded={subsectionExpanded}
+                toggleSubsection={handleToggleSubsection}
+              />
+            )}
+          </>
+        }
         onClick={handleNavigation}
       >
         {sideStripColor !== undefined && (
@@ -128,26 +162,15 @@ export function SidebarItem({
           icon={icon}
         />
         <SidebarItemContent
-          actionButtonProps={actionButtonProps}
-          active={active}
-          contextMenuItems={contextMenuItems}
+          hasCancelButton={active && onCancelButtonClick !== undefined}
+          hasContextMenu={contextMenuItems !== undefined}
           hasSubsection={subsection !== undefined}
           isMainSidebarItem={false}
           label={label}
           namespace={namespace}
           number={number}
           sidebarExpanded={false}
-          onCancelButtonClick={onCancelButtonClick}
         />
-        {active && onCancelButtonClick !== undefined && (
-          <SidebarCancelButton onClick={onCancelButtonClick} />
-        )}
-        {subsection !== undefined && (
-          <SidebarItemSubsectionExpandIcon
-            subsectionExpanded={subsectionExpanded}
-            toggleSubsection={handleToggleSubsection}
-          />
-        )}
       </SidebarItemWrapper>
       {subsection !== undefined && (
         <SidebarItemSubsection

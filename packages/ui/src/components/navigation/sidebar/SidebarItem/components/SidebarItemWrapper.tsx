@@ -9,12 +9,14 @@ export function SidebarItemWrapper({
   active,
   children,
   className,
-  onClick
+  onClick,
+  trailing
 }: {
   active: boolean
   children: React.ReactNode
   className?: string
   onClick?: () => void
+  trailing?: React.ReactNode
 }) {
   return (
     <Transition>
@@ -27,7 +29,7 @@ export function SidebarItemWrapper({
           align="center"
           as="li"
           className={clsx(
-            'sidebar-item',
+            'group sidebar-item',
             active && styles.listItemActiveIndicator,
             className
           )}
@@ -51,10 +53,11 @@ export function SidebarItemWrapper({
                       darkHover: colorWithOpacity('bg-800', '30%')
                     }
               }
-              className="group"
+              flex="1"
               gap="md"
               height="3.5em"
               justify="between"
+              minWidth="0"
               pl="md"
               position="relative"
               pr="md"
@@ -64,12 +67,12 @@ export function SidebarItemWrapper({
                 cursor: 'pointer'
               }}
               tabIndex={0}
-              width="100%"
               onClick={onClick}
             >
               <Text align="left">{children}</Text>
             </Flex>
           </Transition>
+          {trailing}
         </Flex>
       </Text>
     </Transition>

@@ -1,9 +1,8 @@
 import { ListboxButton } from '@headlessui/react'
 import { useCallback, useMemo } from 'react'
 
-import { Box, Flex, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 
-import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import { InputLabel } from '../shared/components/InputLabel'
@@ -149,21 +148,29 @@ export function ListboxInput<T>({
               </Text>
             </InputInnerWrapper>
           </Flex>
-          <Box asChild mr="sm" position="absolute" right="0">
-            <InputActionButton
-              hasError={!!errorMsg}
-              icon="heroicons:chevron-up-down-16-solid"
-              style={{
-                marginRight:
-                  variant === 'classic'
-                    ? '1em'
-                    : size === 'small'
-                      ? '0.25em'
-                      : '0.75em'
-              }}
-              variant={variant}
-            />
-          </Box>
+          <Flex
+            align="center"
+            bg={{ base: 'transparent', hover: 'bg-300', darkHover: 'bg-700' }}
+            justify="center"
+            mr="sm"
+            p="sm"
+            position="absolute"
+            r="lg"
+            right="0"
+            style={{
+              marginRight:
+                variant === 'classic'
+                  ? '1em'
+                  : size === 'small'
+                    ? '0.25em'
+                    : '0.75em',
+              pointerEvents: 'none'
+            }}
+          >
+            <Text asChild color="muted">
+              <Icon icon="heroicons:chevron-up-down-16-solid" />
+            </Text>
+          </Flex>
         </ListboxButton>
       </Flex>
       <ListboxOptions portal={!multiple}>{children}</ListboxOptions>
