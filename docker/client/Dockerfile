@@ -1,53 +1,59 @@
 # syntax=docker/dockerfile:1
 
 # ============================================
-# Builder stage - build client and tools
+# Builder – install deps, build workspace packages, bundle web app
 # ============================================
-FROM oven/bun:alpine AS builder
+FROM node:22-alpine AS builder
 
-# Accept build arg for API host
 ARG VITE_API_HOST=/api
 ENV VITE_API_HOST=$VITE_API_HOST
 
+RUN corepack enable && corepack prepare pnpm@11.21.0 --activate
+
 WORKDIR /app
+
+# Copy only files needed for dependency resolution first (layer cache)
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json .npmrc .pnpmfile.cjs ./
+COPY apps/api/package.json              apps/api/package.json
+COPY apps/web/package.json              apps/web/package.json
+COPY packages/configs/package.json      packages/configs/package.json
+COPY packages/log/package.json          packages/log/package.json
+COPY packages/pocketbase/package.json   packages/pocketbase/package.json
+COPY packages/server-utils/package.json packages/server-utils/package.json
+COPY packages/api/package.json          packages/api/package.json
+COPY packages/federation/package.json   packages/federation/package.json
+COPY packages/localization/package.json packages/localization/package.json
+COPY packages/ui/package.json           packages/ui/package.json
+COPY tools/package.json                 tools/package.json
+COPY docs/package.json                  docs/package.json
+COPY modules/package.json               modules/package.json
+COPY modules/lifeforge--notes/package.json           modules/lifeforge--notes/package.json
+COPY modules/lifeforge--squad-backlog/package.json modules/lifeforge--squad-backlog/package.json
+COPY modules/lifeforge--todo-list/package.json      modules/lifeforge--todo-list/package.json
+COPY locales/lang-en/package.json                   locales/lang-en/package.json
+
+# Install deps only (skip postinstall build – source not copied yet)
+RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Copy source
 COPY . .
 
-# Install dependencies
-RUN --mount=type=cache,target=/root/.bun/install/cache \
-    pnpm install --linker isolated
-
-# Build @lifeforge/log (required by forge CLI used in prebuild)
-RUN cd /app/packages/log && pnpm run build
-
-# Build shared package (required by server types)
-RUN cd /app/shared && pnpm run build
-
-# Build @lifeforge/server-utils (required by server types)
-RUN cd /app/packages/server-utils && pnpm run build
-
-# Build client
-RUN cd /app/apps/web && pnpm run build
+# Turbo-filtered build: only @lifeforge/client and its transitive workspace deps
+RUN pnpm turbo build --filter=@lifeforge/client...
 
 # ============================================
-# Production stage - Nginx static server
+# Production stage – nginx serving built SPA
 # ============================================
-FROM nginx:alpine
+FROM nginx:1.27-alpine
 
-# Install curl for health check
 RUN apk add --no-cache curl
 
-# Copy nginx config for SPA routing and API proxying
 COPY docker/client/nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy built client from builder
 COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
 
 EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD curl -f http://localhost/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
