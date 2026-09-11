@@ -34,7 +34,33 @@ echo "Setting up superuser..."
 /usr/local/bin/pocketbase superuser upsert "$PB_EMAIL" "$PB_PASSWORD" --dir=/pb_data
 echo "Superuser configured."
 
-# ── Start PocketBase ─────────────────────────────────────────────────
+# ── Start PocketBase for migration application ───────────────────────
+# Start PB in background on a temporary port, apply any pending
+# migrations from the pb_migrations directory, then restart on the
+# real port.
+echo "Starting PocketBase (temp) for migration check..."
+/usr/local/bin/pocketbase serve \
+  --http=0.0.0.0:19999 \
+  --dir=/pb_data \
+  --migrationsDir=/pb_data/pb_migrations &
+TEMP_PID=$!
+
+# Wait for it to be ready
+until wget -q --spider http://localhost:19999/api/health 2>/dev/null; do
+  sleep 1
+done
+echo "PocketBase (temp) is ready."
+
+# PocketBase auto-applies migrations on startup. By starting it with
+# --migrationsDir pointing to the shared volume, any migration files
+# present are applied automatically.
+
+# Stop the temporary instance
+kill $TEMP_PID 2>/dev/null
+wait $TEMP_PID 2>/dev/null
+echo "PocketBase (temp) stopped."
+
+# ── Start PocketBase on the real port ────────────────────────────────
 echo "Starting PocketBase on :8090 ..."
 exec /usr/local/bin/pocketbase serve \
   --http=0.0.0.0:8090 \

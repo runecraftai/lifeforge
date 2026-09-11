@@ -40,7 +40,7 @@ services:
       - ./env/.env.docker
     environment:
       - DOCKER_MODE=true
-      - PB_HOST=http://db:8090
+      - PB_HOST=http://localhost:8090
       - PB_DIR=/pb_data
     volumes:
       - pb_data:/pb_data
@@ -67,6 +67,7 @@ services:
       - '${API_PORT:-13636}:3636'
     volumes:
       - ./modules:/lifeforge/modules
+      - ./locales:/lifeforge/locales
     depends_on:
       db:
         condition: service_healthy

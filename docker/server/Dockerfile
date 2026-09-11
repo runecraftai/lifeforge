@@ -39,15 +39,9 @@ COPY . .
 RUN pnpm turbo build --filter=@lifeforge/server...
 
 # ── Collect production node_modules for the API ──────────────────────
-# Create a clean package.json with only production dependencies
-RUN node -e "
-  const fs = require('fs');
-  const pkg = JSON.parse(fs.readFileSync('./apps/api/package.json','utf8'));
-  const ws = new Set(['@lifeforge/configs','@lifeforge/log','@lifeforge/pocketbase','@lifeforge/server-utils']);
-  for (const d of Object.keys(pkg.dependencies||{})) if (ws.has(d)) delete pkg.dependencies[d];
-  delete pkg.devDependencies;
-  fs.writeFileSync('./apps/api/package.docker.json', JSON.stringify(pkg,null,2));
-"
+# Create a clean package.json with only production dependencies,
+# including transitive deps from bundled workspace packages
+RUN node -e "const fs=require('fs'),pkg=JSON.parse(fs.readFileSync('./apps/api/package.json','utf8')),ws=new Set(['@lifeforge/configs','@lifeforge/log','@lifeforge/pocketbase','@lifeforge/server-utils']);for(const d of Object.keys(pkg.dependencies||{}))if(ws.has(d))delete pkg.dependencies[d];delete pkg.devDependencies;for(const w of['./packages/pocketbase/package.json','./packages/log/package.json','./packages/server-utils/package.json']){try{const wp=JSON.parse(fs.readFileSync(w,'utf8'));for(const[k,v]of Object.entries(wp.dependencies||{})){if(!ws.has(k))pkg.dependencies[k]=v}}catch{}}pkg.dependencies.zod='^4.0.0';pkg.dependencies.lodash='^4.17.21';pkg.dependencies.dayjs='^1.11.19';fs.writeFileSync('./apps/api/package.docker.json',JSON.stringify(pkg,null,2));"
 
 # ============================================
 # Production stage – runtime only
@@ -62,6 +56,8 @@ WORKDIR /lifeforge
 # Copy built API bundle
 COPY --from=builder /lifeforge/apps/api/dist           ./apps/api/dist
 COPY --from=builder /lifeforge/apps/api/package.docker.json ./apps/api/package.json
+# Root package.json needed by pnpm install --prod
+COPY --from=builder /lifeforge/apps/api/package.docker.json ./package.json
 
 # Copy built workspace packages (needed at runtime for module resolution)
 COPY --from=builder /lifeforge/packages/configs/dist    ./packages/configs/dist
@@ -73,8 +69,8 @@ COPY --from=builder /lifeforge/packages/pocketbase/package.json ./packages/pocke
 COPY --from=builder /lifeforge/packages/server-utils/dist ./packages/server-utils/dist
 COPY --from=builder /lifeforge/packages/server-utils/package.json ./packages/server-utils/package.json
 
-# Copy .npmrc (needed by pnpm for linker config)
-COPY .npmrc ./
+# Copy .npmrc and pnpm-workspace.yaml (needed by pnpm for linker config and allowBuilds)
+COPY .npmrc pnpm-workspace.yaml ./
 
 # Install production dependencies only
 RUN pnpm install --prod

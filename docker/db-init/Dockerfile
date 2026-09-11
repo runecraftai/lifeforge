@@ -49,18 +49,16 @@ COPY modules/lifeforge--squad-backlog/package.json modules/lifeforge--squad-back
 COPY modules/lifeforge--todo-list/package.json      modules/lifeforge--todo-list/package.json
 COPY locales/lang-en/package.json                   locales/lang-en/package.json
 
-# Install deps only (skip postinstall build – source not copied yet)
 RUN pnpm install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
 # Build workspace packages that forge CLI needs at runtime
-# configs must be built first (other packages import from @lifeforge/configs/vite)
 RUN pnpm turbo build --filter=@lifeforge/configs && \
     pnpm turbo build --filter=@lifeforge/log --filter=@lifeforge/pocketbase --filter=@lifeforge/server-utils
 
 # ============================================
-# Runtime – Node with forge source, tsx, and PocketBase binary
+# Runtime – Node with forge source, tsx, PocketBase binary
 # ============================================
 FROM node:22-alpine
 
@@ -71,22 +69,14 @@ COPY --from=pocketbase /usr/local/bin/pocketbase /usr/local/bin/pocketbase
 
 WORKDIR /app
 
-# Copy forge CLI source (dynamically imports .ts schema files at runtime via tsx)
+# Copy forge CLI source
 COPY --from=builder /app/tools/src ./tools/src
 COPY --from=builder /app/tools/tsconfig.json ./tools/tsconfig.json
 
-# Copy root package.json (has the "forge" script: tsx tools/src/index.ts)
-COPY --from=builder /app/package.json ./package.json
-
-# Copy node_modules from builder (includes tsx, pocketbase SDK, and all deps)
-COPY --from=builder /app/node_modules ./node_modules
-
-# Copy .npmrc
-COPY .npmrc ./
-
-# Copy built workspace packages (needed by forge CLI imports)
+# Copy built workspace packages
 COPY --from=builder /app/packages/configs/dist      ./packages/configs/dist
 COPY --from=builder /app/packages/configs/package.json ./packages/configs/package.json
+COPY --from=builder /app/packages/configs/tsconfig    ./packages/configs/tsconfig
 COPY --from=builder /app/packages/log/dist          ./packages/log/dist
 COPY --from=builder /app/packages/log/package.json  ./packages/log/package.json
 COPY --from=builder /app/packages/pocketbase/dist   ./packages/pocketbase/dist
@@ -94,9 +84,21 @@ COPY --from=builder /app/packages/pocketbase/package.json ./packages/pocketbase/
 COPY --from=builder /app/packages/server-utils/dist ./packages/server-utils/dist
 COPY --from=builder /app/packages/server-utils/package.json ./packages/server-utils/package.json
 
+# Install forge CLI runtime dependencies fresh using npm (pnpm symlinks break across stages)
+COPY docker/db-init/package-runtime.json ./package.json
+RUN npm install --production 2>/dev/null || npm install
+
 # Copy schema source files (imported dynamically by forge CLI)
 COPY --from=builder /app/apps/api/src   ./apps/api/src
 COPY --from=builder /app/modules/       ./modules/
+
+# Create path for tsconfig extends resolution and workspace package symlinks
+RUN mkdir -p node_modules/@lifeforge/configs/tsconfig && \
+    cp packages/configs/tsconfig/base.json node_modules/@lifeforge/configs/tsconfig/base.json && \
+    ln -sf /app/packages/log node_modules/@lifeforge/log && \
+    ln -sf /app/packages/pocketbase node_modules/@lifeforge/pocketbase && \
+    ln -sf /app/packages/server-utils node_modules/@lifeforge/server-utils && \
+    ln -sf /app/packages/configs node_modules/@lifeforge/configs
 
 ENV DOCKER_MODE=true
 ENV PB_BINARY_PATH=/usr/local/bin/pocketbase
