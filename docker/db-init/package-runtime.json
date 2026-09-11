@@ -1,0 +1,26 @@
+{
+  "name": "forge-runtime",
+  "private": true,
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^15.0.0",
+    "concurrently": "^9.2.1",
+    "crypto-js": "^4.2.0",
+    "dayjs": "^1.11.19",
+    "dotenv": "^17.2.3",
+    "handlebars": "^4.7.8",
+    "lodash": "^4.17.21",
+    "openai": "^6.7.0",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "pocketbase": "^0.27.0",
+    "prettier": "^3.8.0",
+    "prompts": "^2.4.2",
+    "rotating-file-stream": "^3.2.7",
+    "semver": "^7.7.3",
+    "tar": "^7.5.2",
+    "tsx": "^4.23.1",
+    "undici": "^8.10.0",
+    "zod": "^4.0.0"
+  }
+}

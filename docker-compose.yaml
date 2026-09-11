@@ -1,27 +1,36 @@
+# LifeForge – local development compose
+# Ports are offset to avoid collisions with a running local instance:
+#   PocketBase :18090  (production :8090)
+#   API server :13636  (production :3636)
+#   Web client :15173  (production :5173)
+#
+# Usage:
+#   cp env/.env.docker.example env/.env.docker   # edit credentials
+#   docker compose up --build
+#   docker compose down -v                         # tear down + volumes
+#
+# To use the real ports (8090 / 3636 / 5173) you must stop any
+# manually-started PocketBase / API / dev-server first — that is
+# the commander's decision, not an automated step.
+
 services:
+  # ── PocketBase database ──────────────────────────────────────────────
   db:
     build:
       context: .
-      dockerfile: docker/db/Dockerfile
+      dockerfile: docker/pocketbase/Dockerfile
     container_name: lifeforge-db
     restart: unless-stopped
     env_file:
       - ./env/.env.docker
     environment:
-      - DOCKER_MODE=true
-      - PB_BINARY_PATH=/usr/local/bin/pocketbase
       - PB_DIR=/pb_data
-    expose:
-      - '8090'
+    ports:
+      - '${PB_PORT:-18090}:8090'
     volumes:
-      - ./database/pb_data:/pb_data
-    healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
-      interval: 5s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
+      - pb_data:/pb_data
 
+  # ── One-shot migration runner ────────────────────────────────────────
   db-init:
     build:
       context: .
@@ -31,16 +40,17 @@ services:
       - ./env/.env.docker
     environment:
       - DOCKER_MODE=true
+      - PB_HOST=http://localhost:8090
       - PB_DIR=/pb_data
-      - PB_HOST=http://0.0.0.0:8090
     volumes:
-      - ./database/pb_data:/pb_data
+      - pb_data:/pb_data
       - ./modules:/app/modules
-      - ./locales:/app/locales
     depends_on:
       db:
         condition: service_healthy
+    # exits after migrations are applied
 
+  # ── API server ───────────────────────────────────────────────────────
   server:
     build:
       context: .
@@ -50,18 +60,21 @@ services:
     env_file:
       - ./env/.env.docker
     environment:
-      - DOCKER_MODE=true
       - NODE_ENV=production
       - PB_HOST=http://db:8090
-    expose:
-      - '3636'
+      - PORT=3636
+    ports:
+      - '${API_PORT:-13636}:3636'
     volumes:
       - ./modules:/lifeforge/modules
       - ./locales:/lifeforge/locales
     depends_on:
+      db:
+        condition: service_healthy
       db-init:
         condition: service_completed_successfully
 
+  # ── Web client (nginx SPA) ───────────────────────────────────────────
   client:
     build:
       context: .
@@ -71,7 +84,11 @@ services:
     container_name: lifeforge-client
     restart: unless-stopped
     ports:
-      - '80:80'
+      - '${WEB_PORT:-15173}:80'
     depends_on:
       server:
-        condition: service_started
+        condition: service_healthy
+
+volumes:
+  pb_data:
+    name: lifeforge-pb-data
