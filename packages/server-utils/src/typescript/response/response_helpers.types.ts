@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { OutputType } from '../../utils/outputStatus'
+import type { OutputType } from '../../utils/outputStatus'
 
 export type SnakeToCamel<S extends string> =
   S extends `${infer Head}_${infer Tail}`

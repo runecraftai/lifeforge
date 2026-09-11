@@ -9,7 +9,7 @@ import {
   type IPBService
 } from '@lifeforge/pocketbase'
 
-import { ITempFileManagerConstructor } from './tempfile_manager.types'
+import type { ITempFileManagerConstructor } from './tempfile_manager.types'
 
 export type FetchAIFunc = <
   T extends z.ZodTypeAny | undefined = undefined

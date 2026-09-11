@@ -4,12 +4,12 @@ import type { z } from 'zod'
 
 import { type CleanedSchemas, type IPBService } from '@lifeforge/pocketbase'
 
-import {
+import type {
   OutputDefinition,
   OutputHelpers
 } from '../response/response_helpers.types'
-import { ConvertMedia, MediaConfig } from '../standalone/media.types'
-import { CoreContext } from './core_context.types'
+import type { ConvertMedia, MediaConfig } from '../standalone/media.types'
+import type { CoreContext } from './core_context.types'
 
 export interface ForgeExpressContext<
   TSchemas extends CleanedSchemas = CleanedSchemas

@@ -3,8 +3,11 @@ import PocketBase from 'pocketbase'
 
 import { PBLogger } from '..'
 import { toPocketBaseCollectionName } from '../../dbUtils'
-import { CleanedSchemas, CollectionKey } from '../../types/pb_service.types'
-import { IDelete, IDeleteFactory } from '../../types/service.interface'
+import type {
+  CleanedSchemas,
+  CollectionKey
+} from '../../types/pb_service.types'
+import type { IDelete, IDeleteFactory } from '../../types/service.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 class ClientError extends Error {
