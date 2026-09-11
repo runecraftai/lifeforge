@@ -1,17 +1,17 @@
 # LifeForge – local development compose
-# Ports are offset to avoid collisions with a running local instance:
-#   PocketBase :18090  (production :8090)
-#   API server :13636  (production :3636)
-#   Web client :15173  (production :5173)
+# Default host ports match the commander's existing local instance:
+#   PocketBase :8090
+#   API server :3636
+#   Web client :5173
+# Alternate host ports can be selected with PB_PORT, API_PORT, and WEB_PORT.
 #
 # Usage:
 #   cp env/.env.docker.example env/.env.docker   # edit credentials
 #   docker compose up --build
 #   docker compose down -v                         # tear down + volumes
 #
-# To use the real ports (8090 / 3636 / 5173) you must stop any
-# manually-started PocketBase / API / dev-server first — that is
-# the commander's decision, not an automated step.
+# Stop any manually-started PocketBase / API / dev-server before using these
+# ports; an old manually-started PocketBase conflicts on port 8090.
 
 services:
   # ── PocketBase database ──────────────────────────────────────────────
@@ -26,7 +26,7 @@ services:
     environment:
       - PB_DIR=/pb_data
     ports:
-      - '${PB_PORT:-18090}:8090'
+      - '${PB_PORT:-8090}:8090'
     volumes:
       - pb_data:/pb_data
 
@@ -64,7 +64,7 @@ services:
       - PB_HOST=http://db:8090
       - PORT=3636
     ports:
-      - '${API_PORT:-13636}:3636'
+      - '${API_PORT:-3636}:3636'
     volumes:
       - ./modules:/lifeforge/modules
       - ./locales:/lifeforge/locales
@@ -84,7 +84,7 @@ services:
     container_name: lifeforge-client
     restart: unless-stopped
     ports:
-      - '${WEB_PORT:-15173}:80'
+      - '${WEB_PORT:-5173}:80'
     depends_on:
       server:
         condition: service_healthy
