@@ -3,7 +3,8 @@ import pino from 'pino'
 import pretty from 'pino-pretty'
 import { Transform } from 'stream'
 
-import { LogLevel, LoggerOptions, getConfig } from '../utils/config'
+import type { LogLevel, LoggerOptions } from '../utils/config'
+import { getConfig } from '../utils/config'
 import { getFileStream } from '../utils/fileTransport'
 
 const PRETTY_OPTIONS = {
