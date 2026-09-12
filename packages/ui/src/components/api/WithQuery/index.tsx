@@ -13,6 +13,7 @@ export function WithQuery<T>({
   showRetryButton = true,
   loaderSize,
   notFoundFallback,
+  errorFallback,
   onNotFound
 }: {
   query: UseQueryResult<T, Error>
@@ -21,6 +22,7 @@ export function WithQuery<T>({
   showRetryButton?: boolean
   loaderSize?: string
   notFoundFallback?: React.ReactNode
+  errorFallback?: React.ReactNode
   onNotFound?: () => void
 }) {
   const is404 =
@@ -41,6 +43,10 @@ export function WithQuery<T>({
   if (query.isError) {
     if (is404 && notFoundFallback !== undefined) {
       return <>{notFoundFallback}</>
+    }
+
+    if (errorFallback !== undefined) {
+      return <>{errorFallback}</>
     }
 
     return (

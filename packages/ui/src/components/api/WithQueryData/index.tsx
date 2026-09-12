@@ -12,7 +12,8 @@ import { WithQuery } from '..'
 export function WithQueryData<T extends ForgeEndpoint>({
   contract,
   queryOptions,
-  children
+  children,
+  ...rest
 }: {
   contract: T
   queryOptions?: Omit<UseQueryOptions, 'queryKey' | 'queryFn'> & {
@@ -27,7 +28,7 @@ export function WithQueryData<T extends ForgeEndpoint>({
   )
 
   return (
-    <WithQuery query={query as UseQueryResult<InferOutput<T>>}>
+    <WithQuery query={query as UseQueryResult<InferOutput<T>>} {...rest}>
       {children}
     </WithQuery>
   )
