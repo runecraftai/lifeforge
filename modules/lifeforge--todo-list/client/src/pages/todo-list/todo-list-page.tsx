@@ -11,14 +11,10 @@ import {
   toast
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
 import { filterTasksBySummary } from '@/entities/task'
-import {
-  type Task,
-  useTodoListContext
-} from '@/entities/task'
-
+import { type Task, useTodoListContext } from '@/entities/task'
 import { ModifyTaskDrawer } from '@/features/edit-task'
+import { forgeAPI } from '@/manifest'
 
 import { Header } from './header'
 import { Sidebar } from './sidebar'

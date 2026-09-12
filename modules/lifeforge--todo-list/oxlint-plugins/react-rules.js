@@ -3,9 +3,11 @@ function walk(node, callback, root = node, seen = new Set()) {
   if (node !== root && node.type === 'JSXExpressionContainer') return
   if (
     node !== root &&
-    ['ArrowFunctionExpression', 'FunctionExpression', 'FunctionDeclaration'].includes(
-      node.type
-    )
+    [
+      'ArrowFunctionExpression',
+      'FunctionExpression',
+      'FunctionDeclaration'
+    ].includes(node.type)
   ) {
     return
   }
@@ -14,7 +16,12 @@ function walk(node, callback, root = node, seen = new Set()) {
   callback(node)
 
   for (const [key, value] of Object.entries(node)) {
-    if (key === 'parent' || key === 'loc' || key === 'range' || key === 'tokens') {
+    if (
+      key === 'parent' ||
+      key === 'loc' ||
+      key === 'range' ||
+      key === 'tokens'
+    ) {
       continue
     }
 
@@ -55,9 +62,15 @@ export const rules = {
     create(context) {
       return {
         VariableDeclarator(node) {
-          if (node.id?.name?.[0] === node.id.name?.[0]?.toUpperCase() &&
-              (node.init?.type === 'ArrowFunctionExpression' || node.init?.type === 'FunctionExpression')) {
-            context.report({ node, message: 'Components must use a function declaration.' })
+          if (
+            node.id?.name?.[0] === node.id.name?.[0]?.toUpperCase() &&
+            (node.init?.type === 'ArrowFunctionExpression' ||
+              node.init?.type === 'FunctionExpression')
+          ) {
+            context.report({
+              node,
+              message: 'Components must use a function declaration.'
+            })
           }
         }
       }
@@ -89,8 +102,10 @@ export const rules = {
           if (
             nestedOrMultipleTernaries ||
             compoundTernaryCondition ||
-            (node.expression.type === 'ConditionalExpression' && logicalCount > 0) ||
-            (node.expression.type === 'LogicalExpression' && node.expression.operator === '||') ||
+            (node.expression.type === 'ConditionalExpression' &&
+              logicalCount > 0) ||
+            (node.expression.type === 'LogicalExpression' &&
+              node.expression.operator === '||') ||
             logicalCount >= 2
           ) {
             context.report({
@@ -127,8 +142,7 @@ export const rules = {
 
           for (const comment of comments) {
             const isTypeScriptDirective =
-              comment.type === 'Line' &&
-              /\/?\s*<reference/.test(comment.value)
+              comment.type === 'Line' && /\/?\s*<reference/.test(comment.value)
 
             if (
               !isTypeScriptDirective &&

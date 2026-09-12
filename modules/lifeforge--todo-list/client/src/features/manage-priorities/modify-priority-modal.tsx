@@ -10,9 +10,8 @@ import {
   createDefaultValues
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
-
 import type { TaskPriority } from '@/entities/priority'
+import { forgeAPI } from '@/manifest'
 
 const schema = z.object({
   name: z.string().min(1, 'Required'),

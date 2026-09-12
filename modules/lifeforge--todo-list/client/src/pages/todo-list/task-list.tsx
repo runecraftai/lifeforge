@@ -1,7 +1,6 @@
 import { Box, Scrollbar, Stack } from '@lifeforge/ui'
 
 import type { Task } from '@/entities/task'
-
 import { TaskItem } from '@/features/complete-task'
 
 export function TaskList({ entries }: { entries: Task[] }) {

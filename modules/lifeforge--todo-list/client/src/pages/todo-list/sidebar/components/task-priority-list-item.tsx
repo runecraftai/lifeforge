@@ -9,10 +9,10 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
-import { ModifyPriorityModal } from '@/features/manage-priorities'
 import type { TaskPriority } from '@/entities/priority'
 import { useTodoListContext } from '@/entities/task'
+import { ModifyPriorityModal } from '@/features/manage-priorities'
+import { forgeAPI } from '@/manifest'
 
 export function TaskPriorityListItem({ item }: { item: TaskPriority }) {
   const queryClient = useQueryClient()

@@ -6,7 +6,10 @@ export const rules = {
         Program(node) {
           const filename = context.filename.split('/').pop() ?? ''
           if (!/^[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+)*$/.test(filename)) {
-            context.report({ node, message: 'Source filenames must use kebab-case.' })
+            context.report({
+              node,
+              message: 'Source filenames must use kebab-case.'
+            })
           }
         }
       }

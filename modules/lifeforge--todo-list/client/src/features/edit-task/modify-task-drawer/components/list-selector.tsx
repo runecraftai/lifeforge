@@ -29,9 +29,7 @@ export function ListSelector({
               width: '0.25rem'
             }}
           />
-          <Text truncate>
-            {lists.find(l => l.id === list)?.name ?? 'None'}
-          </Text>
+          <Text truncate>{lists.find(l => l.id === list)?.name ?? 'None'}</Text>
         </Flex>
       )}
       value={list ?? ''}

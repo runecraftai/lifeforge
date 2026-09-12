@@ -9,10 +9,10 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
-import { ModifyTagModal } from '@/features/manage-tags'
 import type { TaskTag } from '@/entities/tag'
 import { useTodoListContext } from '@/entities/task'
+import { ModifyTagModal } from '@/features/manage-tags'
+import { forgeAPI } from '@/manifest'
 
 export function TaskTagListItem({ item }: { item: TaskTag }) {
   const queryClient = useQueryClient()

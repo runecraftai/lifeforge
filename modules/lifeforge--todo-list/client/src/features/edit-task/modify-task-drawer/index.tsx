@@ -22,8 +22,8 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
 import { useTodoListContext } from '@/entities/task'
+import { forgeAPI } from '@/manifest'
 
 import { ListSelector } from './components/list-selector'
 import { PrioritySelector } from './components/priority-selector'
@@ -171,15 +171,12 @@ export function ModifyTaskDrawer() {
   const drawerOpacity = drawerIsOpen ? 1 : 0
   const drawerPointerEvents = drawerIsOpen ? 'auto' : 'none'
   const drawerZIndex = drawerIsOpen ? 9995 : -1
-  const drawerTransform = drawerIsOpen
-    ? 'translateX(0)'
-    : 'translateX(100%)'
+  const drawerTransform = drawerIsOpen ? 'translateX(0)' : 'translateX(100%)'
 
   return (
     <Box
       bg="bg-900"
       height="100dvh"
-      width="100%"
       style={{
         backgroundColor:
           'color-mix(in srgb, var(--color-bg-900) 20%, transparent)',
@@ -190,15 +187,16 @@ export function ModifyTaskDrawer() {
         transition: 'opacity 100ms ease-in-out',
         zIndex: drawerZIndex
       }}
+      width="100%"
     >
       <Box
         as="button"
         height="100%"
-        width="100%"
         style={{
           inset: 0,
           position: 'absolute'
         }}
+        width="100%"
         onClick={closeWindow}
       />
       <Flex
@@ -208,13 +206,13 @@ export function ModifyTaskDrawer() {
         p="2xl"
         position="absolute"
         right="0"
-        top="0"
-        width="min(40rem, 100%)"
         style={{
           borderRadius: 'var(--radius-xl) 0 0 var(--radius-xl)',
           transform: drawerTransform,
           transition: 'transform 300ms ease-in-out'
         }}
+        top="0"
+        width="min(40rem, 100%)"
       >
         <Scrollbar style={{ flex: '1 1 auto', minHeight: 0 }}>
           <Flex align="center" justify="between" mb="2xl">
@@ -284,7 +282,7 @@ export function ModifyTaskDrawer() {
               onChange={setNotes}
             />
           </Flex>
-          <Flex justify="end" gap="sm" mt="3xl">
+          <Flex gap="sm" justify="end" mt="3xl">
             <Button loading={loading} variant="secondary" onClick={closeWindow}>
               cancel
             </Button>

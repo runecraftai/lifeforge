@@ -5,9 +5,8 @@ import z from 'zod'
 import { type InferInput, useForgeMutation } from '@lifeforge/api'
 import { FormModal, TextField, createDefaultValues } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
-
 import type { TaskTag } from '@/entities/tag'
+import { forgeAPI } from '@/manifest'
 
 const schema = z.object({
   name: z.string().min(1, 'Required')
@@ -52,9 +51,7 @@ export function ModifyTagModal({
         handler: async data => {
           await (
             type === 'create' ? createMutation : updateMutation
-          ).mutateAsync(
-            data as InferInput<typeof forgeAPI.tags.create>['body']
-          )
+          ).mutateAsync(data as InferInput<typeof forgeAPI.tags.create>['body'])
         }
       }}
       uiConfig={{

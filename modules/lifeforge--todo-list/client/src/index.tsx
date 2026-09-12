@@ -1,7 +1,6 @@
 import { Flex, ModuleHeader } from '@lifeforge/ui'
 
 import { TodoListProvider } from '@/entities/task'
-
 import { TodoListPage } from '@/pages/todo-list'
 
 export function TodoList() {
