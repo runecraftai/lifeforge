@@ -76,7 +76,10 @@ const FILTERS: Record<string, any> = {
       operator: '=',
       value: true
     }
-  ]
+  ],
+  todo: [{ field: 'status', operator: '=', value: 'todo' }],
+  doing: [{ field: 'status', operator: '=', value: 'doing' }],
+  lifecycleDone: [{ field: 'status', operator: '=', value: 'done' }]
 }
 
 export const getStatusCounter = forge
@@ -194,6 +197,7 @@ export const create = forge
         collectionName: true,
         completed_at: true,
         done: true,
+        status: true,
         created: true,
         updated: true
       })
@@ -216,6 +220,7 @@ export const create = forge
         .collection('entries')
         .data({
           ...body,
+          status: 'todo',
           due_date:
             (body.due_date && !body.due_date_has_time
               ? dayjs(body.due_date).endOf('day').toISOString()
@@ -240,6 +245,8 @@ export const update = forge
         done: true,
         created: true,
         updated: true
+      }).extend({
+        status: z.enum(['todo', 'doing', 'done']).optional()
       })
     },
     existenceCheck: {
@@ -318,6 +325,7 @@ export const toggleEntry = forge
         .id(id)
         .data({
           done: !entry.done,
+          status: entry.done ? 'todo' : 'done',
           completed_at: entry.done
             ? null
             : dayjs().utc().format('YYYY-MM-DD HH:mm:ss')

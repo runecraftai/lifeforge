@@ -128,6 +128,7 @@ export const schemas = {
       tags: z.array(z.string()),
       priority: z.string(),
       done: z.boolean(),
+      status: z.enum(['todo', 'doing', 'done']),
       completed_at: z.string(),
       created: z.string(),
       updated: z.string()
@@ -241,6 +242,17 @@ export const schemas = {
           required: false,
           system: false,
           type: 'bool'
+        },
+        {
+          hidden: false,
+          max: '',
+          min: '',
+          name: 'status',
+          presentable: false,
+          required: false,
+          system: false,
+          type: 'select',
+          values: ['todo', 'doing', 'done']
         },
         {
           hidden: false,
