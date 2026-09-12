@@ -54,12 +54,13 @@ describe('GET /locales/listUnsupportedModules', () => {
     expect(unwrap(res)).toEqual(expect.any(Array))
   })
 
-  it('keeps the designed 404 when the user has no language', async () => {
-    await getPB().collection('users').update(userId, { language: '' })
+  it('keeps the designed 404 when the user has no matching language', async () => {
+    await getPB().collection('users').update(userId, { language: 'xx' })
     await authenticate()
 
     const res = await forgeAPI.locales.listUnsupportedModules.queryRaw({
-      raw: true
+      raw: true,
+      raiseError: false
     })
 
     expect(res.status).toBe(404)
