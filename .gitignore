@@ -38,8 +38,18 @@ modules/*/locales
 modules/*/package.json
 apps/api/src/generated
 
-# user modules & locales
-modules/*
+# module build and dependency artifacts
+modules/*/client/dist/
+modules/*/server/dist/
+modules/*/node_modules/
+modules/*/.turbo/
+modules/*/**/*.tsbuildinfo
+modules/*/client/**/*.js
+modules/*/server/**/*.js
+!modules/*/oxlint-plugins/
+!modules/*/oxlint-plugins/*.js
+
+# user module locales
 locales/*
 !locales/lang-en
 
