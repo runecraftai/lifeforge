@@ -16,6 +16,8 @@ storybook-static
 
 # testing
 coverage
+visual-report
+visual-results
 
 # environment & credentials
 *.local
