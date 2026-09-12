@@ -41,14 +41,10 @@ function hasBooleanLogical(node) {
   return found
 }
 
-function isJsxRenderable(node) {
-  return node?.type === 'JSXElement' || node?.type === 'JSXFragment'
-}
-
 function isPublicApiJSDoc(comment, sourceCode) {
   return (
     comment.type === 'Block' &&
-    comment.value.startsWith('*') &&
+    comment.value.startsWith('**') &&
     sourceCode?.getTokenAfter(comment)?.value === 'export'
   )
 }
@@ -74,7 +70,6 @@ export const rules = {
         JSXExpressionContainer(node) {
           let conditionalCount = 0
           let logicalCount = 0
-          const logicalExpressions = []
           const conditionalExpressions = []
 
           walk(node.expression, child => {
@@ -84,7 +79,6 @@ export const rules = {
             }
             if (isBooleanLogical(child)) {
               logicalCount++
-              logicalExpressions.push(child)
             }
           })
 
@@ -92,18 +86,9 @@ export const rules = {
           const compoundTernaryCondition = conditionalExpressions.some(
             conditional => hasBooleanLogical(conditional.test)
           )
-          const compoundLogicalCondition = logicalExpressions.some(
-            logical =>
-              hasBooleanLogical(logical.left) ||
-              hasBooleanLogical(logical.right) ||
-              (logical === node.expression &&
-                (logical.operator !== '&&' || !isJsxRenderable(logical.right)))
-          )
-
           if (
             nestedOrMultipleTernaries ||
             compoundTernaryCondition ||
-            compoundLogicalCondition ||
             (node.expression.type === 'ConditionalExpression' && logicalCount > 0)
           ) {
             context.report({

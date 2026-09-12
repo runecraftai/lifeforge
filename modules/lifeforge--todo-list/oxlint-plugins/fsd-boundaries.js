@@ -1,4 +1,4 @@
-const layerOrder = ['app', 'pages', 'features', 'entities', 'shared']
+const layerOrder = ['shared', 'entities', 'features', 'pages', 'app']
 
 function getLayer(source) {
   return layerOrder.find(layer => source.startsWith(`@/${layer}/`))
