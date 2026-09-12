@@ -1,0 +1,29 @@
+{
+  "name": "@lifeforge/lifeforge--unified-kanban",
+  "displayName": "Unified Kanban",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Personal and Squad work on one board",
+  "author": "LifeForge",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build",
+    "test": "pnpm run test:client && pnpm run test:server",
+    "test:client": "cd client && vitest run",
+    "test:server": "cd server && vitest run"
+  },
+  "lifeforge": { "icon": "tabler:layout-kanban", "category": "Productivity" },
+  "devDependencies": { "@tailwindcss/vite": "^4.1.13", "oxlint": "^1.82.0", "tailwindcss": "^4.1.13" },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}
