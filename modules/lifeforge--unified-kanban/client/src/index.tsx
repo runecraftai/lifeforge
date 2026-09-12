@@ -91,6 +91,7 @@ export default function UnifiedKanban() {
   const total = useMemo(() => board.personal.length + board.work.length, [board])
   const onDrop = async (lane: 'personal' | 'work', status: Column) => {
     if (!dragged) return
+    if ((dragged.source === 'personal' && lane !== 'personal') || (dragged.source === 'mission' && lane !== 'work')) return
     const item = dragged
     setDragged(null)
     setBoard(current => ({

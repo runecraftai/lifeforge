@@ -19,7 +19,7 @@ export class PocketBaseAdapter {
     return pb.collection('todo_list__entries').update(id, {
       status,
       done: status === 'done',
-      completed_at: status === 'done' ? new Date().toISOString() : ''
+      completed_at: status === 'done' ? new Date().toISOString() : null
     })
   }
 }

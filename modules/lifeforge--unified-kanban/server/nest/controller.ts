@@ -22,7 +22,9 @@ export class BoardController {
   @Post('move')
   async move(@Req() request: Request, @Body() body: MoveBody) {
     const { pb } = await this.auth.authenticate(request)
-    if (!body || !statuses.includes(body.status) || !body.id) throw new BadRequestException('Invalid board move')
+    if (!body || !statuses.includes(body.status) || !body.id || (body.source !== 'personal' && body.source !== 'mission')) {
+      throw new BadRequestException('Invalid board move')
+    }
     if (body.source === 'personal') await this.pocketbase.movePersonalTask(pb, body.id, body.status)
     else await moveSquadMission(body.id, body.status)
     return { state: 'success', data: { id: body.id, source: body.source, status: body.status } }

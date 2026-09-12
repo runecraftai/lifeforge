@@ -105,7 +105,7 @@ export const getStatusCounter = forge
       completed: 0
     }
 
-    for (const type of Object.keys(FILTERS) as (keyof typeof FILTERS)[]) {
+    for (const type of Object.keys(counters) as (keyof typeof counters)[]) {
       const { totalItems } = await pb.getList
         .collection('entries')
         .page(1)
@@ -113,7 +113,7 @@ export const getStatusCounter = forge
         .filter(FILTERS[type])
         .execute()
 
-      counters[type as keyof typeof counters] = totalItems
+      counters[type] = totalItems
     }
 
     return response.ok(counters)
@@ -244,10 +244,9 @@ export const update = forge
         collectionName: true,
         completed_at: true,
         done: true,
+        status: true,
         created: true,
         updated: true
-      }).extend({
-        status: z.enum(['todo', 'doing', 'done']).optional()
       })
     },
     existenceCheck: {
