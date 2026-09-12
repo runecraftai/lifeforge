@@ -102,7 +102,7 @@ export default function UnifiedKanban() {
         : current.work.filter(candidate => candidate.id !== item.id || candidate.source !== item.source)
     }))
     try {
-      await forgeAPI.board.move.input({ source: item.source, id: item.id, status }).mutate(undefined)
+      await forgeAPI.board.move.mutate({ source: item.source, id: item.id, status })
       await refresh()
     } catch {
       setError(true)

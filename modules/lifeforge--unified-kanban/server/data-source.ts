@@ -36,6 +36,13 @@ export function parseSquadMissions(output: string): SquadMission[] {
   }).filter(item => item.id && item.title)
 }
 
+export async function moveSquadMission(id: string, status: LifecycleStatus) {
+  const command = process.env.SQ_TASKS || 'sq-tasks'
+  const cwd = process.env.SQUAD_DIR || '/home/rehem/Projects/squad'
+  const action = status === 'doing' ? 'start' : status === 'done' ? 'done' : 'reopen'
+  await execFileAsync(command, [action, id, '--json'], { cwd, timeout: 10000, maxBuffer: 1024 * 1024 })
+}
+
 export async function listSquadMissions(): Promise<SquadMission[]> {
   const command = process.env.SQ_TASKS || 'sq-tasks'
   const cwd = process.env.SQUAD_DIR || '/home/rehem/Projects/squad'

@@ -1,36 +1,88 @@
+const emptyQuery = {
+  $schema: 'https://json-schema.org/draft/2020-12/schema',
+  type: 'object',
+  properties: {},
+  additionalProperties: false
+} as const
+
+const item = {
+  type: 'object',
+  properties: {
+    id: { type: 'string' },
+    title: { type: 'string' },
+    source: { type: 'string', enum: ['personal', 'mission'] },
+    status: { type: 'string', enum: ['todo', 'doing', 'done'] },
+    priority: { type: 'string' },
+    repo: { type: 'string' },
+    kind: { type: 'string' }
+  },
+  required: ['id', 'title', 'source', 'status'],
+  additionalProperties: false
+} as const
+
+const board = {
+  $schema: 'https://json-schema.org/draft/2020-12/schema',
+  type: 'object',
+  properties: {
+    lanes: {
+      type: 'object',
+      properties: {
+        personal: { type: 'array', items: item },
+        work: { type: 'array', items: item }
+      },
+      required: ['personal', 'work'],
+      additionalProperties: false
+    }
+  },
+  required: ['lanes'],
+  additionalProperties: false
+} as const
+
+const moveBody = {
+  $schema: 'https://json-schema.org/draft/2020-12/schema',
+  type: 'object',
+  properties: {
+    source: { type: 'string', enum: ['personal', 'mission'] },
+    id: { type: 'string' },
+    status: { type: 'string', enum: ['todo', 'doing', 'done'] }
+  },
+  required: ['source', 'id', 'status'],
+  additionalProperties: false
+} as const
+
 export const contract = {
   board: {
     get: {
       method: 'get',
       description: 'Get unified personal and Squad board data',
       noAuth: false,
-      encrypted: true,
+      encrypted: false,
       isDownloadable: false,
       media: null,
-      input: { query: {} },
-      output: { OK: {} }
+      input: { query: emptyQuery },
+      output: { OK: board }
     },
     move: {
       method: 'post',
       description: 'Move an item to a lifecycle column',
       noAuth: false,
-      encrypted: true,
+      encrypted: false,
       isDownloadable: false,
       media: null,
-      input: {
-        query: {
+      input: { query: emptyQuery, body: moveBody },
+      output: {
+        OK: {
           $schema: 'https://json-schema.org/draft/2020-12/schema',
           type: 'object',
           properties: {
-            source: { type: 'string', enum: ['personal', 'mission'] },
             id: { type: 'string' },
+            source: { type: 'string', enum: ['personal', 'mission'] },
             status: { type: 'string', enum: ['todo', 'doing', 'done'] }
           },
-          required: ['source', 'id', 'status'],
+          required: ['id', 'source', 'status'],
           additionalProperties: false
         }
-      },
-      output: { OK: {} }
+      }
     }
   }
 } as const
