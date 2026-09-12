@@ -52,33 +52,28 @@ function LoginPage() {
     })
   }, [searchParams])
 
-  const loginPageContent = (providers: { provider: string }[]) => (
-    <>
-      <Stack
-        as="section"
-        overflowY="auto"
-        pb="lg"
-        pt="2xl"
-        px={{ base: 'xl', sm: '2xl' }}
-        width={{ base: '100%', lg: '50%' }}
-      >
-        <Stack centered height="100%">
-          <AuthHeader />
-          <AuthForm providers={providers.map(p => p.provider)} />
-        </Stack>
-        <AuthFooter />
-      </Stack>
-      <AuthSideImage />
-      <ModalManager />
-    </>
-  )
-
   return (
-    <WithQueryData
-      contract={forgeAPI.auth.oauth.providers.listEnabled}
-      errorFallback={loginPageContent([])}
-    >
-      {providers => loginPageContent(providers)}
+    <WithQueryData contract={forgeAPI.auth.oauth.providers.listEnabled}>
+      {providers => (
+        <>
+          <Stack
+            as="section"
+            overflowY="auto"
+            pb="lg"
+            pt="2xl"
+            px={{ base: 'xl', sm: '2xl' }}
+            width={{ base: '100%', lg: '50%' }}
+          >
+            <Stack centered height="100%">
+              <AuthHeader />
+              <AuthForm providers={providers.map(p => p.provider)} />
+            </Stack>
+            <AuthFooter />
+          </Stack>
+          <AuthSideImage />
+          <ModalManager />
+        </>
+      )}
     </WithQueryData>
   )
 }
