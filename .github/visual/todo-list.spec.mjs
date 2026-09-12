@@ -54,7 +54,7 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
   const createAccountHeading = page.getByRole('heading', { name: 'Welcome!' })
   if (await isVisible(createAccountHeading)) {
     await page.getByPlaceholder('johndoe@gmail.com').fill(testUser.email)
-    await page.getByPlaceholder('johndoe').fill(testUser.username)
+    await page.getByPlaceholder('johndoe', { exact: true }).fill(testUser.username)
     await page.getByPlaceholder('John Doe').fill(testUser.name)
     await page.getByPlaceholder('Enter your password').fill(testUser.password)
     await page
