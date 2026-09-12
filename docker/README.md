@@ -17,12 +17,12 @@ docker compose down -v
 
 ## What runs
 
-| Service    | Description                        | Default host port |
-|------------|------------------------------------|-------------------|
-| `db`       | PocketBase v0.35.0 (pinned)       | **8090**          |
-| `db-init`  | One-shot migration runner          | — (exits)         |
-| `server`   | Express API on internal port 3636  | **3636**          |
-| `client`   | Nginx SPA (proxies `/api/` → API)  | **5173**          |
+| Service   | Description                                         | Default host port |
+| --------- | --------------------------------------------------- | ----------------- |
+| `db`      | PocketBase v0.35.0 (pinned)                         | **8090**          |
+| `db-init` | One-shot migration runner                           | — (exits)         |
+| `server`  | Express API on internal port 3636                   | **3636**          |
+| `client`  | Nginx SPA (proxies `/api/` and `/socket.io/` → API) | **5173**          |
 
 Open **http://localhost:5173** in your browser.
 PocketBase admin: **http://localhost:8090/_/**
@@ -63,9 +63,9 @@ one-shot step is safe because already-applied migrations are skipped.
 
 ## Volumes
 
-| Volume             | Container path     | Purpose                    |
-|--------------------|--------------------|----------------------------|
-| `lifeforge-pb-data`| `/pb_data`         | PocketBase data + migrations |
+| Volume              | Container path | Purpose                      |
+| ------------------- | -------------- | ---------------------------- |
+| `lifeforge-pb-data` | `/pb_data`     | PocketBase data + migrations |
 
 Modules are bind-mounted from the host (`./modules` → container), so code
 changes are reflected immediately after an API server restart.
@@ -74,16 +74,16 @@ changes are reflected immediately after an API server restart.
 
 Required (in `env/.env.docker`):
 
-| Variable      | Description                           |
-|---------------|---------------------------------------|
-| `PB_EMAIL`    | PocketBase superuser email            |
-| `PB_PASSWORD` | PocketBase superuser password (≥8)    |
-| `MASTER_KEY`  | PocketBase master key (≥16)           |
+| Variable      | Description                        |
+| ------------- | ---------------------------------- |
+| `PB_EMAIL`    | PocketBase superuser email         |
+| `PB_PASSWORD` | PocketBase superuser password (≥8) |
+| `MASTER_KEY`  | PocketBase master key (≥16)        |
 
 Optional:
 
-| Variable   | Default | Description        |
-|------------|---------|--------------------|
+| Variable   | Default | Description          |
+| ---------- | ------- | -------------------- |
 | `PB_PORT`  | 8090    | PocketBase host port |
-| `API_PORT` | 3636    | API server host port  |
-| `WEB_PORT` | 5173    | Web client host port  |
+| `API_PORT` | 3636    | API server host port |
+| `WEB_PORT` | 5173    | Web client host port |

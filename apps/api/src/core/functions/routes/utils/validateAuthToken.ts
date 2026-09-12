@@ -51,8 +51,18 @@ export default async function isAuthTokenValid(
     return false
   }
 
+  let userId: string
+
   try {
-    jwt.verify(bearerToken, JWT_SECRET, { algorithms: ['HS512'] })
+    const payload = jwt.verify(bearerToken, JWT_SECRET, {
+      algorithms: ['HS512']
+    })
+
+    if (typeof payload === 'string' || typeof payload.sub !== 'string') {
+      throw new Error('Access token subject is missing')
+    }
+
+    userId = payload.sub
   } catch {
     res.status(401).send({
       state: 'error',
@@ -63,6 +73,17 @@ export default async function isAuthTokenValid(
   }
 
   const pb = await getSuperUserPB()
+
+  try {
+    req.user = await pb.collection('users').getOne(userId)
+  } catch {
+    res.status(401).send({
+      state: 'error',
+      message: 'Invalid authorization credentials'
+    })
+
+    return false
+  }
 
   req.pb = (module: { id: string }) => new PBService(pb, module)
 
