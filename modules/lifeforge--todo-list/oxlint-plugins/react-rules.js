@@ -128,7 +128,7 @@ export const rules = {
           for (const comment of comments) {
             const isTypeScriptDirective =
               comment.type === 'Line' &&
-              comment.value.trimStart().startsWith('<reference')
+              /\/?\s*<reference/.test(comment.value)
 
             if (
               !isTypeScriptDirective &&
