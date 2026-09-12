@@ -90,6 +90,16 @@
      }
      ```
 
+## Frontend conventions
+
+- Use `@lifeforge/ui` with vanilla-extract for styling, never Tailwind classes, and use `clsx` when composing conditional classes.
+- Persist filters and selected task IDs in query parameters, using the existing `nuqs` dependency so tasks remain bookmarkable.
+- Allow one simple inline JSX conditional or render-only `map`, but derive compound boolean conditions and multiple or nested ternaries before `return`.
+- Keep code free of comments, allowing JSDoc only for generally used public APIs.
+- Extract named types only when reused, move crowded type collections to their own file, and never prefix type names with `I`.
+- Invalidate data by query key, preferably without waiting, await mutations before invalidating when sequencing is required, and never use artificial timers for invalidation.
+- Export declarations at their declaration site instead of collecting exports in trailing blocks.
+
 ## Maintaining this file
 
 Keep this file for knowledge useful to almost every future agent session in this project.
