@@ -16,17 +16,20 @@ export class BoardController {
   @Get()
   async get(@Req() request: Request) {
     const { pb } = await this.auth.authenticate(request)
+
     return { state: 'success', data: await getUnifiedBoard(() => this.pocketbase.listPersonalTasks(pb)) }
   }
 
   @Post('move')
   async move(@Req() request: Request, @Body() body: MoveBody) {
     const { pb } = await this.auth.authenticate(request)
+
     if (!body || !statuses.includes(body.status) || !body.id || (body.source !== 'personal' && body.source !== 'mission')) {
       throw new BadRequestException('Invalid board move')
     }
     if (body.source === 'personal') await this.pocketbase.movePersonalTask(pb, body.id, body.status)
     else await moveSquadMission(body.id, body.status)
+
     return { state: 'success', data: { id: body.id, source: body.source, status: body.status } }
   }
 }

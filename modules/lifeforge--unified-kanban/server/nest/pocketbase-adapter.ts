@@ -7,6 +7,7 @@ import type { PersonalTask } from '../data-source'
 export class PocketBaseAdapter {
   async listPersonalTasks(pb: PocketBase): Promise<PersonalTask[]> {
     const records = await pb.collection('todo_list__entries').getFullList({ sort: '-created' })
+
     return records.map(record => ({
       id: record.id,
       summary: String(record.summary),
