@@ -27,11 +27,7 @@ function getCookieSecurity(req: Request) {
     isLoopbackHost(req.hostname) &&
     isLoopbackHost(originHost) &&
     req.hostname.toLowerCase() !== originHost.toLowerCase()
-  const secure =
-    req.secure ||
-    req.protocol === 'https' ||
-    process.env.NODE_ENV === 'production' ||
-    crossHostLoopback
+  const secure = req.secure || req.protocol === 'https' || crossHostLoopback
 
   return { secure, sameSite: secure ? 'none' : 'lax' } as const
 }
@@ -43,7 +39,7 @@ export function getCookieOptions(req: Request) {
     httpOnly: true,
     secure,
     sameSite,
-    path: '/auth',
+    path: '/',
     maxAge: 7 * 24 * 60 * 60 * 1000
   } as const
 }
@@ -55,7 +51,7 @@ export function getClearCookieOptions(req: Request) {
     httpOnly: true,
     secure,
     sameSite,
-    path: '/auth',
+    path: '/',
     maxAge: 0
   } as const
 }

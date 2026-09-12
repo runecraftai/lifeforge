@@ -11,6 +11,9 @@ declare global {
     interface Request {
       io: SocketIO.Server
       pb: (module: { id: string }) => PBService
+      user?: {
+        language?: string
+      }
       taskPool: Record<string, ITaskPoolTask>
       media?: ConvertMedia<MediaConfig>
     }

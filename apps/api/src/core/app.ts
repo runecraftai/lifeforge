@@ -10,6 +10,16 @@ import { CORS_ALLOWED_ORIGINS } from './routes/constants/corsAllowedOrigins'
 
 const app = express()
 
+const trustProxy = process.env.TRUST_PROXY
+
+if (trustProxy === 'true') {
+  app.set('trust proxy', true)
+} else if (trustProxy && !Number.isNaN(Number(trustProxy))) {
+  app.set('trust proxy', Number(trustProxy))
+} else if (trustProxy) {
+  app.set('trust proxy', trustProxy)
+}
+
 // Security headers
 app.use(
   helmet({

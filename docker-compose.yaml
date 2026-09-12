@@ -63,6 +63,7 @@ services:
       - NODE_ENV=production
       - PB_HOST=http://db:8090
       - PORT=3636
+      - TRUST_PROXY=1
     ports:
       - '${API_PORT:-3636}:3636'
     volumes:

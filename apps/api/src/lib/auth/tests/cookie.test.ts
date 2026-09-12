@@ -4,11 +4,15 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 // @ts-expect-error Vitest must resolve the TypeScript source over the ignored JS build artifact.
 import { getClearCookieOptions, getCookieOptions } from '../constants/cookie.ts'
 
-function request(hostname: string, origin?: string): Request {
+function request(
+  hostname: string,
+  origin?: string,
+  protocol: 'http' | 'https' = 'http'
+): Request {
   return {
     hostname,
-    protocol: 'http',
-    secure: false,
+    protocol,
+    secure: protocol === 'https',
     headers: origin ? { origin } : {}
   } as Request
 }
@@ -24,7 +28,7 @@ describe('auth cookie options', () => {
     expect(getCookieOptions(request('localhost'))).toMatchObject({
       secure: false,
       sameSite: 'lax',
-      path: '/auth'
+      path: '/'
     })
   })
 
@@ -36,7 +40,7 @@ describe('auth cookie options', () => {
     ).toMatchObject({
       secure: true,
       sameSite: 'none',
-      path: '/auth'
+      path: '/'
     })
   })
 
@@ -48,7 +52,7 @@ describe('auth cookie options', () => {
     ).toMatchObject({
       secure: true,
       sameSite: 'none',
-      path: '/auth',
+      path: '/',
       maxAge: 0
     })
   })
@@ -61,7 +65,7 @@ describe('auth cookie options', () => {
     ).toMatchObject({
       secure: false,
       sameSite: 'lax',
-      path: '/auth'
+      path: '/'
     })
   })
 
@@ -73,7 +77,7 @@ describe('auth cookie options', () => {
     ).toMatchObject({
       secure: false,
       sameSite: 'lax',
-      path: '/auth'
+      path: '/'
     })
   })
 
@@ -85,7 +89,29 @@ describe('auth cookie options', () => {
     ).toMatchObject({
       secure: true,
       sameSite: 'none',
-      path: '/auth'
+      path: '/'
+    })
+  })
+
+  it('does not mark plain HTTP production cookies as secure', () => {
+    vi.stubEnv('NODE_ENV', 'production')
+
+    expect(getCookieOptions(request('localhost'))).toMatchObject({
+      secure: false,
+      sameSite: 'lax',
+      path: '/'
+    })
+  })
+
+  it('marks cookies secure when the trusted proxy reports HTTPS', () => {
+    vi.stubEnv('NODE_ENV', 'production')
+
+    expect(
+      getCookieOptions(request('localhost', 'https://localhost:5173', 'https'))
+    ).toMatchObject({
+      secure: true,
+      sameSite: 'none',
+      path: '/'
     })
   })
 })
