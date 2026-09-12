@@ -60,7 +60,11 @@ export function TaskItem({
       className={clsx(styles.item, className)}
       justify="between"
     >
-      <Flex align="center" gap="md" minWidth="0" width="100%">
+      <Checkbox
+        checked={entry.done}
+        onCheckedChange={() => void toggleTaskCompletion()}
+      />
+      <Flex align="center" flex="1" gap="md" minWidth="0">
         {hasListIndicator && (
           <Box
             flexShrink="0"
@@ -79,10 +83,6 @@ export function TaskItem({
           )}
         </Box>
       </Flex>
-      <Checkbox
-        checked={entry.done}
-        onCheckedChange={() => void toggleTaskCompletion()}
-      />
       <Box
         aria-label={`Edit ${entry.summary}`}
         as="button"

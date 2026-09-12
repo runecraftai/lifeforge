@@ -78,12 +78,13 @@ function TodoListPage() {
 
   return (
     <>
-      <Flex flex="1" height="100%" minHeight="0" width="100%">
+      <Flex flex="1" minHeight="0" minWidth="0" width="100%">
         <Sidebar />
         <Flex
           direction="column"
           flex="1"
-          height="100%"
+          minHeight="0"
+          minWidth="0"
           ml={{ base: 'none', xl: 'xl' }}
           position="relative"
           width="100%"

@@ -1,19 +1,21 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { usePromiseLoading } from '@lifeforge/api'
 import { useModuleTranslation } from '@lifeforge/localization'
 import {
+  Box,
   Button,
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
   DateInput,
+  Flex,
   Icon,
   Scrollbar,
   Switch,
+  Text,
   TextAreaInput,
   TextInput,
   toast,
@@ -52,7 +54,6 @@ function ModifyTaskDrawer() {
   >(openType)
 
   const summaryInputRef = useRef<HTMLInputElement>(null)
-  const ref = useRef<HTMLDivElement>(null)
 
   async function handleSubmit() {
     if (openType === null) return
@@ -167,14 +168,10 @@ function ModifyTaskDrawer() {
   }, [selectedTask, openType])
 
   return (
-    <div
-      ref={ref}
-      className={clsx(
-        'bg-bg-900/20 fixed top-0 left-0 h-dvh w-full backdrop-blur-xs transition-all',
-        innerOpenType !== null
-          ? 'z-9995 opacity-100 [transition:z-index_0s_linear_0s,opacity_0.1s_linear_0s]'
-          : 'z-[-1] opacity-0 [transition:z-index_0.1s_linear_0.2s,opacity_0.1s_linear_0.1s]'
-      )}
+    <Box
+      bg="bg-900"
+      height="100dvh"
+      width="100%"
       style={{
         backgroundColor:
           'color-mix(in srgb, var(--color-bg-900) 20%, transparent)',
@@ -186,43 +183,48 @@ function ModifyTaskDrawer() {
         zIndex: innerOpenType !== null ? 9995 : -1
       }}
     >
-      <button
-        className="absolute top-0 left-0 size-full"
+      <Box
+        as="button"
+        height="100%"
+        width="100%"
+        style={{
+          inset: 0,
+          position: 'absolute'
+        }}
         onClick={closeWindow}
       />
-      <div
-        className={clsx(
-          'bg-bg-100 dark:bg-bg-900 absolute top-0 right-0 flex size-full flex-col rounded-l-xl p-8 transition-all duration-300 sm:w-4/5 md:w-3/5 lg:w-2/5',
-          innerOpenType !== null && 'translate-x-0',
-          innerOpenType === null && 'translate-x-full'
-        )}
+      <Flex
+        bg={{ base: 'bg-100', dark: 'bg-900' }}
+        direction="column"
+        height="100%"
+        p="2xl"
+        position="absolute"
+        right="0"
+        top="0"
+        width="min(40rem, 100%)"
         style={{
-          backgroundColor: 'var(--color-bg-100)',
-          height: '100%',
-          padding: '2rem',
-          position: 'absolute',
-          right: 0,
-          top: 0,
+          borderRadius: 'var(--radius-xl) 0 0 var(--radius-xl)',
           transform:
             innerOpenType !== null ? 'translateX(0)' : 'translateX(100%)',
-          transition: 'transform 300ms ease-in-out',
-          width: 'min(40rem, 100%)'
+          transition: 'transform 300ms ease-in-out'
         }}
       >
-        <Scrollbar>
-          <div className="flex-between mb-8 flex">
-            <h1 className="flex items-center gap-3 text-2xl font-semibold">
+        <Scrollbar style={{ flex: '1 1 auto', minHeight: 0 }}>
+          <Flex align="center" justify="between" mb="2xl">
+            <Flex align="center" gap="md">
               <Icon
-                className="size-7"
                 icon={
                   {
                     create: 'tabler:plus',
                     update: 'tabler:pencil'
                   }[innerOpenType ?? 'create']
                 }
+                size="1.75rem"
               />
-              {t(`modals.tasks.${innerOpenType ?? 'create'}`)}
-            </h1>
+              <Text as="h1" size="2xl" weight="semibold">
+                {t(`modals.tasks.${innerOpenType ?? 'create'}`)}
+              </Text>
+            </Flex>
             <ContextMenu>
               <ContextMenuItem
                 dangerous
@@ -231,22 +233,21 @@ function ModifyTaskDrawer() {
                 onClick={handleDeleteTask}
               />
             </ContextMenu>
-          </div>
-          <div className="space-y-3">
+          </Flex>
+          <Flex direction="column" gap="sm">
             <TextInput
               required
-              className="w-full"
               icon="tabler:abc"
               label="Summary"
               placeholder="An urgent task"
               value={summary}
               onChange={setSummary}
             />
-            <div className="flex items-center justify-between py-2">
-              <div className="flex items-center gap-2">
-                <Icon className="size-6" icon="tabler:clock" />
-                <span className="text-lg">{t('inputs.hasTime')}</span>
-              </div>
+            <Flex align="center" gap="md" justify="between" py="sm">
+              <Flex align="center" gap="sm">
+                <Icon icon="tabler:clock" size="1.5rem" />
+                <Text size="lg">{t('inputs.hasTime')}</Text>
+              </Flex>
               <Switch
                 value={dueDateHasTime}
                 onChange={() => {
@@ -257,7 +258,7 @@ function ModifyTaskDrawer() {
                     )
                 }}
               />
-            </div>
+            </Flex>
             <DateInput
               hasTime={dueDateHasTime}
               icon="tabler:calendar"
@@ -275,19 +276,12 @@ function ModifyTaskDrawer() {
               value={notes}
               onChange={setNotes}
             />
-          </div>
-          <div className="mt-12 flex flex-1 flex-col-reverse items-end gap-2 sm:flex-row">
-            <Button
-              className="w-full"
-              icon={''}
-              loading={loading}
-              variant="secondary"
-              onClick={closeWindow}
-            >
+          </Flex>
+          <Flex justify="end" gap="sm" mt="3xl">
+            <Button loading={loading} variant="secondary" onClick={closeWindow}>
               cancel
             </Button>
             <Button
-              className="w-full"
               icon={
                 innerOpenType === 'update' ? 'tabler:pencil' : 'tabler:plus'
               }
@@ -296,10 +290,10 @@ function ModifyTaskDrawer() {
             >
               {innerOpenType === 'update' ? 'Update' : 'Create'}
             </Button>
-          </div>
+          </Flex>
         </Scrollbar>
-      </div>
-    </div>
+      </Flex>
+    </Box>
   )
 }
 

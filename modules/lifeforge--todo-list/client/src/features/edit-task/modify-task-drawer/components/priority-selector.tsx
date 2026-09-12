@@ -1,5 +1,4 @@
-// PriorityListbox.tsx
-import { ListboxInput, ListboxOption } from '@lifeforge/ui'
+import { Box, Flex, ListboxInput, ListboxOption, Text } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@/entities/task'
 
@@ -19,18 +18,21 @@ function PrioritySelector({
       icon="tabler:alert-triangle"
       label="priority"
       renderContent={() => (
-        <>
-          <span
-            className="block h-6 w-1 rounded-full"
+        <Flex align="center" gap="sm" minWidth="0">
+          <Box
+            flexShrink="0"
+            height="1.5rem"
+            r="sm"
             style={{
               backgroundColor:
-                priorities.find(p => p.id === priority)?.color ?? 'lightgray'
+                priorities.find(p => p.id === priority)?.color ?? 'lightgray',
+              width: '0.25rem'
             }}
           />
-          <span className="-mt-px block truncate">
+          <Text truncate>
             {priorities.find(p => p.id === priority)?.name ?? 'None'}
-          </span>
-        </>
+          </Text>
+        </Flex>
       )}
       value={priority}
       onChange={setPriority}

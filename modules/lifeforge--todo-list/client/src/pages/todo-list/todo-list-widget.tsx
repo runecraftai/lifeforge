@@ -5,6 +5,7 @@ import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Button,
   EmptyStateScreen,
+  Flex,
   Scrollbar,
   Widget,
   WithQuery
@@ -24,7 +25,7 @@ function TodoListContent() {
   return (
     <WithQuery query={entriesQuery}>
       {entries => (
-        <ul className="flex flex-1 flex-col gap-2 pr-4">
+        <Flex as="ul" direction="column" flex="1" gap="sm" pr="md">
           {entries.length > 0 ? (
             entries.map(entry => (
               <TaskItem
@@ -52,7 +53,7 @@ function TodoListContent() {
               }}
             />
           )}
-        </ul>
+        </Flex>
       )}
     </WithQuery>
   )
@@ -64,14 +65,15 @@ function TodoList() {
       actionComponent={
         <Button
           as={Link}
-          className="mr-3 p-2!"
           icon="tabler:chevron-right"
+          mr="md"
+          p="sm"
           to="/todo-list"
           variant="plain"
         />
       }
-      className="pr-3"
       icon="tabler:clipboard-list"
+      pr="md"
       title="Todo List"
     >
       <TodoListProvider>

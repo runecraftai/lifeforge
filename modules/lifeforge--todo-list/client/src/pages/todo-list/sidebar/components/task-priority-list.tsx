@@ -1,7 +1,12 @@
 import { useCallback } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
-import { SidebarTitle, WithQuery, useModalStore } from '@lifeforge/ui'
+import {
+  SidebarTitle,
+  Text,
+  WithQuery,
+  useModalStore
+} from '@lifeforge/ui'
 
 import { ModifyPriorityModal } from '@/features/manage-priorities/modify-priority-modal'
 import { useTodoListContext } from '@/entities/task'
@@ -37,7 +42,9 @@ function TaskPriorityList() {
               ))}
             </>
           ) : (
-            <p className="text-bg-500 text-center">{t('empty.priorities')}</p>
+            <Text color="muted" pl="3xl" py="sm" size="sm">
+              {t('empty.priorities')}
+            </Text>
           )
         }
       </WithQuery>

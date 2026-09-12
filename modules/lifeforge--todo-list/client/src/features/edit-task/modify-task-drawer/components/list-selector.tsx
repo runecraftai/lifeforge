@@ -1,4 +1,4 @@
-import { ListboxInput, ListboxOption } from '@lifeforge/ui'
+import { Box, Flex, ListboxInput, ListboxOption, Text } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@/entities/task'
 
@@ -18,18 +18,21 @@ function ListSelector({
       icon="tabler:list"
       label="list"
       renderContent={() => (
-        <>
-          <span
-            className="block h-6 w-1 rounded-full"
+        <Flex align="center" gap="sm" minWidth="0">
+          <Box
+            flexShrink="0"
+            height="1.5rem"
+            r="sm"
             style={{
               backgroundColor:
-                lists.find(l => l.id === list)?.color ?? 'lightgray'
+                lists.find(l => l.id === list)?.color ?? 'lightgray',
+              width: '0.25rem'
             }}
           />
-          <span className="-mt-px block truncate">
+          <Text truncate>
             {lists.find(l => l.id === list)?.name ?? 'None'}
-          </span>
-        </>
+          </Text>
+        </Flex>
       )}
       value={list ?? ''}
       onChange={setList}
