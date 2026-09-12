@@ -8,12 +8,12 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { ModifyPriorityModal } from '@/features/manage-priorities/modify-priority-modal'
+import { ModifyPriorityModal } from '@/features/manage-priorities'
 import { useTodoListContext } from '@/entities/task'
 
 import { TaskPriorityListItem } from './task-priority-list-item'
 
-function TaskPriorityList() {
+export function TaskPriorityList() {
   const { open } = useModalStore()
   const { t } = useModuleTranslation()
   const { prioritiesQuery } = useTodoListContext()
@@ -51,5 +51,3 @@ function TaskPriorityList() {
     </>
   )
 }
-
-export { TaskPriorityList }

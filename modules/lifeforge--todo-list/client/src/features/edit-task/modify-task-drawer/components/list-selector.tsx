@@ -2,7 +2,7 @@ import { Box, Flex, ListboxInput, ListboxOption, Text } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@/entities/task'
 
-function ListSelector({
+export function ListSelector({
   list,
   setList
 }: {
@@ -44,5 +44,3 @@ function ListSelector({
     </ListboxInput>
   )
 }
-
-export { ListSelector }

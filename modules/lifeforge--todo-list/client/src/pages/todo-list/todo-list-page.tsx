@@ -18,13 +18,13 @@ import {
   useTodoListContext
 } from '@/entities/task'
 
-import { ModifyTaskDrawer } from '@/features/edit-task/modify-task-drawer'
+import { ModifyTaskDrawer } from '@/features/edit-task'
 
 import { Header } from './header'
 import { Sidebar } from './sidebar'
 import { TaskList } from './task-list'
 
-function TodoListPage() {
+export function TodoListPage() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const { entriesQuery, setModifyTaskWindowOpenType, setSelectedTask } =
@@ -128,5 +128,3 @@ function TodoListPage() {
     </>
   )
 }
-
-export { TodoListPage }

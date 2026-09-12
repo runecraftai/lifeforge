@@ -11,7 +11,7 @@ import {
   WithQuery
 } from '@lifeforge/ui'
 
-import { TaskItem } from '@/features/complete-task/task-item'
+import { TaskItem } from '@/features/complete-task'
 import {
   TodoListProvider,
   useTodoListContext

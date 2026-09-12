@@ -2,10 +2,10 @@ import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import { parseAsString, useQueryState } from 'nuqs'
 import { type ReactNode, createContext, useContext, useState } from 'react'
 
-import type { TaskList } from '@/entities/list'
-import type { TaskPriority } from '@/entities/priority'
-import type { TaskTag } from '@/entities/tag'
-import type { Task } from '@/entities/task'
+import type { TaskList } from '../list/list-model'
+import type { TaskPriority } from '../priority/priority-model'
+import type { TaskTag } from '../tag/tag-model'
+import type { Task } from './task-model'
 import { forgeAPI } from '@/manifest'
 
 type TaskFilter = {

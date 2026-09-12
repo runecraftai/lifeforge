@@ -8,12 +8,12 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { ModifyTagModal } from '@/features/manage-tags/modify-tag-modal'
+import { ModifyTagModal } from '@/features/manage-tags'
 import { useTodoListContext } from '@/entities/task'
 
 import { TaskTagListItem } from './task-tag-list-item'
 
-function TaskTagList() {
+export function TaskTagList() {
   const { open } = useModalStore()
   const { t } = useModuleTranslation()
   const { tagsListQuery } = useTodoListContext()
@@ -51,5 +51,3 @@ function TaskTagList() {
     </>
   )
 }
-
-export { TaskTagList }

@@ -2,7 +2,7 @@ import { ListboxInput, ListboxOption, Text } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@/entities/task'
 
-function TagsSelector({
+export function TagsSelector({
   tags,
   setTags
 }: {
@@ -36,5 +36,3 @@ function TagsSelector({
     </ListboxInput>
   )
 }
-
-export { TagsSelector }

@@ -2,9 +2,9 @@ import { Box, Scrollbar, Stack } from '@lifeforge/ui'
 
 import type { Task } from '@/entities/task'
 
-import { TaskItem } from '@/features/complete-task/task-item'
+import { TaskItem } from '@/features/complete-task'
 
-function TaskList({ entries }: { entries: Task[] }) {
+export function TaskList({ entries }: { entries: Task[] }) {
   return (
     <Box flex="1" minHeight="0" mt="md" width="100%">
       <Scrollbar style={{ flex: '1 1 auto', minHeight: 0 }}>
@@ -17,5 +17,3 @@ function TaskList({ entries }: { entries: Task[] }) {
     </Box>
   )
 }
-
-export { TaskList }

@@ -1,3 +1,18 @@
 {
-  "ignorePatterns": ["client/dist/**", "client/tsconfig.tsbuildinfo"]
+  "ignorePatterns": ["client/dist/**", "client/tsconfig.tsbuildinfo"],
+  "jsPlugins": [
+    "./oxlint-plugins/fsd-boundaries.js",
+    "./oxlint-plugins/naming-rules.js",
+    "./oxlint-plugins/react-rules.js"
+  ],
+  "rules": {
+    "fsd-boundaries/fsd-import-boundary": "error",
+    "fsd-boundaries/fsd-public-api": "error",
+    "naming-rules/kebab-case-filenames": "error",
+    "naming-rules/no-i-prefix-types": "error",
+    "react-rules/no-arrow-component": "error",
+    "react-rules/no-comments": "error",
+    "react-rules/no-compound-jsx-condition": "error",
+    "react-rules/no-trailing-export-block": "error"
+  }
 }

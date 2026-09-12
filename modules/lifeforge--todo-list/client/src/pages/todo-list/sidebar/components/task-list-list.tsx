@@ -8,12 +8,12 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { ModifyListModal } from '@/features/manage-lists/modify-list-modal'
+import { ModifyListModal } from '@/features/manage-lists'
 import { useTodoListContext } from '@/entities/task'
 
 import { TaskListListItem } from './task-list-list-item'
 
-function TaskListList() {
+export function TaskListList() {
   const { open } = useModalStore()
   const { t } = useModuleTranslation()
   const { listsQuery } = useTodoListContext()
@@ -51,5 +51,3 @@ function TaskListList() {
     </>
   )
 }
-
-export { TaskListList }

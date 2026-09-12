@@ -10,11 +10,11 @@ import {
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
-import { ModifyPriorityModal } from '@/features/manage-priorities/modify-priority-modal'
+import { ModifyPriorityModal } from '@/features/manage-priorities'
 import type { TaskPriority } from '@/entities/priority'
 import { useTodoListContext } from '@/entities/task'
 
-function TaskPriorityListItem({ item }: { item: TaskPriority }) {
+export function TaskPriorityListItem({ item }: { item: TaskPriority }) {
   const queryClient = useQueryClient()
   const { open } = useModalStore()
   const { filter, setFilter } = useTodoListContext()
@@ -88,5 +88,3 @@ function TaskPriorityListItem({ item }: { item: TaskPriority }) {
     />
   )
 }
-
-export { TaskPriorityListItem }

@@ -21,7 +21,7 @@ const schema = z.object({
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex color')
 })
 
-function ModifyListModal({
+export function ModifyListModal({
   data: { type, initialData },
   onClose
 }: {
@@ -90,5 +90,3 @@ function ModifyListModal({
     </FormModal>
   )
 }
-
-export { ModifyListModal }

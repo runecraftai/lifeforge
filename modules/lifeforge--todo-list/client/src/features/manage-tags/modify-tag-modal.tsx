@@ -13,7 +13,7 @@ const schema = z.object({
   name: z.string().min(1, 'Required')
 })
 
-function ModifyTagModal({
+export function ModifyTagModal({
   data: { type, initialData },
   onClose
 }: {
@@ -75,5 +75,3 @@ function ModifyTagModal({
     </FormModal>
   )
 }
-
-export { ModifyTagModal }

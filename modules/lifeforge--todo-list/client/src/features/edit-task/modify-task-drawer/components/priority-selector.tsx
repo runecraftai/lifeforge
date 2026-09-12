@@ -2,7 +2,7 @@ import { Box, Flex, ListboxInput, ListboxOption, Text } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@/entities/task'
 
-function PrioritySelector({
+export function PrioritySelector({
   priority,
   setPriority
 }: {
@@ -44,5 +44,3 @@ function PrioritySelector({
     </ListboxInput>
   )
 }
-
-export { PrioritySelector }

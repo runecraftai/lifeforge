@@ -29,7 +29,7 @@ import { ListSelector } from './components/list-selector'
 import { PrioritySelector } from './components/priority-selector'
 import { TagsSelector } from './components/tags-selector'
 
-function ModifyTaskDrawer() {
+export function ModifyTaskDrawer() {
   const { open } = useModalStore()
   const queryClient = useQueryClient()
   const { t } = useModuleTranslation()
@@ -167,6 +167,14 @@ function ModifyTaskDrawer() {
     }
   }, [selectedTask, openType])
 
+  const drawerIsOpen = innerOpenType !== null
+  const drawerOpacity = drawerIsOpen ? 1 : 0
+  const drawerPointerEvents = drawerIsOpen ? 'auto' : 'none'
+  const drawerZIndex = drawerIsOpen ? 9995 : -1
+  const drawerTransform = drawerIsOpen
+    ? 'translateX(0)'
+    : 'translateX(100%)'
+
   return (
     <Box
       bg="bg-900"
@@ -176,11 +184,11 @@ function ModifyTaskDrawer() {
         backgroundColor:
           'color-mix(in srgb, var(--color-bg-900) 20%, transparent)',
         inset: 0,
-        opacity: innerOpenType !== null ? 1 : 0,
-        pointerEvents: innerOpenType !== null ? 'auto' : 'none',
+        opacity: drawerOpacity,
+        pointerEvents: drawerPointerEvents,
         position: 'fixed',
         transition: 'opacity 100ms ease-in-out',
-        zIndex: innerOpenType !== null ? 9995 : -1
+        zIndex: drawerZIndex
       }}
     >
       <Box
@@ -204,8 +212,7 @@ function ModifyTaskDrawer() {
         width="min(40rem, 100%)"
         style={{
           borderRadius: 'var(--radius-xl) 0 0 var(--radius-xl)',
-          transform:
-            innerOpenType !== null ? 'translateX(0)' : 'translateX(100%)',
+          transform: drawerTransform,
           transition: 'transform 300ms ease-in-out'
         }}
       >
@@ -296,5 +303,3 @@ function ModifyTaskDrawer() {
     </Box>
   )
 }
-
-export { ModifyTaskDrawer }

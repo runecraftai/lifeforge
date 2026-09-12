@@ -10,11 +10,11 @@ import {
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
-import { ModifyListModal } from '@/features/manage-lists/modify-list-modal'
+import { ModifyListModal } from '@/features/manage-lists'
 import type { TaskList } from '@/entities/list'
 import { useTodoListContext } from '@/entities/task'
 
-function TaskListListItem({ item }: { item: TaskList }) {
+export function TaskListListItem({ item }: { item: TaskList }) {
   const queryClient = useQueryClient()
   const { filter, setFilter } = useTodoListContext()
   const { open } = useModalStore()
@@ -89,5 +89,3 @@ function TaskListListItem({ item }: { item: TaskList }) {
     />
   )
 }
-
-export { TaskListListItem }

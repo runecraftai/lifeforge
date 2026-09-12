@@ -5,7 +5,7 @@ import { TaskPriorityList } from './components/task-priority-list'
 import { TaskStatusList } from './components/task-status-list'
 import { TaskTagList } from './components/task-tag-list'
 
-function Sidebar() {
+export function Sidebar() {
   return (
     <SidebarWrapper>
       <SidebarTitle label="tasks" />
@@ -19,5 +19,3 @@ function Sidebar() {
     </SidebarWrapper>
   )
 }
-
-export { Sidebar }

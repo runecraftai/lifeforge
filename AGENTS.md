@@ -99,6 +99,7 @@
 - Extract named types only when reused, move crowded type collections to their own file, and never prefix type names with `I`.
 - Invalidate data by query key, preferably without waiting, await mutations before invalidating when sequencing is required, and never use artificial timers for invalidation.
 - Export declarations at their declaration site instead of collecting exports in trailing blocks.
+- Validate every frontend change with Playwright - an interactive walk with screenshot evidence - not only a build and a test run.
 
 ## Maintaining this file
 
