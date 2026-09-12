@@ -48,6 +48,64 @@ jobs:
           echo 'LifeForge client is running on port 5173.'
           echo 'LifeForge API is running on port 3636; PocketBase is running on port 8090.'
 
+      - name: Seed visual-validation test user
+        run: |
+          # Create the test user directly via PocketBase so the visual test
+          # can log in without relying on the first-user registration UI.
+          # The login route verifies auth_password_hash (argon2), so we must
+          # compute that hash and include it in the record.
+          PB_URL="http://localhost:8090"
+          PB_EMAIL="${PB_EMAIL:-admin@example.com}"
+          PB_PASSWORD="${PB_PASSWORD:-changeme-at-least-8-chars}"
+          VU_EMAIL="visual-validation@example.com"
+          VU_PASSWORD="visual-validation-password"
+          VU_USERNAME="visualvalidation"
+          VU_NAME="Visual Validation"
+
+          # Compute argon2 hash of the password
+          HASH=$(node -e "
+            const { hash } = require('argon2');
+            hash(process.argv[1], { type: 2 }).then(h => process.stdout.write(h));
+          " "$VU_PASSWORD")
+
+          # Authenticate as superuser
+          TOKEN=$(curl -sf -X POST "$PB_URL/api/collections/_superusers/auth-with-password" \
+            -H 'Content-Type: application/json' \
+            -d "{\"identity\":\"$PB_EMAIL\",\"password\":\"$PB_PASSWORD\"}" \
+            | python3 -c 'import sys,json; print(json.load(sys.stdin)["token"])')
+
+          if [ -z "$TOKEN" ]; then
+            echo 'Failed to authenticate as PocketBase superuser; skipping seed.'
+            exit 0
+          fi
+
+          # Check if user already exists
+          EXISTING=$(curl -sf "$PB_URL/api/collections/users/records?filter=(email='$VU_EMAIL')" \
+            -H "Authorization: $TOKEN" \
+            | python3 -c 'import sys,json; print(json.load(sys.stdin)["totalItems"])')
+
+          if [ "$EXISTING" = '0' ]; then
+            curl -sf -X POST "$PB_URL/api/collections/users/records" \
+              -H 'Content-Type: application/json' \
+              -H "Authorization: $TOKEN" \
+              -d "{
+                \"email\": \"$VU_EMAIL\",
+                \"username\": \"$VU_USERNAME\",
+                \"name\": \"$VU_NAME\",
+                \"verified\": true,
+                \"password\": \"$VU_PASSWORD\",
+                \"passwordConfirm\": \"$VU_PASSWORD\",
+                \"auth_password_hash\": \"$HASH\",
+                \"theme\": \"system\",
+                \"language\": \"en\",
+                \"fontScale\": 1.0,
+                \"borderRadiusMultiplier\": 1.0
+              }"
+            echo "Seeded visual-validation user ($VU_EMAIL)."
+          else
+            echo "Visual-validation user ($VU_EMAIL) already exists; skipping seed."
+          fi
+
       - name: Run visual suite
         id: visual
         run: pnpm exec playwright test
