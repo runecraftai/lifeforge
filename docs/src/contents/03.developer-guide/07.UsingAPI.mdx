@@ -265,6 +265,7 @@ Customize behaviour with additional props:
   showRetryButton={true}       // Show retry button on error (default: true)
   loaderSize="lg"              // Loader size
   loaderClassName="min-h-64"   // Custom loader container class
+  errorFallback={<CustomError />} // Custom error fallback (default: ErrorScreen)
 >
   {items => /* render items */}
 </WithQueryData>
