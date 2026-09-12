@@ -98,7 +98,32 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
   await page.getByPlaceholder('johndoe@gmail.com').fill(testUser.email)
   await page.getByPlaceholder('••••••••••••••••').fill(testUser.password)
   await page.getByRole('button', { name: 'Sign In' }).click()
-  await page.waitForURL(/\/dashboard/, { timeout: 15_000 })
+
+  // Detect login failure quickly instead of hanging on waitForURL
+  const dashboardAppeared = await page
+    .waitForURL(/\/dashboard/, { timeout: 10_000 })
+    .then(() => true)
+    .catch(() => false)
+
+  if (!dashboardAppeared) {
+    const currentUrl = page.url()
+    const errorVisible = await page
+      .locator('[class*="error"], [role="alert"]')
+      .first()
+      .textContent()
+      .catch(() => null)
+    const errorMsg = errorVisible ? ` Error: ${errorVisible}` : ''
+    await page.screenshot({
+      fullPage: true,
+      path: `${screenshotDir}/00-login-failed.png`
+    })
+    throw new Error(
+      `Visual walk failed: Login did not redirect to /dashboard. ` +
+        `Current URL: ${currentUrl}.${errorMsg} ` +
+        'Check host response logs above for 4xx/5xx errors. ' +
+        'Screenshot saved to 00-login-failed.png'
+    )
+  }
 
   await setTheme(page, 'dark')
   await page.goto('/todo-list', { waitUntil: 'domcontentloaded' })
