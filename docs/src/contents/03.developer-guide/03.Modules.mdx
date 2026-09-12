@@ -70,7 +70,7 @@ The Vite configuration for building the module as a federated remote. It handles
 
 ### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
 
-This directory contains the frontend code for the module. It is built using React and Tailwind CSS, the same technologies used in the main LifeForge client codebase. A UI library called `lifeforge-ui` is provided in the `packages/` directory to maintain a consistent design language.
+This directory contains the frontend code for the module. New modules use React with Tailwind CSS and shadcn-style UI. Pre-existing modules use `@lifeforge/ui` with vanilla-extract. A UI library called `lifeforge-ui` is provided in the `packages/` directory to maintain a consistent design language for modules that have not yet migrated.
 
 The client's `tsconfig.json` provides helpful path aliases:
 

@@ -1,0 +1,9 @@
+{
+  "extends": "@lifeforge/configs/tsconfig/module.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["./**/*.ts"]
+}
