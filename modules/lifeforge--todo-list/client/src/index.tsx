@@ -1,18 +1,20 @@
 import { ModuleHeader } from '@lifeforge/ui'
 
-import { TodoListProvider } from '@/providers/TodoListProvider'
+import { TodoListProvider } from '@/entities/task'
 
-import TodoListContainer from './components/TodoListContainer'
+import { TodoListPage } from '@/pages/todo-list/todo-list-page'
 
 function TodoList() {
   return (
     <>
       <ModuleHeader />
       <TodoListProvider>
-        <TodoListContainer />
+        <TodoListPage />
       </TodoListProvider>
     </>
   )
 }
+
+export { TodoList }
 
 export default TodoList

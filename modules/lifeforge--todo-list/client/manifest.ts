@@ -8,7 +8,7 @@ const { forgeAPI, ...manifest } = createForgeModule({
   routes: {
     '/': lazy(() => import('@'))
   },
-  widgets: [() => import('@/widgets/TodoList')],
+  widgets: [() => import('@/pages/todo-list/todo-list-widget')],
   contract
 })
 
