@@ -22,7 +22,7 @@
 
 ## UI Library Usage
 
-1. **TAILWIND CSS IS STRICTLY PROHIBITED.** No Tailwind utility classes, no `@apply`, no `@reference`, no `@layer`, no `theme()` - in any file type (`.tsx`, `.css`, `.css.ts`, etc.). Every style must use UI primitives (`Box`, `Flex`, `Text`, etc.) and their props, or plain CSS custom properties. Third-party component APIs (`classNames`, `className`) that accept raw strings as a styling mechanism must use plain CSS class names or inline `style` objects - never Tailwind classes.
+1. **Tailwind CSS plus shadcn-style primitives is the forward styling direction.** New modules use Tailwind CSS (with `@tailwindcss/vite`) and shadcn-style UI. Pre-existing modules keep the current `@lifeforge/ui` + vanilla-extract stack until migrated. Within a module, do not mix both stacks.
 
 2. **When being asked to utilize a component in the UI library (`@lifeforge/ui` or `packages/ui`), always check its corresponding `.stories.tsx` file first for usage examples before implementing.** Do not guess the API from the component source alone.
 
@@ -92,7 +92,7 @@
 
 ## Frontend conventions
 
-- Use `@lifeforge/ui` with vanilla-extract for styling, never Tailwind classes, and use `clsx` when composing conditional classes.
+- New modules: use Tailwind CSS and shadcn-style UI. Pre-existing modules: use `@lifeforge/ui` with vanilla-extract. Use `clsx` when composing conditional classes.
 - Persist filters and selected task IDs in query parameters, using the existing `nuqs` dependency so tasks remain bookmarkable.
 - Allow one simple inline JSX conditional or render-only `map`, but derive compound boolean conditions and multiple or nested ternaries before `return`.
 - Keep code free of comments, allowing JSDoc only for generally used public APIs.
