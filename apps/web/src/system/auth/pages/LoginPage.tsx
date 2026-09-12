@@ -74,7 +74,10 @@ function LoginPage() {
   )
 
   return (
-    <WithQueryData contract={forgeAPI.auth.oauth.providers.listEnabled}>
+    <WithQueryData
+      contract={forgeAPI.auth.oauth.providers.listEnabled}
+      errorFallback={loginPageContent([])}
+    >
       {providers => loginPageContent(providers)}
     </WithQueryData>
   )
