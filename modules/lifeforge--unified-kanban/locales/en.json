@@ -1,0 +1,13 @@
+{
+  "board": {
+    "eyebrow": "Command center",
+    "title": "Unified Kanban",
+    "subtitle": "Personal tasks and Squad missions in one view",
+    "items": "items",
+    "lanes": { "personal": "Pessoal", "work": "Trabalho" },
+    "columns": { "todo": "To do", "doing": "Fazendo", "done": "Done" },
+    "sources": { "personal": "Personal", "mission": "Squad mission" },
+    "empty": "No items here",
+    "error": "The board could not be refreshed"
+  }
+}

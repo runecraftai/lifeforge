@@ -1,0 +1,13 @@
+{
+  "board": {
+    "eyebrow": "指揮中心",
+    "title": "統一看板",
+    "subtitle": "在單一檢視中查看個人工作與 Squad 任務",
+    "items": "項",
+    "lanes": { "personal": "個人", "work": "工作" },
+    "columns": { "todo": "待辦", "doing": "進行中", "done": "已完成" },
+    "sources": { "personal": "個人", "mission": "Squad 任務" },
+    "empty": "此處沒有項目",
+    "error": "看板重新整理失敗"
+  }
+}

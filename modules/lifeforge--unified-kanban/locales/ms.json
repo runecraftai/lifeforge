@@ -1,0 +1,13 @@
+{
+  "board": {
+    "eyebrow": "Pusat arahan",
+    "title": "Kanban Bersatu",
+    "subtitle": "Tugasan peribadi dan misi Squad dalam satu paparan",
+    "items": "item",
+    "lanes": { "personal": "Pessoal", "work": "Trabalho" },
+    "columns": { "todo": "Perlu dibuat", "doing": "Sedang dibuat", "done": "Selesai" },
+    "sources": { "personal": "Peribadi", "mission": "Misi Squad" },
+    "empty": "Tiada item di sini",
+    "error": "Papan tidak dapat disegarkan"
+  }
+}
