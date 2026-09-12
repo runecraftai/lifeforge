@@ -13,7 +13,8 @@ async function isVisible(locator) {
 }
 
 async function setTheme(page, theme) {
-  await page.goto('/personalization', { waitUntil: 'networkidle' })
+  await page.goto('/personalization', { waitUntil: 'domcontentloaded' })
+  await page.waitForTimeout(1_000)
   const themeButton = page
     .locator('button')
     .filter({ has: page.locator(`img[alt="${theme}"]`) })
@@ -49,7 +50,7 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
     )
   })
 
-  await page.goto('/auth', { waitUntil: 'networkidle' })
+  await page.goto('/auth', { waitUntil: 'domcontentloaded' })
 
   // Wait for the page to settle and check what state we're in
   await page.waitForTimeout(2_000)
@@ -90,16 +91,18 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
       .fill(testUser.password)
     await page.getByRole('button', { name: 'Proceed' }).click()
     await page.waitForTimeout(1_500)
-    await page.reload({ waitUntil: 'networkidle' })
+    await page.reload({ waitUntil: 'domcontentloaded' })
+    await page.waitForTimeout(1_000)
   }
 
   await page.getByPlaceholder('johndoe@gmail.com').fill(testUser.email)
   await page.getByPlaceholder('••••••••••••••••').fill(testUser.password)
   await page.getByRole('button', { name: 'Sign In' }).click()
-  await page.waitForURL(/\/dashboard/, { waitUntil: 'networkidle' })
+  await page.waitForURL(/\/dashboard/, { timeout: 15_000 })
 
   await setTheme(page, 'dark')
-  await page.goto('/todo-list', { waitUntil: 'networkidle' })
+  await page.goto('/todo-list', { waitUntil: 'domcontentloaded' })
+  await page.waitForTimeout(1_000)
   await expect(page.getByRole('heading', { name: /All Tasks/ })).toBeVisible()
 
   const taskSummary = `Visual validation task ${Date.now()}`
@@ -128,7 +131,8 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
   })
 
   await setTheme(page, 'light')
-  await page.goto('/todo-list', { waitUntil: 'networkidle' })
+  await page.goto('/todo-list', { waitUntil: 'domcontentloaded' })
+  await page.waitForTimeout(1_000)
   await expect(page.getByText(taskSummary)).toBeVisible()
   await page.screenshot({
     fullPage: true,
