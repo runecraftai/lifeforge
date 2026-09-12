@@ -24,7 +24,7 @@
   "scripts": {
     "forge": "tsx --tsconfig=./tools/tsconfig.json tools/src/index.ts",
     "build": "turbo build --filter=\"./packages/*\" && turbo build --continue",
-    "lint": "prettier --check . && eslint . && pnpm --filter @lifeforge/lifeforge--todo-list lint",
+    "lint": "pnpm --filter @lifeforge/lifeforge--todo-list lint && prettier --check . && eslint .",
     "fix": "prettier --write ./ && pnpm lint",
     "test": "turbo test",
     "postinstall": "turbo build --filter=\"./packages/*\"",
