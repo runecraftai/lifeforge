@@ -1,32 +1,35 @@
-import {
-  type Task,
-  useTodoListContext
-} from '@/entities/task'
+import { Box, Flex, Text } from '@lifeforge/ui'
 
-function TaskTags({ entry }: { entry: Task }) {
+import { type Task, useTodoListContext } from '@/entities/task'
+
+import * as styles from '../task-item.css'
+
+export function TaskTags({ entry }: { entry: Task }) {
   const { tagsListQuery } = useTodoListContext()
-
   const tags = tagsListQuery.data ?? []
+  const taskTags = entry.tags ?? []
+  const visibleTags = taskTags.slice(0, 3)
+  const remainingTagCount = Math.max(taskTags.length - 3, 0)
+  const hasMoreTags = remainingTagCount > 0
+  const tagElements = visibleTags.map(tag => {
+    const tagName = tags.find(item => item.id === tag)?.name
+
+    return (
+      <Text className={styles.tag} key={tag}>
+        <Box aria-hidden="true" as="span" className={styles.tagBackground} />#
+        {tagName}
+      </Text>
+    )
+  })
 
   return (
-    <div className="flex w-full min-w-0 items-center gap-1">
-      {entry.tags?.length > 0 &&
-        entry.tags.slice(0, 3).map(tag => (
-          <span
-            key={tag}
-            className="text-custom-500 relative isolate min-w-12 truncate px-2 py-0.5 text-xs whitespace-nowrap"
-          >
-            <div className="bg-custom-500 absolute top-0 left-0 z-[-1] size-full rounded-full opacity-20" />
-            #{tags.find(t => t.id === tag)?.name}
-          </span>
-        ))}
-      {entry.tags?.length > 3 && (
-        <span className="text-bg-500 shrink-0 text-xs">
-          +{entry.tags.length - 3} more
-        </span>
+    <Flex align="center" gap="xs" minWidth="0" width="100%">
+      {tagElements}
+      {hasMoreTags && (
+        <Text className={styles.moreTags} size="xs">
+          +{remainingTagCount} more
+        </Text>
       )}
-    </div>
+    </Flex>
   )
 }
-
-export { TaskTags }

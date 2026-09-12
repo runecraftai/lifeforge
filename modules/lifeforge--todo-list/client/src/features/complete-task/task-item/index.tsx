@@ -1,19 +1,17 @@
 import { useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
 
-import { Card, Checkbox, toast } from '@lifeforge/ui'
+import { Box, Card, Checkbox, Flex, toast } from '@lifeforge/ui'
 
+import { type Task, useTodoListContext } from '@/entities/task'
 import { forgeAPI } from '@/manifest'
-import {
-  type Task,
-  useTodoListContext
-} from '@/entities/task'
 
 import { TaskDueDate } from './components/task-due-date'
 import { TaskHeader } from './components/task-header'
 import { TaskTags } from './components/task-tags'
+import * as styles from './task-item.css'
 
-function TaskItem({
+export function TaskItem({
   entry,
   className,
   isInDashboardWidget
@@ -23,15 +21,13 @@ function TaskItem({
   isInDashboardWidget?: boolean
 }) {
   const queryClient = useQueryClient()
-
-  const {
-    statusCounterQuery,
-    listsQuery,
-    setSelectedTask,
-    setModifyTaskWindowOpenType
-  } = useTodoListContext()
-
+  const { listsQuery, setSelectedTask, setModifyTaskWindowOpenType } =
+    useTodoListContext()
   const lists = listsQuery.data ?? []
+  const list = lists.find(item => item.id === entry.list)
+  const taskTags = entry.tags ?? []
+  const hasListIndicator = entry.list !== '' && list !== undefined
+  const hasMetadata = entry.due_date !== '' || taskTags.length > 0
 
   async function toggleTaskCompletion() {
     try {
@@ -41,60 +37,58 @@ function TaskItem({
         })
         .mutate(undefined)
 
-      setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ['todoList'] })
-        statusCounterQuery.refetch()
-      }, 500)
+      await queryClient.invalidateQueries({ queryKey: forgeAPI.key })
     } catch {
       toast.error('Error toggling task completion')
     }
   }
 
+  function handleTaskClick() {
+    if (isInDashboardWidget) return
+
+    setModifyTaskWindowOpenType('update')
+    setSelectedTask(entry)
+  }
+
   return (
     <Card
-      key={entry.id}
+      align="center"
+      direction="row"
+      gap="lg"
       isInteractive
       as="li"
-      className={clsx('flex-between relative isolate flex gap-6', className)}
+      className={clsx(styles.item, className)}
+      justify="between"
     >
-      <div className="flex w-full min-w-0 items-center gap-3">
-        {typeof lists !== 'string' && entry.list !== '' && (
-          <span
-            className="h-10 w-1 shrink-0 rounded-full"
-            style={{
-              backgroundColor: lists.find(l => l.id === entry.list)?.color
-            }}
+      <Flex align="center" gap="md" minWidth="0" width="100%">
+        {hasListIndicator && (
+          <Box
+            flexShrink="0"
+            height="2.5rem"
+            r="full"
+            style={{ backgroundColor: list.color, width: '0.25rem' }}
           />
         )}
-        <div className="w-full min-w-0">
+        <Box minWidth="0" width="100%">
           <TaskHeader entry={entry} />
-          {(entry.due_date || entry.tags.length > 0) && (
-            <div className="mt-1 flex items-center gap-2">
+          {hasMetadata && (
+            <Flex align="center" gap="sm" mt="xs">
               <TaskDueDate entry={entry} />
               <TaskTags entry={entry} />
-            </div>
+            </Flex>
           )}
-        </div>
-      </div>
+        </Box>
+      </Flex>
       <Checkbox
         checked={entry.done}
-        onCheckedChange={() => {
-          toggleTaskCompletion()
-        }}
+        onCheckedChange={() => void toggleTaskCompletion()}
       />
-      <button
+      <Box
         aria-label={`Edit ${entry.summary}`}
-        className="absolute top-0 left-0 size-full"
-        style={{ inset: 0, position: 'absolute' }}
-        onClick={() => {
-          if (!isInDashboardWidget) {
-            setModifyTaskWindowOpenType('update')
-            setSelectedTask(entry)
-          }
-        }}
+        as="button"
+        className={styles.overlay}
+        onClick={handleTaskClick}
       />
     </Card>
   )
 }
-
-export { TaskItem }

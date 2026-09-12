@@ -1,13 +1,21 @@
 import { type UseQueryResult, useQuery } from '@tanstack/react-query'
-import { createContext, useContext, useMemo, useState } from 'react'
 import { parseAsString, useQueryState } from 'nuqs'
+import { type ReactNode, createContext, useContext, useState } from 'react'
 
-import { forgeAPI } from '@/manifest'
-import type { Task } from '@/entities/task'
 import type { TaskList } from '@/entities/list'
-import type { TaskTag } from '@/entities/tag'
 import type { TaskPriority } from '@/entities/priority'
+import type { TaskTag } from '@/entities/tag'
+import type { Task } from '@/entities/task'
+import { forgeAPI } from '@/manifest'
 
+type TaskFilter = {
+  status: string | null
+  tag: string | null
+  list: string | null
+  priority: string | null
+}
+
+type TaskFilterKey = keyof TaskFilter
 
 export type TodoListStatusCounter = {
   all: number
@@ -17,51 +25,36 @@ export type TodoListStatusCounter = {
   completed: number
 }
 
-interface ITodoListData {
-  // Data
+type TodoListContextValue = {
   prioritiesQuery: UseQueryResult<TaskPriority[]>
   listsQuery: UseQueryResult<TaskList[]>
   tagsListQuery: UseQueryResult<TaskTag[]>
   entriesQuery: UseQueryResult<Task[]>
   statusCounterQuery: UseQueryResult<TodoListStatusCounter>
-
-  // State
-  filter: {
-    status: string | null
-    tag: string | null
-    list: string | null
-    priority: string | null
-  }
+  filter: TaskFilter
   selectedTask: Task | null
-
-  // Modals
   modifyTaskWindowOpenType: 'create' | 'update' | null
-
-  // Setters
   setModifyTaskWindowOpenType: (value: 'create' | 'update' | null) => void
-  setSelectedTask: React.Dispatch<React.SetStateAction<Task | null>>
-  setFilter: (
-    key: 'status' | 'tag' | 'list' | 'priority',
-    value: string | null
-  ) => void
+  setSelectedTask: (value: Task | null) => void
+  setFilter: (key: TaskFilterKey, value: string | null) => void
 }
 
-export const TodoListContext = createContext<ITodoListData | undefined>(
+export const TodoListContext = createContext<TodoListContextValue | undefined>(
   undefined
 )
 
-export function TodoListProvider({ children }: { children: React.ReactNode }) {
-  const [filter, setFilter] = useState<{
-    status: string | null
-    tag: string | null
-    list: string | null
-    priority: string | null
-  }>({
-    status: null,
-    tag: null,
-    list: null,
-    priority: null
-  })
+export function TodoListProvider({ children }: { children: ReactNode }) {
+  const [status, setStatus] = useQueryState('status', parseAsString)
+  const [tag, setTag] = useQueryState('tag', parseAsString)
+  const [list, setList] = useQueryState('list', parseAsString)
+  const [priority, setPriority] = useQueryState('priority', parseAsString)
+  const filter: TaskFilter = { status, tag, list, priority }
+  const filterSetters = {
+    status: setStatus,
+    tag: setTag,
+    list: setList,
+    priority: setPriority
+  }
 
   const statusCounterQuery = useQuery(
     forgeAPI.entries.getStatusCounter.queryOptions()
@@ -92,48 +85,47 @@ export function TodoListProvider({ children }: { children: React.ReactNode }) {
     void setTaskWindow(value)
   }
 
-  const [deleteTaskConfirmationModalOpen, setDeleteTaskConfirmationModalOpen] =
-    useState(false)
-
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null)
-
-  const value = useMemo(
-    () => ({
-      prioritiesQuery,
-      listsQuery,
-      tagsListQuery,
-      entriesQuery,
-      statusCounterQuery,
-      filter,
-      selectedTask,
-      modifyTaskWindowOpenType,
-      setModifyTaskWindowOpenType,
-      setDeleteTaskConfirmationModalOpen,
-      setSelectedTask,
-      setFilter: (key: keyof typeof filter, value: string | null) => {
-        setFilter(prev => ({
-          ...prev,
-          [key]: value
-        }))
-      }
-    }),
-    [
-      prioritiesQuery,
-      listsQuery,
-      tagsListQuery,
-      entriesQuery,
-      statusCounterQuery,
-      selectedTask,
-      modifyTaskWindowOpenType,
-      deleteTaskConfirmationModalOpen,
-      filter
-    ]
+  const [selectedTaskId, setSelectedTaskId] = useQueryState(
+    'taskId',
+    parseAsString
   )
+  const selectedTaskQuery = useQuery(
+    forgeAPI.entries.getById.input({ id: selectedTaskId ?? '' }).queryOptions({
+      enabled: selectedTaskId !== null,
+      queryKey: [...forgeAPI.entries.getById.key, selectedTaskId]
+    })
+  )
+  const [selectedTaskState, setSelectedTaskState] = useState<Task | null>(null)
+  const selectedTask =
+    selectedTaskState?.id === selectedTaskId
+      ? selectedTaskState
+      : (selectedTaskQuery.data ?? null)
+
+  function setSelectedTask(value: Task | null) {
+    setSelectedTaskState(value)
+    void setSelectedTaskId(value?.id ?? null)
+  }
+
+  const value: TodoListContextValue = {
+    prioritiesQuery,
+    listsQuery,
+    tagsListQuery,
+    entriesQuery,
+    statusCounterQuery,
+    filter,
+    selectedTask,
+    modifyTaskWindowOpenType,
+    setModifyTaskWindowOpenType,
+    setSelectedTask,
+    setFilter: (key, value) => {
+      void filterSetters[key](value)
+    }
+  }
 
   return <TodoListContext value={value}>{children}</TodoListContext>
 }
 
-export function useTodoListContext(): ITodoListData {
+export function useTodoListContext(): TodoListContextValue {
   const context = useContext(TodoListContext)
 
   if (context === undefined) {
@@ -142,8 +134,3 @@ export function useTodoListContext(): ITodoListData {
 
   return context
 }
-
-export type { TaskList } from '@/entities/list'
-export type { TaskTag } from '@/entities/tag'
-export type { TaskPriority } from '@/entities/priority'
-export type { Task }

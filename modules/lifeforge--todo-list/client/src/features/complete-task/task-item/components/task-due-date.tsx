@@ -1,34 +1,41 @@
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import type { ReactNode } from 'react'
+
+import { Text } from '@lifeforge/ui'
 
 import type { Task } from '@/entities/task'
 
+import * as styles from '../task-item.css'
+
 dayjs.extend(relativeTime)
 
-function TaskDueDate({ entry }: { entry: Task }) {
-  return (
-    <>
-      {entry.done && entry.completed_at !== '' ? (
-        <div className="text-bg-500 text-sm whitespace-nowrap">
-          Completed: {dayjs(entry.completed_at).fromNow()}
-        </div>
-      ) : (
-        entry.due_date !== '' && (
-          <div
-            className={clsx(
-              'shrink-0 truncate text-sm',
-              dayjs(entry.due_date).isBefore(dayjs())
-                ? 'text-red-500'
-                : 'text-bg-500'
-            )}
-          >
-            Due {dayjs(entry.due_date).fromNow()}
-          </div>
-        )
-      )}
-    </>
-  )
-}
+export function TaskDueDate({ entry }: { entry: Task }) {
+  const isCompleted = entry.done && entry.completed_at !== ''
+  const hasDueDate = entry.due_date !== ''
+  const isOverdue = hasDueDate && dayjs(entry.due_date).isBefore(dayjs())
+  const dueDateColor = isOverdue ? 'dangerous' : 'muted'
 
-export { TaskDueDate }
+  let content: ReactNode = null
+
+  if (isCompleted) {
+    content = (
+      <Text color="muted" size="sm" whiteSpace="nowrap">
+        Completed: {dayjs(entry.completed_at).fromNow()}
+      </Text>
+    )
+  } else if (hasDueDate) {
+    content = (
+      <Text
+        className={styles.dueDate}
+        color={dueDateColor}
+        size="sm"
+        whiteSpace="nowrap"
+      >
+        Due {dayjs(entry.due_date).fromNow()}
+      </Text>
+    )
+  }
+
+  return content
+}
