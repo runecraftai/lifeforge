@@ -51,6 +51,30 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
 
   await page.goto('/auth', { waitUntil: 'networkidle' })
 
+  // Wait for the page to settle and check what state we're in
+  await page.waitForTimeout(2_000)
+
+  // Check if we can see the login/create account form
+  const emailInput = page.getByPlaceholder('johndoe@gmail.com')
+  const loginFormVisible = await emailInput.isVisible().catch(() => false)
+
+  if (!loginFormVisible) {
+    // API is unavailable - capture the error state for debugging
+    console.log('[visual] Login form not visible - API may be unavailable')
+    await page.screenshot({
+      fullPage: true,
+      path: `${screenshotDir}/00-auth-error-state.png`
+    })
+
+    // Fail the test with a clear message about the API being unavailable
+    throw new Error(
+      'Visual walk failed: Login form is not visible. ' +
+      'The API server may be unavailable or returning errors. ' +
+      'Check the host response logs above for 4xx/5xx errors. ' +
+      'Screenshot saved to 00-auth-error-state.png'
+    )
+  }
+
   const createAccountHeading = page.getByRole('heading', { name: 'Welcome!' })
   if (await isVisible(createAccountHeading)) {
     await page.getByPlaceholder('johndoe@gmail.com').fill(testUser.email)

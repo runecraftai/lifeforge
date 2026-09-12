@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+    />
+    <meta name="title" content="LifeForge." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link
+      rel="apple-touch-startup-image"
+      href="/assets/icons/icon-512x512.png"
+      sizes="512x512"
+    />
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+        font-family: 'Inter', sans-serif;
+        z-index: 9999;
+      }
+
+      .loader {
+        width: 36px;
+        height: 36px;
+        border: 4px solid white;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .forging-text {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: white;
+      }
+
+      .dark .preloader {
+        background-color: var(--color-bg-950);
+      }
+
+      #root {
+        background-color: white;
+        color: black;
+      }
+
+      .dark #root {
+        background-color: var(--color-bg-950);
+        color: var(--color-bg-50);
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/mf-entry-bootstrap-0-e7130b55.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/forgeAPI-DPuc5x4T.js">
+    <link rel="modulepreload" crossorigin href="/assets/dayjs.min-yZk4pRyU.js">
+    <link rel="modulepreload" crossorigin href="/assets/lodash-BOrJCwl2.js">
+    <link rel="modulepreload" crossorigin href="/assets/tinycolor-PEGdpOg4.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-CymxhnHo.css">
+  <link rel="modulepreload" crossorigin href="/assets/hostInit-BkpDfQYq.js"><link rel="modulepreload" crossorigin href="/assets/index-Cr8mr2lf.js"><link rel="modulepreload" crossorigin href="/assets/remoteEntry-phUiqoI9.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf-localSharedImportMap___mfe_internal__host__mf_owner__1-CrRNo2YY.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare___mf_0_lifeforge_mf_1_api__loadShare__.js-CGbAutM8.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare___mf_0_lifeforge_mf_1_federation__loadShare__.js-DN83wbP7.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare___mf_0_lifeforge_mf_1_localization__loadShare__.js-vXnm8mz-.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare___mf_0_lifeforge_mf_1_ui__loadShare__.js-YEC9WRYX.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare__nuqs__loadShare__.js-C2zYdjWo.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare__nuqs_mf_1_adapters_mf_1_react__loadShare__.js-ByJDjNds.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare__react_mf_2_dom__loadShare__.js-CUhP06Zp.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare__react_mf_2_dom_mf_1_client__loadShare__.js-usQK0LMV.js"><link rel="modulepreload" crossorigin href="/assets/_virtual_mf___mfe_internal__host__mf_owner__1__loadShare__react_mf_2_router__loadShare__.js-BhjiVEEd.js"></head>
+
+  <body>
+    <div class="preloader">
+      <span class="loader"></span>
+      <p class="forging-text">Forging things together...</p>
+    </div>
+    <div id="root"></div>
+  </body>
+</html>
