@@ -1,0 +1,1 @@
+export { forgeAPI } from '../../../manifest'
