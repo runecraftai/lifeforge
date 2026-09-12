@@ -1,19 +1,14 @@
 import { useCallback } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
-import {
-  SidebarTitle,
-  Text,
-  WithQuery,
-  useModalStore
-} from '@lifeforge/ui'
+import { SidebarTitle, Text, WithQuery, useModalStore } from '@lifeforge/ui'
 
-import { ModifyTagModal } from '@/features/manage-tags/modify-tag-modal'
 import { useTodoListContext } from '@/entities/task'
+import { ModifyTagModal } from '@/features/manage-tags'
 
 import { TaskTagListItem } from './task-tag-list-item'
 
-function TaskTagList() {
+export function TaskTagList() {
   const { open } = useModalStore()
   const { t } = useModuleTranslation()
   const { tagsListQuery } = useTodoListContext()
@@ -51,5 +46,3 @@ function TaskTagList() {
     </>
   )
 }
-
-export { TaskTagList }

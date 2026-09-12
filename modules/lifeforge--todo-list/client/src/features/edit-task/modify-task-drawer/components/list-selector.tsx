@@ -2,7 +2,7 @@ import { Box, Flex, ListboxInput, ListboxOption, Text } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@/entities/task'
 
-function ListSelector({
+export function ListSelector({
   list,
   setList
 }: {
@@ -29,9 +29,7 @@ function ListSelector({
               width: '0.25rem'
             }}
           />
-          <Text truncate>
-            {lists.find(l => l.id === list)?.name ?? 'None'}
-          </Text>
+          <Text truncate>{lists.find(l => l.id === list)?.name ?? 'None'}</Text>
         </Flex>
       )}
       value={list ?? ''}
@@ -44,5 +42,3 @@ function ListSelector({
     </ListboxInput>
   )
 }
-
-export { ListSelector }

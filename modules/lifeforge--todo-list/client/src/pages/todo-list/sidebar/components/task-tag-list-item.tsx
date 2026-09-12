@@ -9,12 +9,12 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
-import { ModifyTagModal } from '@/features/manage-tags/modify-tag-modal'
 import type { TaskTag } from '@/entities/tag'
 import { useTodoListContext } from '@/entities/task'
+import { ModifyTagModal } from '@/features/manage-tags'
+import { forgeAPI } from '@/manifest'
 
-function TaskTagListItem({ item }: { item: TaskTag }) {
+export function TaskTagListItem({ item }: { item: TaskTag }) {
   const queryClient = useQueryClient()
   const { open } = useModalStore()
   const { filter, setFilter } = useTodoListContext()
@@ -89,5 +89,3 @@ function TaskTagListItem({ item }: { item: TaskTag }) {
     />
   )
 }
-
-export { TaskTagListItem }

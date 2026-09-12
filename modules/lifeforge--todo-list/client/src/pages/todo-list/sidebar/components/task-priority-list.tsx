@@ -1,19 +1,14 @@
 import { useCallback } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
-import {
-  SidebarTitle,
-  Text,
-  WithQuery,
-  useModalStore
-} from '@lifeforge/ui'
+import { SidebarTitle, Text, WithQuery, useModalStore } from '@lifeforge/ui'
 
-import { ModifyPriorityModal } from '@/features/manage-priorities/modify-priority-modal'
 import { useTodoListContext } from '@/entities/task'
+import { ModifyPriorityModal } from '@/features/manage-priorities'
 
 import { TaskPriorityListItem } from './task-priority-list-item'
 
-function TaskPriorityList() {
+export function TaskPriorityList() {
   const { open } = useModalStore()
   const { t } = useModuleTranslation()
   const { prioritiesQuery } = useTodoListContext()
@@ -51,5 +46,3 @@ function TaskPriorityList() {
     </>
   )
 }
-
-export { TaskPriorityList }

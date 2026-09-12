@@ -11,9 +11,8 @@ import {
   createDefaultValues
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
-
 import type { TaskList } from '@/entities/list'
+import { forgeAPI } from '@/manifest'
 
 const schema = z.object({
   name: z.string().min(1, 'Required'),
@@ -21,7 +20,7 @@ const schema = z.object({
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex color')
 })
 
-function ModifyListModal({
+export function ModifyListModal({
   data: { type, initialData },
   onClose
 }: {
@@ -90,5 +89,3 @@ function ModifyListModal({
     </FormModal>
   )
 }
-
-export { ModifyListModal }

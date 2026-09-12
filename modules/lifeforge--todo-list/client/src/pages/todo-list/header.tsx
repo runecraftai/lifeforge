@@ -9,7 +9,7 @@ import {
 
 import { useTodoListContext } from '@/entities/task'
 
-function Header() {
+export function Header() {
   const { t } = useModuleTranslation()
   const { setIsSidebarOpen } = useModuleSidebarState()
 
@@ -31,27 +31,23 @@ function Header() {
   const lists = listsQuery.data ?? []
 
   const tags = tagsListQuery.data ?? []
+  const hasFilter =
+    filter.list !== null || filter.tag !== null || filter.priority !== null
+  const headerStatus = filter.status
+  const headerTask =
+    headerStatus === null || headerStatus === ''
+      ? hasFilter
+        ? 'filtered'
+        : 'all'
+      : headerStatus === 'today'
+        ? 'todays'
+        : headerStatus
 
   return (
     <Flex align="center" justify="between" px="md">
       <Flex direction="column" gap="sm">
         <Text as="h1" size={{ base: '3xl', md: '4xl' }} weight="semibold">
-          {`${t(
-            `headers.${(() => {
-              const status = filter.status
-
-              const hasFilter =
-                filter.list !== null ||
-                filter.tag !== null ||
-                filter.priority !== null
-
-              if (status === null || status === '') {
-                return hasFilter ? 'filtered' : 'all'
-              }
-
-              return status === 'today' ? 'todays' : status
-            })().toLowerCase()}Tasks`
-          )}`.trim()}{' '}
+          {`${t(`headers.${headerTask.toLowerCase()}Tasks`)}`.trim()}{' '}
           <Text as="span" color="muted" size="base">
             ({entries.length})
           </Text>
@@ -119,5 +115,3 @@ function Header() {
     </Flex>
   )
 }
-
-export { Header }

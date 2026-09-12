@@ -10,16 +10,15 @@ import {
   createDefaultValues
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
-
 import type { TaskPriority } from '@/entities/priority'
+import { forgeAPI } from '@/manifest'
 
 const schema = z.object({
   name: z.string().min(1, 'Required'),
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex color')
 })
 
-function ModifyPriorityModal({
+export function ModifyPriorityModal({
   data: { type, initialData },
   onClose
 }: {
@@ -87,5 +86,3 @@ function ModifyPriorityModal({
     </FormModal>
   )
 }
-
-export { ModifyPriorityModal }

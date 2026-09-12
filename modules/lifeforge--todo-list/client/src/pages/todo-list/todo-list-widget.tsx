@@ -11,11 +11,8 @@ import {
   WithQuery
 } from '@lifeforge/ui'
 
-import { TaskItem } from '@/features/complete-task/task-item'
-import {
-  TodoListProvider,
-  useTodoListContext
-} from '@/entities/task'
+import { TodoListProvider, useTodoListContext } from '@/entities/task'
+import { TaskItem } from '@/features/complete-task'
 
 function TodoListContent() {
   const { t } = useModuleTranslation()
