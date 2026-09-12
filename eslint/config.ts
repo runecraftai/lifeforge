@@ -18,6 +18,8 @@ const config: Linter.Config[] = [
     ignores: [
       '**/*.config.ts',
       '**/*.config.js',
+      '**/*.config.mjs',
+      '**/*.mjs',
       '**/dist/',
       'dist/',
       'tools/src/templates/**',
