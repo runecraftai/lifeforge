@@ -90,7 +90,8 @@ export const rules = {
             nestedOrMultipleTernaries ||
             compoundTernaryCondition ||
             (node.expression.type === 'ConditionalExpression' && logicalCount > 0) ||
-            (node.expression.type === 'LogicalExpression' && node.expression.operator === '||')
+            (node.expression.type === 'LogicalExpression' && node.expression.operator === '||') ||
+            logicalCount >= 2
           ) {
             context.report({
               node,
@@ -127,7 +128,7 @@ export const rules = {
           for (const comment of comments) {
             const isTypeScriptDirective =
               comment.type === 'Line' &&
-              comment.value.trimStart().startsWith('/ <reference')
+              comment.value.trimStart().startsWith('<reference')
 
             if (
               !isTypeScriptDirective &&
