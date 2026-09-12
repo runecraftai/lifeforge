@@ -4,6 +4,7 @@ import z from 'zod'
 
 import forge from '../forge'
 import todoListSchemas from '../schema'
+import { backfillEntryStatuses } from '../backfill'
 
 dayjs.extend(utc)
 
@@ -299,6 +300,16 @@ export const remove = forge
 
     return response.noContent()
   })
+
+export const backfillStatuses = forge
+  .mutation({
+    description: 'Backfill lifecycle statuses for existing todos',
+    input: {},
+    output: { OK: z.object({ updated: z.number() }) }
+  })
+  .callback(async ({ pb, response }) =>
+    response.ok({ updated: await backfillEntryStatuses(pb) })
+  )
 
 export const toggleEntry = forge
   .mutation({
