@@ -44,7 +44,7 @@ function hasBooleanLogical(node) {
 function isPublicApiJSDoc(comment, sourceCode) {
   return (
     comment.type === 'Block' &&
-    comment.value.startsWith('**') &&
+    comment.value.startsWith('*') &&
     sourceCode?.getTokenAfter(comment)?.value === 'export'
   )
 }
@@ -89,7 +89,8 @@ export const rules = {
           if (
             nestedOrMultipleTernaries ||
             compoundTernaryCondition ||
-            (node.expression.type === 'ConditionalExpression' && logicalCount > 0)
+            (node.expression.type === 'ConditionalExpression' && logicalCount > 0) ||
+            (node.expression.type === 'LogicalExpression' && node.expression.operator === '||')
           ) {
             context.report({
               node,

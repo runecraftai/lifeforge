@@ -23,7 +23,7 @@ export const rules = {
           const currentIndex = layerOrder.indexOf(current)
           const importedIndex = layerOrder.indexOf(imported)
 
-          if (importedIndex <= currentIndex) {
+          if (importedIndex >= currentIndex) {
             context.report({
               node,
               message: `Invalid FSD import: ${current} cannot import ${imported}.`
