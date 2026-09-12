@@ -31,6 +31,7 @@ jobs:
       - name: Start LifeForge with Docker Compose
         run: |
           cp env/.env.docker.example env/.env.docker
+          docker compose down -v --remove-orphans
           docker compose up --build -d
           for attempt in {1..60}; do
             if curl --fail --silent http://localhost:5173/ >/dev/null; then

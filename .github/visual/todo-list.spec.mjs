@@ -69,18 +69,22 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
     // Fail the test with a clear message about the API being unavailable
     throw new Error(
       'Visual walk failed: Login form is not visible. ' +
-      'The API server may be unavailable or returning errors. ' +
-      'Check the host response logs above for 4xx/5xx errors. ' +
-      'Screenshot saved to 00-auth-error-state.png'
+        'The API server may be unavailable or returning errors. ' +
+        'Check the host response logs above for 4xx/5xx errors. ' +
+        'Screenshot saved to 00-auth-error-state.png'
     )
   }
 
   const createAccountHeading = page.getByRole('heading', { name: 'Welcome!' })
   if (await isVisible(createAccountHeading)) {
     await page.getByPlaceholder('johndoe@gmail.com').fill(testUser.email)
-    await page.getByPlaceholder('johndoe', { exact: true }).fill(testUser.username)
+    await page
+      .getByPlaceholder('johndoe', { exact: true })
+      .fill(testUser.username)
     await page.getByPlaceholder('John Doe').fill(testUser.name)
-    await page.getByPlaceholder('Enter your password', { exact: true }).fill(testUser.password)
+    await page
+      .getByPlaceholder('Enter your password', { exact: true })
+      .fill(testUser.password)
     await page
       .getByPlaceholder('Re-enter your password')
       .fill(testUser.password)
