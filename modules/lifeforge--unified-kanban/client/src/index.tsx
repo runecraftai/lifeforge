@@ -80,7 +80,9 @@ function BoardCard({
           type="button"
           onClick={() => onPromote(item.id)}
         >
-          {promoting ? t('board.actions.promoting') : t('board.actions.promote')}
+          {promoting
+            ? t('board.actions.promoting')
+            : t('board.actions.promote')}
         </button>
       ) : null}
     </article>

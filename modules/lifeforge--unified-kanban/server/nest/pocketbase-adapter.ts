@@ -64,5 +64,6 @@ function isNotFound(error: unknown): boolean {
     (error as { status: unknown }).status === 404
   )
     return true
+
   return false
 }

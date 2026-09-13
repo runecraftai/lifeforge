@@ -65,7 +65,8 @@ export const contract = {
     },
     promote: {
       method: 'post',
-      description: 'Create or return the Squad mission linked to a personal task',
+      description:
+        'Create or return the Squad mission linked to a personal task',
       noAuth: false,
       encrypted: false,
       isDownloadable: false,
@@ -118,7 +119,8 @@ export const contract = {
     },
     undoPromote: {
       method: 'post',
-      description: 'Remove the link between a personal task and its Squad mission',
+      description:
+        'Remove the link between a personal task and its Squad mission',
       noAuth: false,
       encrypted: false,
       isDownloadable: false,

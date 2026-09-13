@@ -117,6 +117,7 @@ async function callSquadMcp(
     if (!text) throw new SquadMcpException('Squad MCP returned an empty response')
 
     let result: Record<string, unknown>
+
     try {
       result = JSON.parse(text) as Record<string, unknown>
     } catch {
