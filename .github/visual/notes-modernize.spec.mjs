@@ -150,7 +150,7 @@ test('validates notes module layout, modal creation, and URL persistence', async
   const newNoteButton = page.getByRole('button', { name: /New note/ })
   await expect(newNoteButton).toBeVisible()
 
-  const searchInput = page.getByPlaceholder(/search/i)
+  const searchInput = page.getByPlaceholder('Search notes')
   const searchButton = page.getByRole('button', { name: 'Search' })
   await expect(searchInput).toBeVisible()
   await expect(searchButton).toBeVisible()
