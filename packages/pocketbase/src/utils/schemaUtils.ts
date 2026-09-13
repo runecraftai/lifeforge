@@ -1,4 +1,5 @@
-import { ZodObject, ZodRawShape, ZodString, z } from 'zod'
+import { z } from 'zod'
+import type { ZodObject, ZodRawShape, ZodString } from 'zod'
 
 // Helper type to convert union to intersection
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

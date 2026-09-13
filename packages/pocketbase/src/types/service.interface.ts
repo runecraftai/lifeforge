@@ -1,7 +1,7 @@
-import PocketBase from 'pocketbase'
+import type PocketBase from 'pocketbase'
 
-import { CleanedSchemas } from '../utils/schemaUtils'
-import {
+import type { CleanedSchemas } from '../utils/schemaUtils'
+import type {
   AllPossibleFieldsForFilter,
   CollectionKey,
   ExpandConfig,

@@ -1,6 +1,6 @@
 import type OpenAI from 'openai'
-import { Server } from 'socket.io'
-import z from 'zod'
+import type { Server } from 'socket.io'
+import type z from 'zod'
 
 import type { Logger } from '@lifeforge/log'
 import {
@@ -9,7 +9,7 @@ import {
   type IPBService
 } from '@lifeforge/pocketbase'
 
-import { ITempFileManagerConstructor } from './tempfile_manager.types'
+import type { ITempFileManagerConstructor } from './tempfile_manager.types'
 
 export type FetchAIFunc = <
   T extends z.ZodTypeAny | undefined = undefined

@@ -22,7 +22,8 @@ import type {
   ConvertMedia,
   MediaConfig
 } from '../typescript/standalone/media.types'
-import { Output, OutputType } from '../utils/outputStatus'
+import { Output } from '../utils/outputStatus'
+import type { OutputType } from '../utils/outputStatus'
 
 type KeysOf<T> = T extends any ? keyof T : never
 

@@ -3,13 +3,13 @@ import PocketBase from 'pocketbase'
 
 import { PBLogger } from '..'
 import { toPocketBaseCollectionName } from '../../dbUtils'
-import {
+import type {
   CleanedSchemas,
   CollectionKey,
   ExpandConfig,
   FieldSelection
 } from '../../types/pb_service.types'
-import {
+import type {
   ICreate,
   ICreateData,
   ICreateFactory
