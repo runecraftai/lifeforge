@@ -72,6 +72,20 @@ jobs:
             fi
             sleep 2
           done
+          echo 'Waiting for API + PocketBase connectivity (listEnabled)...'
+          for attempt in {1..30}; do
+            HTTP_CODE=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5173/api/auth/oauth/providers/listEnabled 2>/dev/null || true)
+            if [ "$HTTP_CODE" = '200' ]; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo "LifeForge API listEnabled endpoint did not become ready (HTTP $HTTP_CODE)"
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
           echo 'LifeForge client is running on port 5173.'
           echo 'LifeForge API is running on port 3636; PocketBase is running on port 8090.'
 
