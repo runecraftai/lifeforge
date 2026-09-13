@@ -11,8 +11,8 @@ The LifeForge UI library is built on a **zero-runtime CSS-in-JS** architecture p
 ### Two Strict Rules
 
 > [!IMPORTANT]
-> **RULE 1: NO TAILWINDCSS AT ALL**  
-> Tailwind utility classes, `@apply` directives, `@reference`, `@layer`, and `theme()` are **forbidden** in all files - `.tsx`, `.css`, `.css.ts`, everywhere. All layout, spacing, typography, and styling must use the custom primitives or standard CSS custom properties. Third-party library overrides in `.css` files must use plain CSS with `var(--color-*)` custom properties - never `@apply`, `@layer`, or Tailwind classes. External library CSS should be imported with plain `@import` (no `layer()`).
+> **RULE 1: USE THE STACK THAT MATCHES THE CONSUMER**
+> Existing modules continue to use the Vanilla Extract primitives and recipes. Tailwind-native modules may import `@lifeforge/ui/tailwind.css` and use the Tailwind components documented below. Do not mix both styling stacks within a module. Third-party library overrides in `.css` files must use plain CSS with `var(--color-*)` custom properties.
 
 > [!IMPORTANT]
 > **RULE 2: NO INLINE STYLES FOR CORE LAYOUT & DESIGN**  
@@ -1546,7 +1546,7 @@ import { Icon } from '@lifeforge/ui'
 
 Before submitting a pull request, verify that you have adhered to all core design patterns:
 
-- [ ] **No Tailwind classes or `@apply`:** No `className="flex..."` in `.tsx`, no `@apply` in `.css`, no `@reference` in `.css`. All styles use primitives or plain CSS custom properties.
+- [ ] **Use the module's styling stack:** Existing modules use primitives and recipes; Tailwind-native modules import `@lifeforge/ui/tailwind.css`. Do not use `@apply` or `@reference`.
 - [ ] **No arbitrary inline styles:** Inline `style` is only used for properties computed at runtime (e.g. coordinates or scales). Standard layouts use `p`, `m`, `width`, `height`, etc.
 - [ ] **Strict font-sizing rules:** Prohibited `text-xs` is never used. Default size is `text-base` (omit size prop), and titles use sizes `>= text-lg`.
 - [ ] **Correct loaders:** Form/button loading states use the pre-animated `svg-spinners:ring-resize` icon and **never** use custom `animate-spin` utilities.
@@ -1558,3 +1558,103 @@ Before submitting a pull request, verify that you have adhered to all core desig
 - [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin - no need to define responsive sizes like `mb={{ base: '6rem', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
 - [ ] **Component organization:** Components are strictly separated into individual files under their respective `components/` folders instead of being grouped together.
 - [ ] **Conventional functions:** All React components use standard function declarations (`export function Component()`) and avoid arrow functions.
+
+---
+
+## 15. Tailwind-native kanban components
+
+The design system publishes Tailwind-native components alongside the existing
+Vanilla Extract components. Import the Tailwind token entry point in a module's
+stylesheet before using these components:
+
+```css
+@import 'tailwindcss';
+@import '@lifeforge/ui/tailwind.css';
+```
+
+The entry point maps the existing `--color-bg-*`, `--color-custom-*`,
+`--text-*`, `--radius-*`, and `--spacing` variables through `@theme inline`.
+It also defines the `dark:` variant for LifeForge's `.dark` class. Personalised
+theme colours and background palettes therefore continue to work without
+replacing the existing variables.
+
+### ModuleHeaderTailwind
+
+`ModuleHeaderTailwind` renders a module title, description, optional icon, and
+trailing content. It reads the title and icon from `ModuleWrapper` unless you
+provide `title` or `icon`. Set `namespace={false}` to render the title and the
+standard description directly instead of resolving translation keys. The
+navigation button appears below the `sm` breakpoint when the module sidebar is
+collapsed.
+
+| Prop        | Type              | Description                                               |
+| ----------- | ----------------- | --------------------------------------------------------- |
+| `icon`      | `string`          | Optional Iconify icon name.                               |
+| `title`     | `string`          | Optional title override.                                  |
+| `trailing`  | `ReactNode`       | Content rendered on the right side.                       |
+| `namespace` | `string \| false` | Translation namespace, or `false` to disable translation. |
+
+### KanbanLane
+
+`KanbanLane` groups horizontally scrollable columns under a labelled divider.
+Its `title` prop accepts any React node. The `default` variant uses the normal
+vertical spacing; `compact` reduces the spacing between the heading and
+columns.
+
+### KanbanColumn
+
+`KanbanColumn` provides a status heading, item count, drop target, and empty
+state around its children.
+
+| Prop         | Type                     | Description                                  |
+| ------------ | ------------------------ | -------------------------------------------- |
+| `title`      | `ReactNode`              | Status heading.                              |
+| `count`      | `number`                 | Number displayed in the count pill.          |
+| `emptyLabel` | `ReactNode`              | Empty-state content. Defaults to `No items`. |
+| `isEmpty`    | `boolean`                | Shows the empty state when true.             |
+| `variant`    | `default \| drop-target` | Adds an accent focus ring to a drop target.  |
+
+### KanbanCard
+
+`KanbanCard` renders a draggable board item. The `title`, `itemId`, `source`,
+`priority`, `repo`, and `kind` props accept text or React nodes. The optional
+metadata props render their corresponding badges. Cards are draggable by
+default; set `draggable={false}` for a static card. The `default` variant is
+used by the kanban board, while `dragging` lowers opacity and removes the
+shadow for drag previews.
+
+| Prop          | Type                  | Description                                 |
+| ------------- | --------------------- | ------------------------------------------- |
+| `title`       | `ReactNode`           | Card heading.                               |
+| `itemId`      | `ReactNode`           | Optional identifier shown below the badges. |
+| `source`      | `ReactNode`           | Optional neutral source badge.              |
+| `priority`    | `ReactNode`           | Optional amber priority badge.              |
+| `repo`        | `ReactNode`           | Optional blue repository badge.             |
+| `kind`        | `ReactNode`           | Optional outlined type badge.               |
+| `variant`     | `default \| dragging` | Default card or drag-preview presentation.  |
+| `onDragStart` | `DragEventHandler`    | Called when dragging starts.                |
+
+### Usage example
+
+```tsx
+import {
+  KanbanCard,
+  KanbanColumn,
+  KanbanLane,
+  ModuleHeaderTailwind
+} from '@lifeforge/ui'
+
+<ModuleHeaderTailwind trailing={<button type="button">New item</button>} />
+<KanbanLane title="Personal work">
+  <KanbanColumn count={1} title="To do">
+    <KanbanCard
+      itemId="task-42"
+      source="Personal"
+      title="Prepare the release notes"
+    />
+  </KanbanColumn>
+</KanbanLane>
+```
+
+The existing `ModuleHeader` export and all Vanilla Extract components remain
+available for consumers that have not migrated.
