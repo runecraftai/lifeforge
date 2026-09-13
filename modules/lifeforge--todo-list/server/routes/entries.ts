@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import z from 'zod'
 
+import { backfillEntryStatuses } from '../backfill'
 import forge from '../forge'
 import todoListSchemas from '../schema'
 
@@ -76,7 +77,10 @@ const FILTERS: Record<string, any> = {
       operator: '=',
       value: true
     }
-  ]
+  ],
+  todo: [{ field: 'status', operator: '=', value: 'todo' }],
+  doing: [{ field: 'status', operator: '=', value: 'doing' }],
+  lifecycleDone: [{ field: 'status', operator: '=', value: 'done' }]
 }
 
 export const getStatusCounter = forge
@@ -101,7 +105,7 @@ export const getStatusCounter = forge
       completed: 0
     }
 
-    for (const type of Object.keys(FILTERS) as (keyof typeof FILTERS)[]) {
+    for (const type of Object.keys(counters) as (keyof typeof counters)[]) {
       const { totalItems } = await pb.getList
         .collection('entries')
         .page(1)
@@ -109,7 +113,7 @@ export const getStatusCounter = forge
         .filter(FILTERS[type])
         .execute()
 
-      counters[type as keyof typeof counters] = totalItems
+      counters[type] = totalItems
     }
 
     return response.ok(counters)
@@ -189,13 +193,15 @@ export const create = forge
     description: 'Create a new todo',
     input: {
       body: todoListSchemas.entries.omit({
-        completed_at: true,
-        done: true,
-        created: true,
-        updated: true,
         id: true,
         collectionId: true,
-        collectionName: true
+        collectionName: true,
+        completed_at: true,
+        done: true,
+        status: true,
+        squad_mission_id: true,
+        created: true,
+        updated: true
       })
     },
     existenceCheck: {
@@ -216,6 +222,7 @@ export const create = forge
         .collection('entries')
         .data({
           ...body,
+          status: 'todo',
           due_date:
             (body.due_date && !body.due_date_has_time
               ? dayjs(body.due_date).endOf('day').toISOString()
@@ -233,13 +240,15 @@ export const update = forge
         id: z.string()
       }),
       body: todoListSchemas.entries.omit({
-        completed_at: true,
-        done: true,
-        created: true,
-        updated: true,
         id: true,
         collectionId: true,
-        collectionName: true
+        collectionName: true,
+        completed_at: true,
+        done: true,
+        status: true,
+        squad_mission_id: true,
+        created: true,
+        updated: true
       })
     },
     existenceCheck: {
@@ -293,6 +302,16 @@ export const remove = forge
     return response.noContent()
   })
 
+export const backfillStatuses = forge
+  .mutation({
+    description: 'Backfill lifecycle statuses for existing todos',
+    input: {},
+    output: { OK: z.object({ updated: z.number() }) }
+  })
+  .callback(async ({ pb, response }) =>
+    response.ok({ updated: await backfillEntryStatuses(pb) })
+  )
+
 export const toggleEntry = forge
   .mutation({
     description: 'Toggle todo completion status',
@@ -318,6 +337,7 @@ export const toggleEntry = forge
         .id(id)
         .data({
           done: !entry.done,
+          status: entry.done ? 'todo' : 'done',
           completed_at: entry.done
             ? null
             : dayjs().utc().format('YYYY-MM-DD HH:mm:ss')
