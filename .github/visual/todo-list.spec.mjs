@@ -67,10 +67,11 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
 
   await page.goto('/auth', { waitUntil: 'domcontentloaded' })
 
-  await page.waitForTimeout(2_000)
-
   const emailInput = page.getByPlaceholder('johndoe@gmail.com')
-  const loginFormVisible = await emailInput.isVisible().catch(() => false)
+  const loginFormVisible = await emailInput
+    .waitFor({ state: 'visible', timeout: 10_000 })
+    .then(() => true)
+    .catch(() => false)
 
   if (!loginFormVisible) {
     console.log('[visual] Login form not visible - API may be unavailable')

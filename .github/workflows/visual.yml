@@ -207,6 +207,16 @@ jobs:
             echo 'No screenshots were produced; skipping evidence publication.'
             exit 0
           fi
+          USABLE=$(node -e "
+            const fs = require('fs');
+            const manifest = JSON.parse(fs.readFileSync(process.env.SCREENSHOTS + '/manifest.json', 'utf8'));
+            const hasUsable = (manifest.captures || []).some(c => c.usable === true);
+            process.stdout.write(hasUsable ? 'true' : 'false');
+          ")
+          if [ "$USABLE" != 'true' ]; then
+            echo 'No usable captures in manifest; skipping evidence publication.'
+            exit 0
+          fi
 
           pages_dir="$(mktemp -d)"
           git init --quiet "$pages_dir"
