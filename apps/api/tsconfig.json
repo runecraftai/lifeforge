@@ -19,7 +19,6 @@
     "types": ["multer"]
   },
   "include": [
-    "./src/**/*",
-    "../../modules/lifeforge--unified-kanban/server/**/*.ts"
+    "./src/**/*"
   ]
 }

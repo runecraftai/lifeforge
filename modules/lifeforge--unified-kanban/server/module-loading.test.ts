@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest'
 describe('Unified Kanban server loading', () => {
   it('loads through the API development route loader', () => {
     const repoRoot = path.resolve(import.meta.dirname, '../../..')
+    const moduleDir = path.join(repoRoot, 'modules/lifeforge--unified-kanban')
     expect(() =>
       execFileSync(
         'pnpm',
@@ -12,14 +13,11 @@ describe('Unified Kanban server loading', () => {
           'exec',
           'tsx',
           '--tsconfig',
-          path.join(repoRoot, 'apps/api/tsconfig.json'),
-          path.join(
-            repoRoot,
-            'modules/lifeforge--unified-kanban/server/index.ts'
-          )
+          path.join(moduleDir, 'server/tsconfig.json'),
+          path.join(moduleDir, 'server/index.ts')
         ],
         {
-          cwd: path.join(repoRoot, 'apps/api'),
+          cwd: moduleDir,
           env: { ...process.env, NODE_ENV: 'development' },
           encoding: 'utf8'
         }
