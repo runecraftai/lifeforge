@@ -70,10 +70,12 @@ export class BoardController {
     )
     this.promoteLocks.set(task.id, locked)
 
-    return locked
+    return locked.finally(() => {
+      this.promoteLocks.delete(task.id)
+    })
   }
 
-  private async promoteLocked(pb: unknown, task: { id: string; summary: string; squadMissionId?: string }) {
+  private async promoteLocked(pb: unknown, task: { id: string; summary: string; squadMissionId?: string }): Promise<{ state: string; data: { taskId: string; squadMissionId: string; already: boolean } }> {
     const fresh = await this.pocketbase.getPersonalTask(pb as never, task.id)
 
     if (fresh?.squadMissionId) {

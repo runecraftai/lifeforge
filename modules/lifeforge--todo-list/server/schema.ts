@@ -129,7 +129,7 @@ export const schemas = {
       priority: z.string(),
       done: z.boolean(),
       status: z.enum(['todo', 'doing', 'done']),
-      squad_mission_id: z.string(),
+      squad_mission_id: z.string().optional().nullable(),
       completed_at: z.string(),
       created: z.string(),
       updated: z.string()
