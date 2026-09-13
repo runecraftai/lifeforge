@@ -57,6 +57,8 @@ jobs:
           done
           echo 'Restarting PocketBase to load the migrated schema...'
           docker compose restart db
+          echo 'Restarting the API to reconnect to PocketBase...'
+          docker compose restart server
           echo 'Waiting for client (port 5173)...'
           for attempt in {1..60}; do
             if curl --fail --silent http://localhost:5173/ >/dev/null; then
