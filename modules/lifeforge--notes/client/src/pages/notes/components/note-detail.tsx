@@ -61,7 +61,10 @@ export function NoteDetail({
     })
   }
 
-  const updatedLabel = new Date(currentNote.updated).toLocaleString()
+  const updatedDate = new Date(currentNote.updated)
+  const updatedLabel = Number.isNaN(updatedDate.getTime())
+    ? 'Recently'
+    : updatedDate.toLocaleString()
 
   return (
     <article className="flex min-h-80 min-w-0 flex-col rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-950/50">

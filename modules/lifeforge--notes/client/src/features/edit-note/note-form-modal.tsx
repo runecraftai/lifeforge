@@ -78,7 +78,6 @@ export function NoteFormModal({
         name="title"
         placeholder="Give your note a title"
         required={true}
-        variant="plain"
       />
       <TextAreaField
         control={form.control}
@@ -86,7 +85,6 @@ export function NoteFormModal({
         label="Content"
         name="content"
         placeholder="Write your note..."
-        variant="plain"
       />
     </FormModal>
   )

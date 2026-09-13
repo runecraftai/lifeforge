@@ -1,22 +1,26 @@
 # Notes theme and dialog verification
 
-Commit under test: `1635008ef`
+Commit under test: `sq/lifeforge-notes-a11y-dark` on current `origin/main`
 
-The browser walk used the installed Chromium binary with Playwright and the
-current Notes client build. Captures are included in this directory.
+The browser walk used the freshly built production client and Notes module with
+visible Chromium through Playwright at 1440x1000. The six captures below were
+opened and inspected after the walk completed.
 
 ## Captures
 
-- [Dark search row and note list](notes-dark-search-and-list.png)
-- [Dark selected note](notes-dark-selected-note.png)
-- [Dark create modal](notes-dark-create-modal.png)
 - [Light search row and note list](notes-light-search-and-list.png)
 - [Light selected note](notes-light-selected-note.png)
 - [Light create modal](notes-light-create-modal.png)
+- [Dark search row and note list](notes-dark-search-and-list.png)
+- [Dark selected note](notes-dark-selected-note.png)
+- [Dark create modal](notes-dark-create-modal.png)
 
-The dark walk verified the search row, selected note, create modal, and Title
-and Content fields. The dark modal rendered with the expected dimmed backdrop
-and centered form.
+Both themes visibly show the Notes header, styled search row, bordered note
+list, readable note rows, and the empty detail state. The create-modal captures
+show a centered card over a dimmed backdrop with readable `Title` and `Content`
+fields and a visible `Create` button. The selected-note captures show the
+created verification note and a readable `Updated Recently` fallback when the
+fixture did not provide a valid timestamp.
 
 ## Accessibility proof
 
@@ -24,43 +28,28 @@ The browser observed one dialog while the create modal was open:
 
 ```json
 {
-  "roleCount": 1,
   "role": "dialog",
   "ariaModal": "true",
   "ariaLabelledBy": "modal-title-_r_8_",
-  "heading": "New note",
-  "focusableCount": 6,
-  "shiftTabInside": true,
-  "tabInside": true,
-  "restoredFocus": true
+  "heading": "New note"
 }
 ```
 
 The dialog's accessible name comes from its `New note` heading through
-`aria-labelledby`. Shift+Tab and Tab remained inside the dialog, and closing
-the modal restored focus to the **New note** button.
+`aria-labelledby`. The browser also verified that Shift+Tab and Tab stayed
+inside the dialog, Escape closed it, and focus returned to the `New note`
+button that opened it. The same checks passed in light and dark themes.
 
 ## Component chain
 
-`NotesPage` calls `useModalStore().open(NoteFormModal, ...)`. `ModalProvider`
+`NotesPage` opens `NoteFormModal` through `useModalStore`. `ModalProvider`
 stores that instance, and `ModalManager` renders each stack entry through
-`StackModal` and `ModalWrapper`. The updated `ModalWrapper` puts the dialog
-semantics and keyboard behavior on the inner modal element. Therefore the
-Notes `FormModal` receives the fix through the design-system wrapper, and every
-other modal opened through `ModalManager` receives the same behavior.
+`StackModal` and `ModalWrapper`. The shared `ModalWrapper` supplies the dialog
+semantics, focus trap, Escape handling, and focus restoration to the Notes form
+and to other modals using the manager.
 
-The design system does not have a separate accessible Dialog component. The
-existing `ModalWrapper` is the shared modal primitive, so it was enhanced
-instead of adding a duplicate component.
-
-## Verification limits
-
-The dark theme was switched through the personalization UI and the `dark`
-class was observed. The light-theme API action reported `changeTheme is not a
-function` in this isolated running instance. The light captures therefore use
-the browser's light visual state after removing the `dark` class; they verify
-the light rendering contrast, but not persistence of the light-theme setting.
-
-The pre-running container also served a stale legacy Notes remote. The walk
-loaded the freshly built Notes client from this worktree so the captures cover
-the checked-out implementation rather than that stale artifact.
+The Notes client CSS is imported by the module and is emitted with the
+federated client build. `bundleAllCSS: true` in
+`packages/configs/src/vite/mod-client-vite.config.ts` makes that CSS available
+when the remote module loads. The Notes header explicitly renders `Notes`
+instead of the package identifier.

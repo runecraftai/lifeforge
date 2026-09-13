@@ -121,6 +121,7 @@ export function NotesPage() {
     <div className="flex min-h-0 flex-1 flex-col px-4 pb-6 pt-2 sm:px-6">
       <ModuleHeaderTailwind
         namespace={false}
+        title="Notes"
         trailing={<CreateNoteButton onClick={openCreateModal} />}
       />
       <main className="flex min-h-0 flex-1 flex-col">
