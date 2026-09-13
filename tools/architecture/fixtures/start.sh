@@ -13,6 +13,7 @@ if [[ ! -f "$ENV_FILE" ]]; then
 fi
 
 set -a
+# shellcheck source=fixture.env
 source "$ENV_FILE"
 set +a
 

@@ -1,5 +1,29 @@
 export const contract = {
   "entries": {
+    "backfillStatuses": {
+      "method": "post",
+      "description": "Backfill lifecycle statuses for existing todos",
+      "noAuth": false,
+      "encrypted": true,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "updated": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "updated"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
     "create": {
       "method": "post",
       "description": "Create a new todo",
@@ -81,6 +105,14 @@ export const contract = {
             "done": {
               "type": "boolean"
             },
+            "status": {
+              "type": "string",
+              "enum": [
+                "todo",
+                "doing",
+                "done"
+              ]
+            },
             "completed_at": {
               "type": "string"
             },
@@ -109,6 +141,7 @@ export const contract = {
             "tags",
             "priority",
             "done",
+            "status",
             "completed_at",
             "created",
             "updated",
@@ -175,6 +208,14 @@ export const contract = {
             "done": {
               "type": "boolean"
             },
+            "status": {
+              "type": "string",
+              "enum": [
+                "todo",
+                "doing",
+                "done"
+              ]
+            },
             "completed_at": {
               "type": "string"
             },
@@ -203,6 +244,7 @@ export const contract = {
             "tags",
             "priority",
             "done",
+            "status",
             "completed_at",
             "created",
             "updated",
@@ -324,6 +366,14 @@ export const contract = {
               "done": {
                 "type": "boolean"
               },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "todo",
+                  "doing",
+                  "done"
+                ]
+              },
               "completed_at": {
                 "type": "string"
               },
@@ -352,6 +402,7 @@ export const contract = {
               "tags",
               "priority",
               "done",
+              "status",
               "completed_at",
               "created",
               "updated",
@@ -446,6 +497,14 @@ export const contract = {
             "done": {
               "type": "boolean"
             },
+            "status": {
+              "type": "string",
+              "enum": [
+                "todo",
+                "doing",
+                "done"
+              ]
+            },
             "completed_at": {
               "type": "string"
             },
@@ -474,6 +533,7 @@ export const contract = {
             "tags",
             "priority",
             "done",
+            "status",
             "completed_at",
             "created",
             "updated",
@@ -580,6 +640,14 @@ export const contract = {
             "done": {
               "type": "boolean"
             },
+            "status": {
+              "type": "string",
+              "enum": [
+                "todo",
+                "doing",
+                "done"
+              ]
+            },
             "completed_at": {
               "type": "string"
             },
@@ -608,6 +676,7 @@ export const contract = {
             "tags",
             "priority",
             "done",
+            "status",
             "completed_at",
             "created",
             "updated",
