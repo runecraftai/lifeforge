@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
 // Import the compiled schema from dist to avoid React type resolution issues
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { moduleConfigSchema } = await import('../../dist/index.js')
 
 describe('moduleConfigSchema contract fields', () => {
@@ -11,7 +10,9 @@ describe('moduleConfigSchema contract fields', () => {
         routes: { '/': {} },
         contractVersion: '1.0.0'
       })
+
       expect(result.success).toBe(true)
+
       if (result.success) {
         expect(result.data.contractVersion).toBe('1.0.0')
       }
@@ -19,7 +20,9 @@ describe('moduleConfigSchema contract fields', () => {
 
     it('omits contractVersion when absent', () => {
       const result = moduleConfigSchema.safeParse({ routes: { '/': {} } })
+
       expect(result.success).toBe(true)
+
       if (result.success) {
         expect(result.data.contractVersion).toBeUndefined()
       }
@@ -50,16 +53,20 @@ describe('moduleConfigSchema contract fields', () => {
           }
         }
       }
+
       const result = moduleConfigSchema.safeParse({
         routes: { '/': {} },
         contract: catalog
       })
+
       expect(result.success).toBe(true)
     })
 
     it('omits contract when absent', () => {
       const result = moduleConfigSchema.safeParse({ routes: { '/': {} } })
+
       expect(result.success).toBe(true)
+
       if (result.success) {
         expect(result.data.contract).toBeUndefined()
       }
@@ -69,11 +76,13 @@ describe('moduleConfigSchema contract fields', () => {
   describe('existing manifest compatibility', () => {
     it('accepts a minimal manifest with only routes', () => {
       const result = moduleConfigSchema.safeParse({ routes: { '/': {} } })
+
       expect(result.success).toBe(true)
     })
 
     it('rejects a manifest missing required routes field', () => {
       const result = moduleConfigSchema.safeParse({})
+
       expect(result.success).toBe(false)
     })
 
@@ -86,6 +95,7 @@ describe('moduleConfigSchema contract fields', () => {
         contractVersion: '1.0.0',
         widgets: []
       })
+
       expect(result.success).toBe(true)
     })
   })
