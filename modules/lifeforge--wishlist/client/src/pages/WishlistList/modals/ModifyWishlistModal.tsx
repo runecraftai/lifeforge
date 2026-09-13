@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useParams } from 'react-router'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
 
@@ -9,47 +8,45 @@ import {
   ColorField,
   FormModal,
   IconField,
+  TextAreaField,
   TextField,
   createDefaultValues
 } from '@lifeforge/ui'
-import { toast } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
-import type { IdeaBoxFolder } from '@/providers/IdeaBoxProvider'
+
+import type { WishlistList } from '..'
 
 const schema = z.object({
   name: z.string().min(1, 'Required'),
   icon: z.string().min(1, 'Required'),
-  color: z.string()
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex color'),
+  description: z.string().optional()
 })
 
-function ModifyFolderModal({
+function ModifyWishlistListModal({
   data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    initialData?: IdeaBoxFolder
+    initialData?: WishlistList
   }
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
-  const { id, '*': path } = useParams<{ id: string; '*': string }>()
 
   const mutation = useMutation(
     (type === 'create'
-      ? forgeAPI.folders.create
-      : forgeAPI.folders.update.input({
+      ? forgeAPI.wishlist.lists.create
+      : forgeAPI.wishlist.lists.update.input({
           id: initialData?.id || ''
         })
     ).mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ['ideaBox', 'folders']
+          queryKey: ['wishlist', 'lists']
         })
-      },
-      onError: error => {
-        toast.error(`Failed to ${type} folder: ${error.message}`)
       }
     })
   )
@@ -57,9 +54,7 @@ function ModifyFolderModal({
   const form = useForm({
     defaultValues: {
       ...createDefaultValues(schema),
-      name: initialData?.name || '',
-      icon: initialData?.icon || 'tabler:folder',
-      color: initialData?.color || '#FFFFFF'
+      ...(initialData ?? { color: '#FFFFFF' })
     },
     resolver: zodResolver(schema)
   })
@@ -70,37 +65,44 @@ function ModifyFolderModal({
       submissionConfig={{
         template: type,
         handler: async data => {
-          await mutation.mutateAsync({
-            ...data,
-            container: id!,
-            parent: path?.split('/').pop() || ''
-          })
+          await mutation.mutateAsync(
+            data as InferInput<
+              (typeof forgeAPI.wishlist.lists)[typeof type]
+            >['body']
+          )
         }
       }}
       uiConfig={{
         icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-        namespace: 'apps.ideaBox',
-        title: `folder.${type}`,
+        namespace: 'apps.wishlist',
+        title: `wishlist.${type}`,
         onClose
       }}
     >
       <TextField
         required
         control={form.control}
-        icon="tabler:folder"
-        label="Folder name"
+        icon="tabler:list"
+        label="Wishlist name"
         name="name"
-        placeholder="My Folder"
+        placeholder="My wishlist"
       />
-      <IconField
+      <TextAreaField
+        control={form.control}
+        icon="tabler:file-text"
+        label="Wishlist description"
+        name="description"
+        placeholder="My wishlist description"
+      />
+      <IconField required control={form.control} label="Wishlist icon" name="icon" />
+      <ColorField
         required
         control={form.control}
-        label="Folder icon"
-        name="icon"
+        label="Wishlist color"
+        name="color"
       />
-      <ColorField control={form.control} label="Folder color" name="color" />
     </FormModal>
   )
 }
 
-export default ModifyFolderModal
+export default ModifyWishlistListModal

@@ -11,6 +11,7 @@
     "build:server": "cd server && vite build"
   },
   "dependencies": {
+    "@iconify/react": "^5.2.0",
     "react-quilljs": "^2.0.5"
   },
   "devDependencies": {},

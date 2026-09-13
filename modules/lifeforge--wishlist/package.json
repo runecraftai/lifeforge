@@ -11,7 +11,13 @@
     "build:server": "cd server && vite build"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "@iconify/react": "^5.2.0",
+    "@uidotdev/usehooks": "^2.4.1",
+    "jsdom": "^25.0.0",
     "open-graph-scraper": "^6.11.0",
+    "react-medium-image-zoom": "^5.4.0",
+    "react-toastify": "^10.0.4",
     "sharp": "^0.34.4"
   },
   "devDependencies": {},
