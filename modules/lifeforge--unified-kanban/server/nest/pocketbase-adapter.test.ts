@@ -57,6 +57,15 @@ describe('PocketBaseAdapter', () => {
       await expect(adapter.getPersonalTask(pb, 'task-1')).rejects.toThrow('Timeout')
     })
 
+    it('rethrows network errors whose message contains "not found"', async () => {
+      const adapter = new PocketBaseAdapter()
+      const pb = mockPb({
+        getOne: vi.fn().mockRejectedValue(new Error('Connection to server not found'))
+      })
+
+      await expect(adapter.getPersonalTask(pb, 'task-1')).rejects.toThrow('Connection to server not found')
+    })
+
     it('maps a found record to a PersonalTask', async () => {
       const adapter = new PocketBaseAdapter()
       const pb = mockPb({

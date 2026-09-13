@@ -64,6 +64,5 @@ function isNotFound(error: unknown): boolean {
     (error as { status: unknown }).status === 404
   )
     return true
-  if (error instanceof Error && /404|not.?found/i.test(error.message)) return true
   return false
 }
