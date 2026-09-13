@@ -138,7 +138,7 @@ export class SquadMcpAdapter {
     const taskId = result.taskId
 
     if (taskId !== input.id && taskId !== 'created') {
-      throw new Error('Squad MCP returned an unexpected mission id')
+      throw new SquadMcpException('Squad MCP returned an unexpected mission id')
     }
 
     return { taskId: input.id }
