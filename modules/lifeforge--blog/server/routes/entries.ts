@@ -1,4 +1,4 @@
-import { forgeController, forgeRouter } from '@functions/routes'
+import { forgeController, forgeRouter } from '@lifeforge/server-utils'
 
 const list = forgeController
   .query()

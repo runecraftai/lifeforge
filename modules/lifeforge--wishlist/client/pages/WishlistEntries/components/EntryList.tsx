@@ -1,4 +1,4 @@
-import { EmptyStateScreen, Scrollbar, useModalStore } from 'lifeforge-ui'
+import { EmptyStateScreen, Scrollbar, useModalStore } from '@lifeforge/ui'
 import { useTranslation } from 'react-i18next'
 
 import type { WishlistEntry } from '..'

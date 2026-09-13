@@ -6,9 +6,9 @@ import {
   FAB,
   ModuleHeader,
   SearchInput,
-  WithQuery
-} from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
+  WithQuery,
+  useModalStore
+} from '@lifeforge/ui'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { InferOutput } from 'shared'

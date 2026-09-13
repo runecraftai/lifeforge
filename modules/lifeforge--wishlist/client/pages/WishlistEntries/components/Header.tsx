@@ -6,7 +6,7 @@ import {
   ContextMenuItem,
   GoBackButton,
   useModalStore
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'

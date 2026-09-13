@@ -11,7 +11,7 @@ import {
   TagsInput,
   TextAreaInput,
   TextInput
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 
 const VISIBILITY_OPTIONS = [
   {

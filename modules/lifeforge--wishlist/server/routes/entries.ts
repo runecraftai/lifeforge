@@ -1,5 +1,4 @@
-import getMedia from '@functions/external/media'
-import { forgeController, forgeRouter } from '@functions/routes'
+import { forgeController, forgeRouter } from '@lifeforge/server-utils'
 import z from 'zod'
 
 import scrapeProviders from '../helpers/scrapers'
@@ -78,16 +77,17 @@ const create = forgeController
     list: 'wishlist__lists'
   })
   .statusCode(201)
-  .callback(({ pb, body, media: { image } }) =>
-    pb.create
+  .callback(async ({ pb, body, media: { image }, core: { media: { retrieveMedia } } }) => {
+    const imageData = await retrieveMedia('image', image)
+    return pb.create
       .collection('wishlist__entries')
       .data({
         ...body,
         bought: false,
-        ...getMedia('image', image)
+        ...imageData
       })
       .execute()
-  )
+  })
 
 const update = forgeController
   .mutation()
@@ -114,14 +114,15 @@ const update = forgeController
   .existenceCheck('body', {
     list: 'wishlist__lists'
   })
-  .callback(
-    ({
+  .callback(async ({
       pb,
       query: { id },
       body: { list, name, url, price },
-      media: { image }
-    }) =>
-      pb.update
+      media: { image },
+      core: { media: { retrieveMedia } }
+    }) => {
+      const imageData = await retrieveMedia('image', image)
+      return pb.update
         .collection('wishlist__entries')
         .id(id)
         .data({
@@ -129,9 +130,10 @@ const update = forgeController
           name,
           url,
           price,
-          ...getMedia('image', image)
+          ...imageData
         })
         .execute()
+    }
   )
 
 const updateBoughtStatus = forgeController

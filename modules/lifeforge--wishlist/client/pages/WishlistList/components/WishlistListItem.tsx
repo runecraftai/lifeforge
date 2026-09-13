@@ -6,7 +6,7 @@ import {
   ContextMenu,
   ContextMenuItem,
   useModalStore
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 import { useCallback } from 'react'
 import { Link } from 'react-router'
 import { toast } from 'react-toastify'

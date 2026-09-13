@@ -1,5 +1,6 @@
-import { forgeController, forgeRouter } from '@functions/routes'
-import { SCHEMAS } from '@schema'
+import { forgeController, forgeRouter } from '@lifeforge/server-utils'
+
+import wishlistSchemas from '../schema'
 import z from 'zod'
 
 const getById = forgeController
@@ -46,7 +47,7 @@ const create = forgeController
   .mutation()
   .description('Create a new wishlist')
   .input({
-    body: SCHEMAS.wishlist.lists.schema
+    body: wishlistSchemas.lists.schema
   })
   .statusCode(201)
   .callback(({ pb, body }) =>
@@ -60,7 +61,7 @@ const update = forgeController
     query: z.object({
       id: z.string()
     }),
-    body: SCHEMAS.wishlist.lists.schema
+    body: wishlistSchemas.lists.schema
   })
   .existenceCheck('query', {
     id: 'wishlist__lists'

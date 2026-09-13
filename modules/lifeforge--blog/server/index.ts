@@ -1,7 +1,11 @@
-import { forgeRouter } from '@functions/routes'
+import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
 
 import blogEntriesRouter from './routes/entries'
 
-export default forgeRouter({
+const routes = forgeRouter({
   entries: blogEntriesRouter
 })
+
+writeContractFileToClient(routes, import.meta.dirname)
+
+export default routes

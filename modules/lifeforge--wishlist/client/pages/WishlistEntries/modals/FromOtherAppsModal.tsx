@@ -6,8 +6,9 @@ import {
   ListboxOption,
   ModalHeader,
   TextInput
-} from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
+,
+  useModalStore
+} from '@lifeforge/ui'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'

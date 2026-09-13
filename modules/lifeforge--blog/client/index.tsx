@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { Button, EmptyStateScreen, ModuleHeader, WithQuery } from 'lifeforge-ui'
+import { Button, EmptyStateScreen, ModuleHeader, WithQuery } from '@lifeforge/ui'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 

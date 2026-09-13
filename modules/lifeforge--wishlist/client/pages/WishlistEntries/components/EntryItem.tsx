@@ -10,7 +10,7 @@ import {
   ContextMenu,
   ContextMenuItem,
   useModalStore
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 import { useCallback, useState } from 'react'
 import Zoom from 'react-medium-image-zoom'
 import { toast } from 'react-toastify'
