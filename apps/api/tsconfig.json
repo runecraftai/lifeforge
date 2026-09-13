@@ -18,5 +18,8 @@
     },
     "types": ["multer"]
   },
-  "include": ["./src/**/*"]
+  "include": [
+    "./src/**/*",
+    "../../modules/lifeforge--unified-kanban/server/**/*.ts"
+  ]
 }
