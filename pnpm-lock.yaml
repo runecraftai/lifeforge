@@ -494,6 +494,30 @@ importers:
 
   locales/lang-en: {}
 
+  modules/lifeforge--api-endpoint-explorer:
+    dependencies:
+      '@lifeforge/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
+      '@lifeforge/federation':
+        specifier: workspace:*
+        version: link:../../packages/federation
+      '@lifeforge/localization':
+        specifier: workspace:*
+        version: link:../../packages/localization
+      '@lifeforge/pocketbase':
+        specifier: workspace:*
+        version: link:../../packages/pocketbase
+      '@lifeforge/server-utils':
+        specifier: workspace:*
+        version: link:../../packages/server-utils
+      '@lifeforge/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+
   modules/lifeforge--notes:
     dependencies:
       '@lifeforge/api':
@@ -524,6 +548,74 @@ importers:
       tailwindcss:
         specifier: ^4.1.13
         version: 4.3.3
+
+  modules/lifeforge--passwords:
+    dependencies:
+      '@lifeforge/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
+      '@lifeforge/federation':
+        specifier: workspace:*
+        version: link:../../packages/federation
+      '@lifeforge/localization':
+        specifier: workspace:*
+        version: link:../../packages/localization
+      '@lifeforge/pocketbase':
+        specifier: workspace:*
+        version: link:../../packages/pocketbase
+      '@lifeforge/server-utils':
+        specifier: workspace:*
+        version: link:../../packages/server-utils
+      '@lifeforge/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      '@noble/hashes':
+        specifier: ^2.2.0
+        version: 2.2.0
+      copy-to-clipboard:
+        specifier: ^3.3.3
+        version: 3.3.3
+    devDependencies:
+      pocketbase:
+        specifier: ^0.27.0
+        version: 0.27.0
+
+  modules/lifeforge--pomodoro-timer:
+    dependencies:
+      '@lifeforge/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
+      '@lifeforge/federation':
+        specifier: workspace:*
+        version: link:../../packages/federation
+      '@lifeforge/localization':
+        specifier: workspace:*
+        version: link:../../packages/localization
+      '@lifeforge/pocketbase':
+        specifier: workspace:*
+        version: link:../../packages/pocketbase
+      '@lifeforge/server-utils':
+        specifier: workspace:*
+        version: link:../../packages/server-utils
+      '@lifeforge/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      culori:
+        specifier: ^4.0.2
+        version: 4.0.2
+      react-virtualized:
+        specifier: ^9.22.6
+        version: 9.22.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+    devDependencies:
+      '@types/react-virtualized':
+        specifier: ^9.22.3
+        version: 9.22.3
 
   modules/lifeforge--squad-backlog:
     dependencies:
@@ -9325,8 +9417,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@noble/hashes@2.2.0':
-    optional: true
+  '@noble/hashes@2.2.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
