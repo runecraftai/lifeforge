@@ -200,7 +200,9 @@ test('validates notes module layout, modal creation, and URL persistence', async
   )
 
   await page.getByText('Test Note Title').click()
-  await expect(page.getByText('Test note content body')).toBeVisible()
+  await expect(
+    page.getByRole('article').getByText('Test note content body')
+  ).toBeVisible()
 
   await recordCapture(
     '04-notes-selected-light.png',
