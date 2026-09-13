@@ -27,5 +27,8 @@ Playwright assertions:
 - No board refresh error
 - `109 items` rendered from the board data source
 - Six board columns rendered; computed column style was `display: flex`, rounded corners, and a non-transparent background
+- [`visual-results/screenshots/unified-kanban-expanded.png`](visual-results/screenshots/unified-kanban-expanded.png) shows the Trabalho lane expanded at `/unified-kanban`; its three columns were visible.
+- [`visual-results/screenshots/unified-kanban-work-collapsed.png`](visual-results/screenshots/unified-kanban-work-collapsed.png) shows the same lane collapsed at `/unified-kanban?collapsed=work`; its three columns were hidden.
+- Reloading `/unified-kanban?collapsed=work` preserved the collapsed state, proving URL persistence.
 
 The remaining browser console warnings/errors were unrelated existing runtime behavior (font authorization fallback, socket close during navigation, and SPA root 404s); none affected the Kanban request or rendered board.
