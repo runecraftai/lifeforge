@@ -34,12 +34,27 @@ jobs:
           docker compose down -v --remove-orphans
           docker compose up --build -d
           echo 'Waiting for database initialization...'
-          if ! docker compose wait db-init; then
-            echo 'LifeForge database initialization failed.'
-            docker compose ps
-            docker compose logs
-            exit 1
-          fi
+          db_init_status=''
+          for attempt in {1..60}; do
+            db_init_status=$(docker inspect --format '{{.State.Status}}' lifeforge-db-init 2>/dev/null || true)
+            if [ "$db_init_status" = 'exited' ]; then
+              db_init_exit_code=$(docker inspect --format '{{.State.ExitCode}}' lifeforge-db-init)
+              if [ "$db_init_exit_code" != '0' ]; then
+                echo "LifeForge database initialization failed (exit $db_init_exit_code)."
+                docker compose ps
+                docker compose logs
+                exit 1
+              fi
+              break
+            fi
+            if [ "$attempt" -eq 60 ]; then
+              echo "LifeForge database initialization did not finish (status: $db_init_status)."
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
           echo 'Restarting PocketBase to load the migrated schema...'
           docker compose restart db
           echo 'Waiting for client (port 5173)...'
