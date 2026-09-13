@@ -11,7 +11,7 @@ import { useCallback } from 'react'
 import { Link } from 'react-router'
 import { toast } from 'react-toastify'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 import type { WishlistList } from '..'
 import ModifyWishlistListModal from '../modals/ModifyWishlistModal'

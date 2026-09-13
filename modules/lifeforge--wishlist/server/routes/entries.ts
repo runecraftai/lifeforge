@@ -45,10 +45,10 @@ const scrapeExternal = forgeController
       provider: z.string()
     })
   })
-  .callback(async ({ pb, body: { url, provider } }) => {
+  .callback(async ({ pb, body: { url, provider }, core }) => {
     const result = await scrapeProviders[
       provider as keyof typeof scrapeProviders
-    ]?.(pb, url)
+    ]?.(pb, url, core)
 
     if (!result) {
       throw new Error('Error scraping provider')

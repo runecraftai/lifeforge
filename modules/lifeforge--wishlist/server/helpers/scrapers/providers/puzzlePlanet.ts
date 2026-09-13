@@ -1,8 +1,8 @@
-import { PBService } from '@functions/database'
+import type { IPBService } from '@lifeforge/pocketbase'
 import { JSDOM } from 'jsdom'
 
 const scrapePuzzlePlanet = async (
-  _: PBService,
+  _: IPBService<any>,
   url: string
 ): Promise<{
   name: string

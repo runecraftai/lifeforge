@@ -15,7 +15,7 @@ import { useCallback, useState } from 'react'
 import Zoom from 'react-medium-image-zoom'
 import { toast } from 'react-toastify'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 import type { WishlistEntry } from '..'
 import ModifyEntryModal from '../modals/ModifyEntryModal'

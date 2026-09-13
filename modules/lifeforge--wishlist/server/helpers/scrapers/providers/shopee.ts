@@ -1,5 +1,5 @@
-import { PBService } from '@functions/database'
-import { fetchAI } from '@functions/external/ai'
+import type { IPBService } from '@lifeforge/pocketbase'
+import type { CoreContext } from '@lifeforge/server-utils'
 import ogs from 'open-graph-scraper'
 import sharp from 'sharp'
 import { createWorker } from 'tesseract.js'
@@ -67,8 +67,9 @@ async function getImageURL(url: string): Promise<string> {
 }
 
 const scrapeShopee = async (
-  pb: PBService,
-  url: string
+  pb: IPBService<any>,
+  url: string,
+  core: CoreContext
 ): Promise<{
   name: string
   image: string
@@ -109,7 +110,7 @@ const scrapeShopee = async (
   ${result.ogTitle}`
 
     final.name =
-      (await fetchAI({
+      (await core.api.fetchAI({
         pb,
         provider: 'groq',
         model: 'llama-3.3-70b-versatile',

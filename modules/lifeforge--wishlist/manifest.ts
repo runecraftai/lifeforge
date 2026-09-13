@@ -1,5 +1,4 @@
 import { lazy } from 'react'
-import type { ModuleConfig } from 'shared'
 
 export default {
   name: 'Wishlist',
@@ -10,4 +9,4 @@ export default {
   },
   hasAI: true,
   category: 'Finance'
-} satisfies ModuleConfig
+}

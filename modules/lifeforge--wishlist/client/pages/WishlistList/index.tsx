@@ -11,9 +11,9 @@ import {
 } from '@lifeforge/ui'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { InferOutput } from 'shared'
+import type { InferOutput } from '@lifeforge/api'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 
 import WishlistListItem from './components/WishlistListItem'
 import ModifyWishlistListModal from './modals/ModifyWishlistModal'

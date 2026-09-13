@@ -1,18 +1,17 @@
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/manifest'
 import { Icon } from '@iconify/react'
 import {
   Button,
   ListboxInput,
   ListboxOption,
   ModalHeader,
-  TextInput
-,
+  TextInput,
   useModalStore
 } from '@lifeforge/ui'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { toast } from 'react-toastify'
-import { usePromiseLoading } from 'shared'
+import { usePromiseLoading } from '@lifeforge/api'
 
 import ModifyEntryModal from './ModifyEntryModal'
 

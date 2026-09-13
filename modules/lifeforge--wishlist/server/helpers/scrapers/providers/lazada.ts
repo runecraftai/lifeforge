@@ -1,10 +1,11 @@
-import { PBService } from '@functions/database'
-import { fetchAI } from '@functions/external/ai'
+import type { IPBService } from '@lifeforge/pocketbase'
+import type { CoreContext } from '@lifeforge/server-utils'
 import ogs from 'open-graph-scraper'
 
 const scrapeLazada = async (
-  pb: PBService,
-  url: string
+  pb: IPBService<any>,
+  url: string,
+  core: CoreContext
 ): Promise<{
   name: string
   image: string
@@ -42,7 +43,7 @@ const scrapeLazada = async (
   ${result.ogTitle}`
 
     final.name =
-      (await fetchAI({
+      (await core.api.fetchAI({
         pb,
         provider: 'groq',
         model: 'llama-3.3-70b-versatile',
