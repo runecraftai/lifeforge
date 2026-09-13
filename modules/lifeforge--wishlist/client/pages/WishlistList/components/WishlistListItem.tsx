@@ -1,5 +1,9 @@
 import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useCallback } from 'react'
+import { Link } from 'react-router'
+import { toast } from 'react-toastify'
+
 import {
   Card,
   ConfirmationModal,
@@ -7,9 +11,6 @@ import {
   ContextMenuItem,
   useModalStore
 } from '@lifeforge/ui'
-import { useCallback } from 'react'
-import { Link } from 'react-router'
-import { toast } from 'react-toastify'
 
 import { forgeAPI } from '@/manifest'
 
@@ -18,7 +19,6 @@ import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
 
 function WishlistListItem({ list }: { list: WishlistList }) {
   const queryClient = useQueryClient()
-
   const open = useModalStore(state => state.open)
 
   const deleteMutation = useMutation(

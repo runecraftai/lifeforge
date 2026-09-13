@@ -4,15 +4,9 @@
     "baseUrl": ".",
     "composite": false,
     "paths": {
-      "@": [
-        "./client/index"
-      ],
-      "@/*": [
-        "./client/*"
-      ]
+      "@": ["./client/index"],
+      "@/*": ["./client/*"]
     }
   },
-  "include": [
-    "./manifest.ts"
-  ]
+  "include": ["./manifest.ts"]
 }

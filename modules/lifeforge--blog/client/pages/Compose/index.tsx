@@ -1,11 +1,12 @@
+import { useState } from 'react'
+import { useQuill } from 'react-quilljs'
+import { useNavigate } from 'react-router'
+
 import {
   ContentWrapperWithSidebar,
   GoBackButton,
   LayoutWithSidebar
 } from '@lifeforge/ui'
-import { useState } from 'react'
-import { useQuill } from 'react-quilljs'
-import { useNavigate } from 'react-router'
 
 import Sidebar from './components/Sidebar'
 

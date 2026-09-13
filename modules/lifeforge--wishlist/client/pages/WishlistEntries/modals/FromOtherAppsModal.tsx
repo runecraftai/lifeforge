@@ -1,5 +1,9 @@
-import { forgeAPI } from '@/manifest'
 import { Icon } from '@iconify/react'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
+import { toast } from 'react-toastify'
+
+import { usePromiseLoading } from '@lifeforge/api'
 import {
   Button,
   ListboxInput,
@@ -8,10 +12,8 @@ import {
   TextInput,
   useModalStore
 } from '@lifeforge/ui'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import { toast } from 'react-toastify'
-import { usePromiseLoading } from '@lifeforge/api'
+
+import { forgeAPI } from '@/manifest'
 
 import ModifyEntryModal from './ModifyEntryModal'
 
@@ -38,11 +40,8 @@ const PROVIDERS = [
 
 function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
   const open = useModalStore(state => state.open)
-
   const { id } = useParams<{ id: string }>()
-
   const [provider, setProvider] = useState('')
-
   const [url, setUrl] = useState('')
 
   async function fetchData() {

@@ -1,7 +1,12 @@
-import { forgeAPI } from '@/manifest'
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
+import { toast } from 'react-toastify'
+
+import type { InferOutput } from '@lifeforge/api'
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Button,
   ContextMenuItem,
@@ -10,11 +15,8 @@ import {
   WithQuery,
   useModalStore
 } from '@lifeforge/ui'
-import { useModuleTranslation } from '@lifeforge/localization'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
-import { toast } from 'react-toastify'
-import type { InferOutput } from '@lifeforge/api'
+
+import { forgeAPI } from '@/manifest'
 
 import EntryList from './components/EntryList'
 import Header from './components/Header'
@@ -29,13 +31,9 @@ export type WishlistList = InferOutput<typeof forgeAPI.wishlist.lists.getById>
 
 function WishlistEntries() {
   const open = useModalStore(state => state.open)
-
   const navigate = useNavigate()
-
   const { t } = useModuleTranslation()
-
   const { id } = useParams<{ id: string }>()
-
   const [activeTab, setActiveTab] = useState('wishlist')
 
   const validQuery = useQuery(
@@ -66,7 +64,6 @@ function WishlistEntries() {
   )
 
   const [searchQuery, setSearchQuery] = useState('')
-
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   const filteredEntries = useMemo(() => {

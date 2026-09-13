@@ -2,6 +2,10 @@ import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { useCallback, useState } from 'react'
+import Zoom from 'react-medium-image-zoom'
+import { toast } from 'react-toastify'
+
 import {
   Button,
   Card,
@@ -11,9 +15,6 @@ import {
   ContextMenuItem,
   useModalStore
 } from '@lifeforge/ui'
-import { useCallback, useState } from 'react'
-import Zoom from 'react-medium-image-zoom'
-import { toast } from 'react-toastify'
 
 import { forgeAPI } from '@/manifest'
 
@@ -24,9 +25,7 @@ dayjs.extend(relativeTime)
 
 function EntryItem({ entry }: { entry: WishlistEntry }) {
   const open = useModalStore(state => state.open)
-
   const queryClient = useQueryClient()
-
   const [bought, setBought] = useState(entry.bought)
 
   const toggleBoughtMutation = useMutation(

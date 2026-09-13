@@ -1,5 +1,6 @@
-import type { IPBService } from '@lifeforge/pocketbase'
 import { JSDOM } from 'jsdom'
+
+import type { IPBService } from '@lifeforge/pocketbase'
 
 const scrapePuzzlePlanet = async (
   _: IPBService<any>,

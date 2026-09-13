@@ -1,5 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
+import { useCallback, useMemo, useState } from 'react'
+
+import type { InferOutput } from '@lifeforge/api'
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Button,
   EmptyStateScreen,
@@ -9,9 +13,6 @@ import {
   WithQuery,
   useModalStore
 } from '@lifeforge/ui'
-import { useModuleTranslation } from '@lifeforge/localization'
-import { useCallback, useMemo, useState } from 'react'
-import type { InferOutput } from '@lifeforge/api'
 
 import { forgeAPI } from '@/manifest'
 
@@ -24,13 +25,9 @@ export type WishlistList = InferOutput<
 
 function Wishlist() {
   const open = useModalStore(state => state.open)
-
   const { t } = useModuleTranslation()
-
   const listsQuery = useQuery(forgeAPI.wishlist.lists.list.queryOptions())
-
   const [searchQuery, setSearchQuery] = useState('')
-
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
   const filteredLists = useMemo(() => {

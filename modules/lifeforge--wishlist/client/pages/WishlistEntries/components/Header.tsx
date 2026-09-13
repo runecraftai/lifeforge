@@ -1,5 +1,9 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+import { useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Button,
   ContextMenu,
@@ -7,9 +11,6 @@ import {
   GoBackButton,
   useModalStore
 } from '@lifeforge/ui'
-import { useModuleTranslation } from '@lifeforge/localization'
-import { useCallback } from 'react'
-import { useNavigate, useParams } from 'react-router'
 
 import type { WishlistList } from '..'
 import FromOtherAppsModal from '../modals/FromOtherAppsModal'
@@ -21,11 +22,8 @@ function Header({
   wishlistListDetails: WishlistList
 }) {
   const open = useModalStore(state => state.open)
-
   const { t } = useModuleTranslation()
-
   const { id } = useParams<{ id: string }>()
-
   const navigate = useNavigate()
 
   const handleAddManually = useCallback(() => {

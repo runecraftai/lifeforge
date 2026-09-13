@@ -1,5 +1,5 @@
-import { EmptyStateScreen, Scrollbar, useModalStore } from '@lifeforge/ui'
 import { useModuleTranslation } from '@lifeforge/localization'
+import { EmptyStateScreen, Scrollbar, useModalStore } from '@lifeforge/ui'
 
 import type { WishlistEntry } from '..'
 import ModifyEntryModal from '../modals/ModifyEntryModal'
@@ -13,7 +13,6 @@ function EntryList({
   isTotallyEmpty: boolean
 }) {
   const open = useModalStore(state => state.open)
-
   const { t } = useModuleTranslation()
 
   if (isTotallyEmpty) {

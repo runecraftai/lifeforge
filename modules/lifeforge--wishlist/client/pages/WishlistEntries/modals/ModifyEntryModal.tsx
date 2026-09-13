@@ -1,9 +1,11 @@
-import { forgeAPI } from '@/manifest'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { FormModal, defineForm } from '@lifeforge/ui'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+
 import type { InferInput } from '@lifeforge/api'
+import { FormModal, defineForm } from '@lifeforge/ui'
+
+import { forgeAPI } from '@/manifest'
 
 import type { WishlistEntry } from '..'
 
@@ -18,7 +20,6 @@ function ModifyEntryModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
-
   const [fileRemoved, setFileRemoved] = useState(false)
 
   const mutation = useMutation(

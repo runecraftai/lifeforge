@@ -1,6 +1,7 @@
+import ogs from 'open-graph-scraper'
+
 import type { IPBService } from '@lifeforge/pocketbase'
 import type { CoreContext } from '@lifeforge/server-utils'
-import ogs from 'open-graph-scraper'
 
 const scrapeLazada = async (
   pb: IPBService<any>,

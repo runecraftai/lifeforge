@@ -1,8 +1,8 @@
 import z from 'zod'
 
 import forge from '../forge'
-import wishlistSchemas from '../schema'
 import scrapeProviders from '../helpers/scrapers'
+import wishlistSchemas from '../schema'
 
 export const listByListId = forge
   .query({
@@ -91,19 +91,30 @@ export const create = forge
       CREATED: wishlistSchemas.entries.schema
     }
   })
-  .callback(async ({ pb, body, media: { image }, core: { media: { retrieveMedia } }, response }) => {
-    const imageData = await retrieveMedia('image', image)
-    return response.created(
-      await pb.create
-        .collection('wishlist__entries')
-        .data({
-          ...body,
-          bought: false,
-          ...imageData
-        })
-        .execute()
-    )
-  })
+  .callback(
+    async ({
+      pb,
+      body,
+      media: { image },
+      core: {
+        media: { retrieveMedia }
+      },
+      response
+    }) => {
+      const imageData = await retrieveMedia('image', image)
+
+      return response.created(
+        await pb.create
+          .collection('wishlist__entries')
+          .data({
+            ...body,
+            bought: false,
+            ...imageData
+          })
+          .execute()
+      )
+    }
+  )
 
 export const update = forge
   .mutation({
@@ -132,29 +143,34 @@ export const update = forge
       OK: wishlistSchemas.entries.schema
     }
   })
-  .callback(async ({
-    pb,
-    query: { id },
-    body: { list, name, url, price },
-    media: { image },
-    core: { media: { retrieveMedia } },
-    response
-  }) => {
-    const imageData = await retrieveMedia('image', image)
-    return response.ok(
-      await pb.update
-        .collection('wishlist__entries')
-        .id(id)
-        .data({
-          list,
-          name,
-          url,
-          price,
-          ...imageData
-        })
-        .execute()
-    )
-  })
+  .callback(
+    async ({
+      pb,
+      query: { id },
+      body: { list, name, url, price },
+      media: { image },
+      core: {
+        media: { retrieveMedia }
+      },
+      response
+    }) => {
+      const imageData = await retrieveMedia('image', image)
+
+      return response.ok(
+        await pb.update
+          .collection('wishlist__entries')
+          .id(id)
+          .data({
+            list,
+            name,
+            url,
+            price,
+            ...imageData
+          })
+          .execute()
+      )
+    }
+  )
 
 export const updateBoughtStatus = forge
   .mutation({

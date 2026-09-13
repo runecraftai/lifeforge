@@ -1,1149 +1,1115 @@
 export const contract = {
-  "containers": {
-    "create": {
-      "method": "post",
-      "description": "Create a new container",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": {
-        "cover": {
-          "optional": true
+  containers: {
+    create: {
+      method: 'post',
+      description: 'Create a new container',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: {
+        cover: {
+          optional: true
         }
       },
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "icon": {
-              "type": "string"
+      input: {
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "icon",
-            "color",
-            "name",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'icon',
+            'color',
+            'name',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         }
       },
-      "output": {
-        "CREATED": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "icon": {
-              "type": "string"
+      output: {
+        CREATED: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "cover": {
-              "type": "string"
+            cover: {
+              type: 'string'
             },
-            "pinned": {
-              "type": "boolean"
+            pinned: {
+              type: 'boolean'
             },
-            "hidden": {
-              "type": "boolean"
+            hidden: {
+              type: 'boolean'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "icon",
-            "color",
-            "name",
-            "cover",
-            "pinned",
-            "hidden",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'icon',
+            'color',
+            'name',
+            'cover',
+            'pinned',
+            'hidden',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         }
       }
     },
-    "list": {
-      "method": "get",
-      "description": "Get all containers with stats",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "hidden": {
-              "type": "string"
+    list: {
+      method: 'get',
+      description: 'Get all containers with stats',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            hidden: {
+              type: 'string'
             }
           },
-          "additionalProperties": false
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string'
               },
-              "color": {
-                "type": "string"
+              color: {
+                type: 'string'
               },
-              "icon": {
-                "type": "string"
+              icon: {
+                type: 'string'
               },
-              "cover": {
-                "type": "string"
+              cover: {
+                type: 'string'
               },
-              "pinned": {
-                "type": "boolean"
+              pinned: {
+                type: 'boolean'
               },
-              "hidden": {
-                "type": "boolean"
+              hidden: {
+                type: 'boolean'
               },
-              "text_count": {
-                "type": "number"
+              text_count: {
+                type: 'number'
               },
-              "link_count": {
-                "type": "number"
+              link_count: {
+                type: 'number'
               },
-              "image_count": {
-                "type": "number"
+              image_count: {
+                type: 'number'
               },
-              "id": {
-                "type": "string"
+              id: {
+                type: 'string'
               },
-              "collectionId": {
-                "type": "string"
+              collectionId: {
+                type: 'string'
               },
-              "collectionName": {
-                "type": "string"
+              collectionName: {
+                type: 'string'
               }
             },
-            "required": [
-              "name",
-              "color",
-              "icon",
-              "cover",
-              "pinned",
-              "hidden",
-              "text_count",
-              "link_count",
-              "image_count",
-              "id",
-              "collectionId",
-              "collectionName"
+            required: [
+              'name',
+              'color',
+              'icon',
+              'cover',
+              'pinned',
+              'hidden',
+              'text_count',
+              'link_count',
+              'image_count',
+              'id',
+              'collectionId',
+              'collectionName'
             ],
-            "additionalProperties": false
+            additionalProperties: false
           }
         }
       }
     },
-    "remove": {
-      "method": "post",
-      "description": "Delete a container",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    remove: {
+      method: 'post',
+      description: 'Delete a container',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "NO_CONTENT": true,
-        "NOT_FOUND": true
+      output: {
+        NO_CONTENT: true,
+        NOT_FOUND: true
       }
     },
-    "toggleHide": {
-      "method": "post",
-      "description": "Toggle visibility of a container",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    toggleHide: {
+      method: 'post',
+      description: 'Toggle visibility of a container',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "icon": {
-              "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "cover": {
-              "type": "string"
+            cover: {
+              type: 'string'
             },
-            "pinned": {
-              "type": "boolean"
+            pinned: {
+              type: 'boolean'
             },
-            "hidden": {
-              "type": "boolean"
+            hidden: {
+              type: 'boolean'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "icon",
-            "color",
-            "name",
-            "cover",
-            "pinned",
-            "hidden",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'icon',
+            'color',
+            'name',
+            'cover',
+            'pinned',
+            'hidden',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "togglePin": {
-      "method": "post",
-      "description": "Toggle pin status of a container",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    togglePin: {
+      method: 'post',
+      description: 'Toggle pin status of a container',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "icon": {
-              "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "cover": {
-              "type": "string"
+            cover: {
+              type: 'string'
             },
-            "pinned": {
-              "type": "boolean"
+            pinned: {
+              type: 'boolean'
             },
-            "hidden": {
-              "type": "boolean"
+            hidden: {
+              type: 'boolean'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "icon",
-            "color",
-            "name",
-            "cover",
-            "pinned",
-            "hidden",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'icon',
+            'color',
+            'name',
+            'cover',
+            'pinned',
+            'hidden',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "update": {
-      "method": "post",
-      "description": "Update an existing container",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": {
-        "cover": {
-          "optional": true
+    update: {
+      method: 'post',
+      description: 'Update an existing container',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: {
+        cover: {
+          optional: true
         }
       },
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         },
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "icon": {
-              "type": "string"
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "icon",
-            "color",
-            "name",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'icon',
+            'color',
+            'name',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "icon": {
-              "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "cover": {
-              "type": "string"
+            cover: {
+              type: 'string'
             },
-            "pinned": {
-              "type": "boolean"
+            pinned: {
+              type: 'boolean'
             },
-            "hidden": {
-              "type": "boolean"
+            hidden: {
+              type: 'boolean'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "icon",
-            "color",
-            "name",
-            "cover",
-            "pinned",
-            "hidden",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'icon',
+            'color',
+            'name',
+            'cover',
+            'pinned',
+            'hidden',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "validate": {
-      "method": "get",
-      "description": "Validate if a container exists",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    validate: {
+      method: 'get',
+      description: 'Validate if a container exists',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "boolean"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'boolean'
         }
       }
     }
   },
-  "folders": {
-    "create": {
-      "method": "post",
-      "description": "Create a new folder",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+  folders: {
+    create: {
+      method: 'post',
+      description: 'Create a new folder',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "parent": {
-              "type": "string"
+            parent: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "container",
-            "name",
-            "color",
-            "icon",
-            "parent",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'container',
+            'name',
+            'color',
+            'icon',
+            'parent',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         }
       },
-      "output": {
-        "CREATED": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+      output: {
+        CREATED: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "parent": {
-              "type": "string"
+            parent: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "container",
-            "name",
-            "color",
-            "icon",
-            "parent",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'container',
+            'name',
+            'color',
+            'icon',
+            'parent',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "list": {
-      "method": "get",
-      "description": "Get all folders in a path",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+    list: {
+      method: 'get',
+      description: 'Get all folders in a path',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "path": {
-              "type": "string"
+            path: {
+              type: 'string'
             }
           },
-          "required": [
-            "container",
-            "path"
-          ],
-          "additionalProperties": false
+          required: ['container', 'path'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "container": {
-                "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              container: {
+                type: 'string'
               },
-              "name": {
-                "type": "string"
+              name: {
+                type: 'string'
               },
-              "color": {
-                "type": "string"
+              color: {
+                type: 'string'
               },
-              "icon": {
-                "type": "string"
+              icon: {
+                type: 'string'
               },
-              "parent": {
-                "type": "string"
+              parent: {
+                type: 'string'
               },
-              "id": {
-                "type": "string"
+              id: {
+                type: 'string'
               },
-              "collectionId": {
-                "type": "string"
+              collectionId: {
+                type: 'string'
               },
-              "collectionName": {
-                "type": "string"
+              collectionName: {
+                type: 'string'
               }
             },
-            "required": [
-              "container",
-              "name",
-              "color",
-              "icon",
-              "parent",
-              "id",
-              "collectionId",
-              "collectionName"
+            required: [
+              'container',
+              'name',
+              'color',
+              'icon',
+              'parent',
+              'id',
+              'collectionId',
+              'collectionName'
             ],
-            "additionalProperties": false
+            additionalProperties: false
           }
         },
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
+        BAD_REQUEST: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'string'
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "moveTo": {
-      "method": "post",
-      "description": "Move folder to another parent",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    moveTo: {
+      method: 'post',
+      description: 'Move folder to another parent',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         },
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "target": {
-              "type": "string"
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            target: {
+              type: 'string'
             }
           },
-          "required": [
-            "target"
-          ],
-          "additionalProperties": false
+          required: ['target'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "parent": {
-              "type": "string"
+            parent: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "container",
-            "name",
-            "color",
-            "icon",
-            "parent",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'container',
+            'name',
+            'color',
+            'icon',
+            'parent',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "remove": {
-      "method": "post",
-      "description": "Delete a folder",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    remove: {
+      method: 'post',
+      description: 'Delete a folder',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "NO_CONTENT": true,
-        "NOT_FOUND": true
+      output: {
+        NO_CONTENT: true,
+        NOT_FOUND: true
       }
     },
-    "removeFromParent": {
-      "method": "post",
-      "description": "Move folder to parent folder",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    removeFromParent: {
+      method: 'post',
+      description: 'Move folder to parent folder',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "parent": {
-              "type": "string"
+            parent: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "container",
-            "name",
-            "color",
-            "icon",
-            "parent",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'container',
+            'name',
+            'color',
+            'icon',
+            'parent',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
+        BAD_REQUEST: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'string'
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "update": {
-      "method": "post",
-      "description": "Update folder details",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    update: {
+      method: 'post',
+      description: 'Update folder details',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         },
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "name",
-            "color",
-            "icon",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'name',
+            'color',
+            'icon',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "name": {
-              "type": "string"
+            name: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "parent": {
-              "type": "string"
+            parent: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "container",
-            "name",
-            "color",
-            "icon",
-            "parent",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'container',
+            'name',
+            'color',
+            'icon',
+            'parent',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     }
   },
-  "ideas": {
-    "archive": {
-      "method": "post",
-      "description": "Toggle archive status of an idea",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+  ideas: {
+    archive: {
+      method: 'post',
+      description: 'Toggle archive status of an idea',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "text",
-                "image",
-                "link"
-              ]
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            type: {
+              type: 'string',
+              enum: ['text', 'image', 'link']
             },
-            "container": {
-              "type": "string"
+            container: {
+              type: 'string'
             },
-            "folder": {
-              "type": "string"
+            folder: {
+              type: 'string'
             },
-            "pinned": {
-              "type": "boolean"
+            pinned: {
+              type: 'boolean'
             },
-            "archived": {
-              "type": "boolean"
+            archived: {
+              type: 'boolean'
             },
-            "tags": {},
-            "created": {
-              "type": "string"
+            tags: {},
+            created: {
+              type: 'string'
             },
-            "updated": {
-              "type": "string"
+            updated: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "type",
-            "container",
-            "folder",
-            "pinned",
-            "archived",
-            "tags",
-            "created",
-            "updated",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'type',
+            'container',
+            'folder',
+            'pinned',
+            'archived',
+            'tags',
+            'created',
+            'updated',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "create": {
-      "method": "post",
-      "description": "Create a new idea entry",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": {
-        "image": {
-          "optional": true
+    create: {
+      method: 'post',
+      description: 'Create a new idea entry',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: {
+        image: {
+          optional: true
         }
       },
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "allOf": [
+      input: {
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          allOf: [
             {
-              "type": "object",
-              "properties": {
-                "container": {
-                  "type": "string"
+              type: 'object',
+              properties: {
+                container: {
+                  type: 'string'
                 },
-                "folder": {
-                  "type": "string"
+                folder: {
+                  type: 'string'
                 },
-                "tags": {},
-                "id": {
-                  "type": "string"
+                tags: {},
+                id: {
+                  type: 'string'
                 },
-                "collectionId": {
-                  "type": "string"
+                collectionId: {
+                  type: 'string'
                 },
-                "collectionName": {
-                  "type": "string"
+                collectionName: {
+                  type: 'string'
                 }
               },
-              "required": [
-                "container",
-                "folder",
-                "tags",
-                "id",
-                "collectionId",
-                "collectionName"
+              required: [
+                'container',
+                'folder',
+                'tags',
+                'id',
+                'collectionId',
+                'collectionName'
               ]
             },
             {
-              "anyOf": [
+              anyOf: [
                 {
-                  "type": "object",
-                  "properties": {
-                    "content": {
-                      "type": "string"
+                  type: 'object',
+                  properties: {
+                    content: {
+                      type: 'string'
                     },
-                    "id": {
-                      "type": "string"
+                    id: {
+                      type: 'string'
                     },
-                    "collectionId": {
-                      "type": "string"
+                    collectionId: {
+                      type: 'string'
                     },
-                    "collectionName": {
-                      "type": "string"
+                    collectionName: {
+                      type: 'string'
                     },
-                    "type": {
-                      "type": "string",
-                      "const": "text"
+                    type: {
+                      type: 'string',
+                      const: 'text'
                     }
                   },
-                  "required": [
-                    "content",
-                    "id",
-                    "collectionId",
-                    "collectionName",
-                    "type"
+                  required: [
+                    'content',
+                    'id',
+                    'collectionId',
+                    'collectionName',
+                    'type'
                   ]
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'string'
                     },
-                    "collectionId": {
-                      "type": "string"
+                    collectionId: {
+                      type: 'string'
                     },
-                    "collectionName": {
-                      "type": "string"
+                    collectionName: {
+                      type: 'string'
                     },
-                    "type": {
-                      "type": "string",
-                      "const": "image"
+                    type: {
+                      type: 'string',
+                      const: 'image'
                     }
                   },
-                  "required": [
-                    "id",
-                    "collectionId",
-                    "collectionName",
-                    "type"
-                  ]
+                  required: ['id', 'collectionId', 'collectionName', 'type']
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "link": {
-                      "type": "string",
-                      "format": "uri"
+                  type: 'object',
+                  properties: {
+                    link: {
+                      type: 'string',
+                      format: 'uri'
                     },
-                    "id": {
-                      "type": "string"
+                    id: {
+                      type: 'string'
                     },
-                    "collectionId": {
-                      "type": "string"
+                    collectionId: {
+                      type: 'string'
                     },
-                    "collectionName": {
-                      "type": "string"
+                    collectionName: {
+                      type: 'string'
                     },
-                    "type": {
-                      "type": "string",
-                      "const": "link"
+                    type: {
+                      type: 'string',
+                      const: 'link'
                     }
                   },
-                  "required": [
-                    "link",
-                    "id",
-                    "collectionId",
-                    "collectionName",
-                    "type"
+                  required: [
+                    'link',
+                    'id',
+                    'collectionId',
+                    'collectionName',
+                    'type'
                   ]
                 }
               ]
@@ -1151,263 +1117,253 @@ export const contract = {
           ]
         }
       },
-      "output": {
-        "CREATED": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "text",
-                "image",
-                "link"
-              ]
+      output: {
+        CREATED: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            type: {
+              type: 'string',
+              enum: ['text', 'image', 'link']
             },
-            "container": {
-              "type": "string"
+            container: {
+              type: 'string'
             },
-            "folder": {
-              "type": "string"
+            folder: {
+              type: 'string'
             },
-            "pinned": {
-              "type": "boolean"
+            pinned: {
+              type: 'boolean'
             },
-            "archived": {
-              "type": "boolean"
+            archived: {
+              type: 'boolean'
             },
-            "tags": {},
-            "created": {
-              "type": "string"
+            tags: {},
+            created: {
+              type: 'string'
             },
-            "updated": {
-              "type": "string"
+            updated: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "type",
-            "container",
-            "folder",
-            "pinned",
-            "archived",
-            "tags",
-            "created",
-            "updated",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'type',
+            'container',
+            'folder',
+            'pinned',
+            'archived',
+            'tags',
+            'created',
+            'updated',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
+        BAD_REQUEST: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'string'
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "list": {
-      "method": "get",
-      "description": "Get all ideas from a folder or idea container",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+    list: {
+      method: 'get',
+      description: 'Get all ideas from a folder or idea container',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "path": {
-              "type": "string"
+            path: {
+              type: 'string'
             },
-            "archived": {
-              "type": "string"
+            archived: {
+              type: 'string'
             }
           },
-          "required": [
-            "container",
-            "path"
-          ],
-          "additionalProperties": false
+          required: ['container', 'path'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "allOf": [
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'array',
+          items: {
+            allOf: [
               {
-                "type": "object",
-                "properties": {
-                  "container": {
-                    "type": "string"
+                type: 'object',
+                properties: {
+                  container: {
+                    type: 'string'
                   },
-                  "folder": {
-                    "type": "string"
+                  folder: {
+                    type: 'string'
                   },
-                  "pinned": {
-                    "type": "boolean"
+                  pinned: {
+                    type: 'boolean'
                   },
-                  "archived": {
-                    "type": "boolean"
+                  archived: {
+                    type: 'boolean'
                   },
-                  "tags": {},
-                  "created": {
-                    "type": "string"
+                  tags: {},
+                  created: {
+                    type: 'string'
                   },
-                  "updated": {
-                    "type": "string"
+                  updated: {
+                    type: 'string'
                   },
-                  "id": {
-                    "type": "string"
+                  id: {
+                    type: 'string'
                   },
-                  "collectionId": {
-                    "type": "string"
+                  collectionId: {
+                    type: 'string'
                   },
-                  "collectionName": {
-                    "type": "string"
+                  collectionName: {
+                    type: 'string'
                   }
                 },
-                "required": [
-                  "container",
-                  "folder",
-                  "pinned",
-                  "archived",
-                  "tags",
-                  "created",
-                  "updated",
-                  "id",
-                  "collectionId",
-                  "collectionName"
+                required: [
+                  'container',
+                  'folder',
+                  'pinned',
+                  'archived',
+                  'tags',
+                  'created',
+                  'updated',
+                  'id',
+                  'collectionId',
+                  'collectionName'
                 ]
               },
               {
-                "anyOf": [
+                anyOf: [
                   {
-                    "type": "object",
-                    "properties": {
-                      "base_entry": {
-                        "type": "string"
+                    type: 'object',
+                    properties: {
+                      base_entry: {
+                        type: 'string'
                       },
-                      "content": {
-                        "type": "string"
+                      content: {
+                        type: 'string'
                       },
-                      "id": {
-                        "type": "string"
+                      id: {
+                        type: 'string'
                       },
-                      "collectionId": {
-                        "type": "string"
+                      collectionId: {
+                        type: 'string'
                       },
-                      "collectionName": {
-                        "type": "string"
+                      collectionName: {
+                        type: 'string'
                       },
-                      "type": {
-                        "type": "string",
-                        "const": "text"
+                      type: {
+                        type: 'string',
+                        const: 'text'
                       }
                     },
-                    "required": [
-                      "base_entry",
-                      "content",
-                      "id",
-                      "collectionId",
-                      "collectionName",
-                      "type"
+                    required: [
+                      'base_entry',
+                      'content',
+                      'id',
+                      'collectionId',
+                      'collectionName',
+                      'type'
                     ]
                   },
                   {
-                    "type": "object",
-                    "properties": {
-                      "image": {
-                        "type": "string"
+                    type: 'object',
+                    properties: {
+                      image: {
+                        type: 'string'
                       },
-                      "base_entry": {
-                        "type": "string"
+                      base_entry: {
+                        type: 'string'
                       },
-                      "id": {
-                        "type": "string"
+                      id: {
+                        type: 'string'
                       },
-                      "collectionId": {
-                        "type": "string"
+                      collectionId: {
+                        type: 'string'
                       },
-                      "collectionName": {
-                        "type": "string"
+                      collectionName: {
+                        type: 'string'
                       },
-                      "type": {
-                        "type": "string",
-                        "const": "image"
+                      type: {
+                        type: 'string',
+                        const: 'image'
                       },
-                      "child": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
+                      child: {
+                        type: 'object',
+                        properties: {
+                          id: {
+                            type: 'string'
                           },
-                          "collectionId": {
-                            "type": "string"
+                          collectionId: {
+                            type: 'string'
                           }
                         },
-                        "required": [
-                          "id",
-                          "collectionId"
-                        ]
+                        required: ['id', 'collectionId']
                       }
                     },
-                    "required": [
-                      "image",
-                      "base_entry",
-                      "id",
-                      "collectionId",
-                      "collectionName",
-                      "type",
-                      "child"
+                    required: [
+                      'image',
+                      'base_entry',
+                      'id',
+                      'collectionId',
+                      'collectionName',
+                      'type',
+                      'child'
                     ]
                   },
                   {
-                    "type": "object",
-                    "properties": {
-                      "link": {
-                        "type": "string",
-                        "format": "uri"
+                    type: 'object',
+                    properties: {
+                      link: {
+                        type: 'string',
+                        format: 'uri'
                       },
-                      "base_entry": {
-                        "type": "string"
+                      base_entry: {
+                        type: 'string'
                       },
-                      "id": {
-                        "type": "string"
+                      id: {
+                        type: 'string'
                       },
-                      "collectionId": {
-                        "type": "string"
+                      collectionId: {
+                        type: 'string'
                       },
-                      "collectionName": {
-                        "type": "string"
+                      collectionName: {
+                        type: 'string'
                       },
-                      "type": {
-                        "type": "string",
-                        "const": "link"
+                      type: {
+                        type: 'string',
+                        const: 'link'
                       }
                     },
-                    "required": [
-                      "link",
-                      "base_entry",
-                      "id",
-                      "collectionId",
-                      "collectionName",
-                      "type"
+                    required: [
+                      'link',
+                      'base_entry',
+                      'id',
+                      'collectionId',
+                      'collectionName',
+                      'type'
                     ]
                   }
                 ]
@@ -1415,323 +1371,297 @@ export const contract = {
             ]
           }
         },
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
+        BAD_REQUEST: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'string'
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "moveTo": {
-      "method": "post",
-      "description": "Move an idea to another folder",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    moveTo: {
+      method: 'post',
+      description: 'Move an idea to another folder',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         },
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "target": {
-              "type": "string"
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            target: {
+              type: 'string'
             }
           },
-          "required": [
-            "target"
-          ],
-          "additionalProperties": false
+          required: ['target'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "NO_CONTENT": true,
-        "NOT_FOUND": true
+      output: {
+        NO_CONTENT: true,
+        NOT_FOUND: true
       }
     },
-    "pin": {
-      "method": "post",
-      "description": "Toggle pin status of an idea",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    pin: {
+      method: 'post',
+      description: 'Toggle pin status of an idea',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "text",
-                "image",
-                "link"
-              ]
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            type: {
+              type: 'string',
+              enum: ['text', 'image', 'link']
             },
-            "container": {
-              "type": "string"
+            container: {
+              type: 'string'
             },
-            "folder": {
-              "type": "string"
+            folder: {
+              type: 'string'
             },
-            "pinned": {
-              "type": "boolean"
+            pinned: {
+              type: 'boolean'
             },
-            "archived": {
-              "type": "boolean"
+            archived: {
+              type: 'boolean'
             },
-            "tags": {},
-            "created": {
-              "type": "string"
+            tags: {},
+            created: {
+              type: 'string'
             },
-            "updated": {
-              "type": "string"
+            updated: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "type",
-            "container",
-            "folder",
-            "pinned",
-            "archived",
-            "tags",
-            "created",
-            "updated",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'type',
+            'container',
+            'folder',
+            'pinned',
+            'archived',
+            'tags',
+            'created',
+            'updated',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "remove": {
-      "method": "post",
-      "description": "Delete an idea",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    remove: {
+      method: 'post',
+      description: 'Delete an idea',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "NO_CONTENT": true,
-        "NOT_FOUND": true
+      output: {
+        NO_CONTENT: true,
+        NOT_FOUND: true
       }
     },
-    "removeFromParent": {
-      "method": "post",
-      "description": "Move idea to parent folder",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    removeFromParent: {
+      method: 'post',
+      description: 'Move idea to parent folder',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "NO_CONTENT": true,
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
+      output: {
+        NO_CONTENT: true,
+        BAD_REQUEST: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'string'
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "update": {
-      "method": "post",
-      "description": "Update an existing idea",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": {
-        "image": {
-          "optional": true
+    update: {
+      method: 'post',
+      description: 'Update an existing idea',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: {
+        image: {
+          optional: true
         }
       },
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         },
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "allOf": [
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          allOf: [
             {
-              "type": "object",
-              "properties": {
-                "tags": {},
-                "id": {
-                  "type": "string"
+              type: 'object',
+              properties: {
+                tags: {},
+                id: {
+                  type: 'string'
                 },
-                "collectionId": {
-                  "type": "string"
+                collectionId: {
+                  type: 'string'
                 },
-                "collectionName": {
-                  "type": "string"
+                collectionName: {
+                  type: 'string'
                 }
               },
-              "required": [
-                "tags",
-                "id",
-                "collectionId",
-                "collectionName"
-              ]
+              required: ['tags', 'id', 'collectionId', 'collectionName']
             },
             {
-              "anyOf": [
+              anyOf: [
                 {
-                  "type": "object",
-                  "properties": {
-                    "content": {
-                      "type": "string"
+                  type: 'object',
+                  properties: {
+                    content: {
+                      type: 'string'
                     },
-                    "id": {
-                      "type": "string"
+                    id: {
+                      type: 'string'
                     },
-                    "collectionId": {
-                      "type": "string"
+                    collectionId: {
+                      type: 'string'
                     },
-                    "collectionName": {
-                      "type": "string"
+                    collectionName: {
+                      type: 'string'
                     },
-                    "type": {
-                      "type": "string",
-                      "const": "text"
+                    type: {
+                      type: 'string',
+                      const: 'text'
                     }
                   },
-                  "required": [
-                    "content",
-                    "id",
-                    "collectionId",
-                    "collectionName",
-                    "type"
+                  required: [
+                    'content',
+                    'id',
+                    'collectionId',
+                    'collectionName',
+                    'type'
                   ]
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'string'
                     },
-                    "collectionId": {
-                      "type": "string"
+                    collectionId: {
+                      type: 'string'
                     },
-                    "collectionName": {
-                      "type": "string"
+                    collectionName: {
+                      type: 'string'
                     },
-                    "type": {
-                      "type": "string",
-                      "const": "image"
+                    type: {
+                      type: 'string',
+                      const: 'image'
                     }
                   },
-                  "required": [
-                    "id",
-                    "collectionId",
-                    "collectionName",
-                    "type"
-                  ]
+                  required: ['id', 'collectionId', 'collectionName', 'type']
                 },
                 {
-                  "type": "object",
-                  "properties": {
-                    "link": {
-                      "type": "string",
-                      "format": "uri"
+                  type: 'object',
+                  properties: {
+                    link: {
+                      type: 'string',
+                      format: 'uri'
                     },
-                    "id": {
-                      "type": "string"
+                    id: {
+                      type: 'string'
                     },
-                    "collectionId": {
-                      "type": "string"
+                    collectionId: {
+                      type: 'string'
                     },
-                    "collectionName": {
-                      "type": "string"
+                    collectionName: {
+                      type: 'string'
                     },
-                    "type": {
-                      "type": "string",
-                      "const": "link"
+                    type: {
+                      type: 'string',
+                      const: 'link'
                     }
                   },
-                  "required": [
-                    "link",
-                    "id",
-                    "collectionId",
-                    "collectionName",
-                    "type"
+                  required: [
+                    'link',
+                    'id',
+                    'collectionId',
+                    'collectionName',
+                    'type'
                   ]
                 }
               ]
@@ -1739,691 +1669,668 @@ export const contract = {
           ]
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "text",
-                "image",
-                "link"
-              ]
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            type: {
+              type: 'string',
+              enum: ['text', 'image', 'link']
             },
-            "container": {
-              "type": "string"
+            container: {
+              type: 'string'
             },
-            "folder": {
-              "type": "string"
+            folder: {
+              type: 'string'
             },
-            "pinned": {
-              "type": "boolean"
+            pinned: {
+              type: 'boolean'
             },
-            "archived": {
-              "type": "boolean"
+            archived: {
+              type: 'boolean'
             },
-            "tags": {},
-            "created": {
-              "type": "string"
+            tags: {},
+            created: {
+              type: 'string'
             },
-            "updated": {
-              "type": "string"
+            updated: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "type",
-            "container",
-            "folder",
-            "pinned",
-            "archived",
-            "tags",
-            "created",
-            "updated",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'type',
+            'container',
+            'folder',
+            'pinned',
+            'archived',
+            'tags',
+            'created',
+            'updated',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
+        BAD_REQUEST: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'string'
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     }
   },
-  "tags": {
-    "create": {
-      "method": "post",
-      "description": "Create a new tag",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
+  tags: {
+    create: {
+      method: 'post',
+      description: 'Create a new tag',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "container": {
-              "type": "string"
+            container: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "name",
-            "icon",
-            "color",
-            "container",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'name',
+            'icon',
+            'color',
+            'container',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         }
       },
-      "output": {
-        "CREATED": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
+      output: {
+        CREATED: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "container": {
-              "type": "string"
+            container: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "name",
-            "icon",
-            "color",
-            "container",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'name',
+            'icon',
+            'color',
+            'container',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "list": {
-      "method": "get",
-      "description": "Get all tags in a container",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+    list: {
+      method: 'get',
+      description: 'Get all tags in a container',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             }
           },
-          "required": [
-            "container"
-          ],
-          "additionalProperties": false
+          required: ['container'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string'
               },
-              "color": {
-                "type": "string"
+              color: {
+                type: 'string'
               },
-              "icon": {
-                "type": "string"
+              icon: {
+                type: 'string'
               },
-              "container": {
-                "type": "string"
+              container: {
+                type: 'string'
               },
-              "amount": {
-                "type": "number"
+              amount: {
+                type: 'number'
               },
-              "id": {
-                "type": "string"
+              id: {
+                type: 'string'
               },
-              "collectionId": {
-                "type": "string"
+              collectionId: {
+                type: 'string'
               },
-              "collectionName": {
-                "type": "string"
+              collectionName: {
+                type: 'string'
               }
             },
-            "required": [
-              "name",
-              "color",
-              "icon",
-              "container",
-              "amount",
-              "id",
-              "collectionId",
-              "collectionName"
+            required: [
+              'name',
+              'color',
+              'icon',
+              'container',
+              'amount',
+              'id',
+              'collectionId',
+              'collectionName'
             ],
-            "additionalProperties": false
+            additionalProperties: false
           }
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "remove": {
-      "method": "post",
-      "description": "Delete a tag",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    remove: {
+      method: 'post',
+      description: 'Delete a tag',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "NO_CONTENT": true,
-        "NOT_FOUND": true
+      output: {
+        NO_CONTENT: true,
+        NOT_FOUND: true
       }
     },
-    "update": {
-      "method": "post",
-      "description": "Update an existing tag",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    update: {
+      method: 'post',
+      description: 'Update an existing tag',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         },
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "name",
-            "icon",
-            "color",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'name',
+            'icon',
+            'color',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string'
             },
-            "icon": {
-              "type": "string"
+            icon: {
+              type: 'string'
             },
-            "color": {
-              "type": "string"
+            color: {
+              type: 'string'
             },
-            "container": {
-              "type": "string"
+            container: {
+              type: 'string'
             },
-            "id": {
-              "type": "string"
+            id: {
+              type: 'string'
             },
-            "collectionId": {
-              "type": "string"
+            collectionId: {
+              type: 'string'
             },
-            "collectionName": {
-              "type": "string"
+            collectionName: {
+              type: 'string'
             }
           },
-          "required": [
-            "name",
-            "icon",
-            "color",
-            "container",
-            "id",
-            "collectionId",
-            "collectionName"
+          required: [
+            'name',
+            'icon',
+            'color',
+            'container',
+            'id',
+            'collectionId',
+            'collectionName'
           ],
-          "additionalProperties": false
+          additionalProperties: false
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     }
   },
-  "misc": {
-    "checkValid": {
-      "method": "get",
-      "description": "Validate if a folder path exists",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+  misc: {
+    checkValid: {
+      method: 'get',
+      description: 'Validate if a folder path exists',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "path": {
-              "type": "string"
+            path: {
+              type: 'string'
             }
           },
-          "required": [
-            "container",
-            "path"
-          ],
-          "additionalProperties": false
+          required: ['container', 'path'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "boolean"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'boolean'
         }
       }
     },
-    "getOgData": {
-      "method": "get",
-      "description": "Get Open Graph metadata for a link entry",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
+    getOgData: {
+      method: 'get',
+      description: 'Get Open Graph metadata for a link entry',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string'
             }
           },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
+          required: ['id'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema'
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "getPath": {
-      "method": "get",
-      "description": "Get path information for a container or folder",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "string"
+    getPath: {
+      method: 'get',
+      description: 'Get path information for a container or folder',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'string'
             },
-            "folder": {
-              "type": "string"
+            folder: {
+              type: 'string'
             }
           },
-          "required": [
-            "container"
-          ],
-          "additionalProperties": false
+          required: ['container'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "container": {
-              "type": "object",
-              "properties": {
-                "icon": {
-                  "type": "string"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            container: {
+              type: 'object',
+              properties: {
+                icon: {
+                  type: 'string'
                 },
-                "color": {
-                  "type": "string"
+                color: {
+                  type: 'string'
                 },
-                "name": {
-                  "type": "string"
+                name: {
+                  type: 'string'
                 },
-                "cover": {
-                  "type": "string"
+                cover: {
+                  type: 'string'
                 },
-                "pinned": {
-                  "type": "boolean"
+                pinned: {
+                  type: 'boolean'
                 },
-                "hidden": {
-                  "type": "boolean"
+                hidden: {
+                  type: 'boolean'
                 },
-                "id": {
-                  "type": "string"
+                id: {
+                  type: 'string'
                 },
-                "collectionId": {
-                  "type": "string"
+                collectionId: {
+                  type: 'string'
                 },
-                "collectionName": {
-                  "type": "string"
+                collectionName: {
+                  type: 'string'
                 }
               },
-              "required": [
-                "icon",
-                "color",
-                "name",
-                "cover",
-                "pinned",
-                "hidden",
-                "id",
-                "collectionId",
-                "collectionName"
+              required: [
+                'icon',
+                'color',
+                'name',
+                'cover',
+                'pinned',
+                'hidden',
+                'id',
+                'collectionId',
+                'collectionName'
               ],
-              "additionalProperties": false
+              additionalProperties: false
             },
-            "route": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "container": {
-                    "type": "string"
+            route: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  container: {
+                    type: 'string'
                   },
-                  "name": {
-                    "type": "string"
+                  name: {
+                    type: 'string'
                   },
-                  "color": {
-                    "type": "string"
+                  color: {
+                    type: 'string'
                   },
-                  "icon": {
-                    "type": "string"
+                  icon: {
+                    type: 'string'
                   },
-                  "parent": {
-                    "type": "string"
+                  parent: {
+                    type: 'string'
                   },
-                  "id": {
-                    "type": "string"
+                  id: {
+                    type: 'string'
                   },
-                  "collectionId": {
-                    "type": "string"
+                  collectionId: {
+                    type: 'string'
                   },
-                  "collectionName": {
-                    "type": "string"
+                  collectionName: {
+                    type: 'string'
                   }
                 },
-                "required": [
-                  "container",
-                  "name",
-                  "color",
-                  "icon",
-                  "parent",
-                  "id",
-                  "collectionId",
-                  "collectionName"
+                required: [
+                  'container',
+                  'name',
+                  'color',
+                  'icon',
+                  'parent',
+                  'id',
+                  'collectionId',
+                  'collectionName'
                 ],
-                "additionalProperties": false
+                additionalProperties: false
               }
             }
           },
-          "required": [
-            "container",
-            "route"
-          ],
-          "additionalProperties": false
+          required: ['container', 'route'],
+          additionalProperties: false
         },
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
+        BAD_REQUEST: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'string'
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     },
-    "search": {
-      "method": "get",
-      "description": "Search entries in a container",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "q": {
-              "type": "string"
+    search: {
+      method: 'get',
+      description: 'Search entries in a container',
+      noAuth: false,
+      encrypted: true,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            q: {
+              type: 'string'
             },
-            "container": {
-              "type": "string"
+            container: {
+              type: 'string'
             },
-            "tags": {
-              "type": "string"
+            tags: {
+              type: 'string'
             },
-            "folder": {
-              "type": "string"
+            folder: {
+              type: 'string'
             }
           },
-          "required": [
-            "q",
-            "container"
-          ],
-          "additionalProperties": false
+          required: ['q', 'container'],
+          additionalProperties: false
         }
       },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "const": "text"
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              type: {
+                type: 'string',
+                const: 'text'
               },
-              "container": {
-                "type": "string"
+              container: {
+                type: 'string'
               },
-              "folder": {
-                "type": "string"
+              folder: {
+                type: 'string'
               },
-              "pinned": {
-                "type": "boolean"
+              pinned: {
+                type: 'boolean'
               },
-              "archived": {
-                "type": "boolean"
+              archived: {
+                type: 'boolean'
               },
-              "tags": {},
-              "created": {
-                "type": "string"
+              tags: {},
+              created: {
+                type: 'string'
               },
-              "updated": {
-                "type": "string"
+              updated: {
+                type: 'string'
               },
-              "id": {
-                "type": "string"
+              id: {
+                type: 'string'
               },
-              "collectionId": {
-                "type": "string"
+              collectionId: {
+                type: 'string'
               },
-              "collectionName": {
-                "type": "string"
+              collectionName: {
+                type: 'string'
               },
-              "content": {
-                "type": "string"
+              content: {
+                type: 'string'
               },
-              "fullPath": {
-                "type": "string"
+              fullPath: {
+                type: 'string'
               },
-              "expand": {
-                "type": "object",
-                "properties": {
-                  "folder": {
-                    "type": "object",
-                    "properties": {
-                      "container": {
-                        "type": "string"
+              expand: {
+                type: 'object',
+                properties: {
+                  folder: {
+                    type: 'object',
+                    properties: {
+                      container: {
+                        type: 'string'
                       },
-                      "name": {
-                        "type": "string"
+                      name: {
+                        type: 'string'
                       },
-                      "color": {
-                        "type": "string"
+                      color: {
+                        type: 'string'
                       },
-                      "icon": {
-                        "type": "string"
+                      icon: {
+                        type: 'string'
                       },
-                      "parent": {
-                        "type": "string"
+                      parent: {
+                        type: 'string'
                       },
-                      "id": {
-                        "type": "string"
+                      id: {
+                        type: 'string'
                       },
-                      "collectionId": {
-                        "type": "string"
+                      collectionId: {
+                        type: 'string'
                       },
-                      "collectionName": {
-                        "type": "string"
+                      collectionName: {
+                        type: 'string'
                       }
                     },
-                    "required": [
-                      "container",
-                      "name",
-                      "color",
-                      "icon",
-                      "parent",
-                      "id",
-                      "collectionId",
-                      "collectionName"
+                    required: [
+                      'container',
+                      'name',
+                      'color',
+                      'icon',
+                      'parent',
+                      'id',
+                      'collectionId',
+                      'collectionName'
                     ],
-                    "additionalProperties": false
+                    additionalProperties: false
                   }
                 },
-                "additionalProperties": false
+                additionalProperties: false
               }
             },
-            "required": [
-              "type",
-              "container",
-              "folder",
-              "pinned",
-              "archived",
-              "tags",
-              "created",
-              "updated",
-              "id",
-              "collectionId",
-              "collectionName",
-              "content",
-              "fullPath",
-              "expand"
+            required: [
+              'type',
+              'container',
+              'folder',
+              'pinned',
+              'archived',
+              'tags',
+              'created',
+              'updated',
+              'id',
+              'collectionId',
+              'collectionName',
+              'content',
+              'fullPath',
+              'expand'
             ],
-            "additionalProperties": false
+            additionalProperties: false
           }
         },
-        "NOT_FOUND": true
+        NOT_FOUND: true
       }
     }
   }

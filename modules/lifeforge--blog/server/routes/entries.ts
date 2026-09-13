@@ -11,7 +11,5 @@ export const list = forge
     }
   })
   .callback(async ({ pb, response }) =>
-    response.ok(
-      await pb.getFullList.collection('blog__entries').execute()
-    )
+    response.ok(await pb.getFullList.collection('blog__entries').execute())
   )
