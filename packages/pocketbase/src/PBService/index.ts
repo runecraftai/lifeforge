@@ -1,8 +1,8 @@
 import PocketBase from 'pocketbase'
 
-import { IPBService } from '..'
+import type { IPBService } from '..'
 import { createServiceLogger } from '../utils/logger'
-import { CleanedSchemas } from '../utils/schemaUtils'
+import type { CleanedSchemas } from '../utils/schemaUtils'
 import create from './services/create'
 import deleteRecord from './services/delete'
 import getFirstListItem from './services/getFirstListItem'

@@ -3,7 +3,7 @@ import PocketBase from 'pocketbase'
 
 import { PBLogger } from '..'
 import { toPocketBaseCollectionName } from '../../dbUtils'
-import {
+import type {
   AllPossibleFieldsForFilter,
   CleanedSchemas,
   CollectionKey,
@@ -11,7 +11,7 @@ import {
   FieldSelection,
   FilterType
 } from '../../types/pb_service.types'
-import {
+import type {
   IGetList,
   IGetListFactory,
   IGetListReturnType

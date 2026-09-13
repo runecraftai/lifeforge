@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 
-import { LogLevel } from '@/utils/config'
+import type { LogLevel } from '@/utils/config'
 
 import { type Logger, createLogger } from './logger'
 

@@ -1,6 +1,7 @@
-import { ZodArray, ZodObject, ZodType, z } from 'zod'
+import { z } from 'zod'
+import type { ZodArray, ZodObject, ZodType } from 'zod'
 
-import { CleanedSchemas } from '../utils/schemaUtils'
+import type { CleanedSchemas } from '../utils/schemaUtils'
 
 export type { CleanedSchemas }
 

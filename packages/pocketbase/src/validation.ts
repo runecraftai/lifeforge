@@ -1,5 +1,5 @@
-import { CleanedSchemas, CollectionKey } from './types/pb_service.types'
-import { IPBService } from './types/service.interface'
+import type { CleanedSchemas, CollectionKey } from './types/pb_service.types'
+import type { IPBService } from './types/service.interface'
 
 const checkExistence = async <TSchemas extends CleanedSchemas>(
   pb: IPBService<TSchemas>,
