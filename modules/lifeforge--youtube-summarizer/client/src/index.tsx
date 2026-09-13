@@ -1,39 +1,126 @@
-import { Button, ModuleHeader, TextAreaInput, Widget } from '@lifeforge/ui'
-import { useState } from 'react'
+import { type InferOutput } from '@lifeforge/api'
+import {
+  EmptyStateScreen,
+  ModuleHeader,
+  TextInput,
+  WithQuery
+} from '@lifeforge/ui'
+import { useQuery } from '@tanstack/react-query'
+import { useDebounce } from '@uidotdev/usehooks'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { forgeAPI } from '@/manifest'
+
+import CaptionSelector from '../components/CaptionSelector'
+import SummaryDisplay from '../components/SummaryDisplay'
+import VideoInfo from '../components/VideoInfo'
+
+export type YoutubeInfo = InferOutput<
+  typeof forgeAPI.youtube.summarize
+>
 
 function YoutubeSummarizer() {
-  const [captionUrl, setCaptionUrl] = useState('')
-  const [summary, setSummary] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const { t } = useTranslation('apps.youtubeSummarizer')
 
-  async function summarize() {
-    setLoading(true)
+  const [videoUrl, setVideoUrl] = useState<string>('')
+
+  const debouncedVideoUrl = useDebounce(videoUrl, 300)
+
+  const [summarizeLoading, setSummarizeLoading] = useState(false)
+
+  const [summarizeResult, setSummarizeResult] = useState<string | null>(null)
+
+  const videoID = useMemo(() => {
     try {
-      setSummary(
-        captionUrl
-          ? 'Summarization requires yt-dlp and a configured Groq key.'
-          : 'Enter a caption URL.'
-      )
+      if (debouncedVideoUrl.includes('youtube.com/watch?v=')) {
+        return new URL(debouncedVideoUrl).searchParams.get('v')
+      } else if (debouncedVideoUrl.includes('youtu.be/')) {
+        return debouncedVideoUrl.split('?')[0].split('/').pop()
+      }
+    } catch {
+      return
+    }
+  }, [debouncedVideoUrl])
+
+  const videoInfoQuery = useQuery(
+    forgeAPI.youtube.summarize
+      .input({
+        id: videoID || ''
+      })
+      .queryOptions({ enabled: !!videoID && videoID.length === 11 })
+  )
+
+  async function summarizeVideo(url: string) {
+    if (!url) {
+      toast.error(t('errors.noCaptions'))
+
+      return
+    }
+
+    setSummarizeLoading(true)
+
+    try {
+      const response = await forgeAPI.youtube.summarize.mutate({
+        url
+      })
+
+      setSummarizeResult(response)
+    } catch {
+      toast.error(t('errors.summarizeFailed'))
     } finally {
-      setLoading(false)
+      setSummarizeLoading(false)
     }
   }
+
+  useEffect(() => {
+    setSummarizeResult(null)
+  }, [videoID])
 
   return (
     <>
       <ModuleHeader />
-      <Widget icon="tabler:brand-youtube" title="YouTube Summarizer">
-        <TextAreaInput
-          label="Caption URL"
-          onChange={setCaptionUrl}
-          placeholder="https://..."
-          value={captionUrl}
+      <TextInput
+        disabled={summarizeLoading}
+        icon="tabler:link"
+        label="video URL"
+        namespace="apps.youtubeSummarizer"
+        placeholder="https://www.youtube.com/watch?v=..."
+        setValue={setVideoUrl}
+        value={videoUrl}
+      />
+      {videoID?.length !== 11 ? (
+        <EmptyStateScreen
+          icon="tabler:link-off"
+          name="videoURL"
+          namespace="apps.youtubeSummarizer"
         />
-        <Button loading={loading} onClick={summarize}>
-          Summarize
-        </Button>
-        {summary && <p className="mt-4 whitespace-pre-wrap">{summary}</p>}
-      </Widget>
+      ) : (
+        <div className="my-6">
+          <WithQuery query={videoInfoQuery}>
+            {videoInfo =>
+              videoInfo ? (
+                <>
+                  <VideoInfo videoInfo={videoInfo} />
+                  <CaptionSelector
+                    summarizeLoading={summarizeLoading}
+                    videoInfo={videoInfo}
+                    onSummarize={summarizeVideo}
+                  />
+                  <SummaryDisplay summary={summarizeResult} />
+                </>
+              ) : (
+                <EmptyStateScreen
+                  icon="tabler:link-off"
+                  name="videoURL"
+                  namespace="apps.youtubeSummarizer"
+                />
+              )
+            }
+          </WithQuery>
+        </div>
+      )}
     </>
   )
 }

@@ -2,7 +2,7 @@ import { lazy } from 'react'
 
 import { createForgeModule } from '@lifeforge/federation'
 
-const contract = {}
+import contract from './contract'
 
 const { forgeAPI, ...manifest } = createForgeModule({
   routes: {

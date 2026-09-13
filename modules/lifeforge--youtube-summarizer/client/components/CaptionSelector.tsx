@@ -5,12 +5,17 @@ import {
   ListboxInput,
   ListboxOption,
   Widget
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { forceDown } from 'shared'
+function forceDown(url: string, filename: string) {
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+}
 
-import type { YoutubeInfo } from '..'
+import type { YoutubeInfo } from '../src/index'
 
 interface CaptionMeta {
   ext: string

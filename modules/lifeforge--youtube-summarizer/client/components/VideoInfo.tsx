@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import humanNumber from 'human-number'
-import { Widget } from 'lifeforge-ui'
+import { Widget } from '@lifeforge/ui'
 
-import type { YoutubeInfo } from '..'
+import type { YoutubeInfo } from '../src/index'
 
 function VideoInfo({ videoInfo }: { videoInfo: YoutubeInfo }) {
   return (

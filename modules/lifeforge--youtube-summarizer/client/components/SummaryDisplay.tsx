@@ -1,4 +1,4 @@
-import { Widget } from 'lifeforge-ui'
+import { Widget } from '@lifeforge/ui'
 import Markdown from 'react-markdown'
 
 interface SummaryDisplayProps {
