@@ -33,12 +33,39 @@ jobs:
           cp env/.env.docker.example env/.env.docker
           docker compose down -v --remove-orphans
           docker compose up --build -d
+          echo 'Waiting for client (port 5173)...'
           for attempt in {1..60}; do
             if curl --fail --silent http://localhost:5173/ >/dev/null; then
               break
             fi
             if [ "$attempt" -eq 60 ]; then
-              echo 'LifeForge did not become reachable on http://localhost:5173'
+              echo 'LifeForge client did not become reachable on http://localhost:5173'
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Waiting for API server (port 3636)...'
+          for attempt in {1..60}; do
+            if curl --fail --silent http://localhost:3636/ >/dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 60 ]; then
+              echo 'LifeForge API did not become reachable on http://localhost:3636'
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Waiting for API to initialize...'
+          for attempt in {1..30}; do
+            if curl --fail --silent http://localhost:3636/api/status >/dev/null 2>&1; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo 'LifeForge API did not become ready on http://localhost:3636/api/status'
               docker compose ps
               docker compose logs
               exit 1
