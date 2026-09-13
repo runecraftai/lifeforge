@@ -18,7 +18,7 @@ import SummaryDisplay from '../components/SummaryDisplay'
 import VideoInfo from '../components/VideoInfo'
 
 export type YoutubeInfo = InferOutput<
-  typeof forgeAPI.youtube.summarize
+  typeof forgeAPI.youtube.getYoutubeVideoInfo
 >
 
 function YoutubeSummarizer() {
@@ -45,7 +45,7 @@ function YoutubeSummarizer() {
   }, [debouncedVideoUrl])
 
   const videoInfoQuery = useQuery(
-    forgeAPI.youtube.summarize
+    forgeAPI.youtube.getYoutubeVideoInfo
       .input({
         id: videoID || ''
       })
