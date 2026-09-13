@@ -18,6 +18,8 @@ type PromoteBody = { taskId: string }
 
 @Controller('board')
 export class BoardController {
+  private readonly promoteLocks = new Map<string, Promise<unknown>>()
+
   constructor(
     private readonly auth: AuthAdapter,
     private readonly pocketbase: PocketBaseAdapter,
@@ -61,12 +63,32 @@ export class BoardController {
       }
     }
 
+    const previous = this.promoteLocks.get(task.id) ?? Promise.resolve()
+    const locked = previous.then(
+      () => this.promoteLocked(pb, task),
+      () => this.promoteLocked(pb, task)
+    )
+    this.promoteLocks.set(task.id, locked)
+
+    return locked
+  }
+
+  private async promoteLocked(pb: unknown, task: { id: string; summary: string; squadMissionId?: string }) {
+    const fresh = await this.pocketbase.getPersonalTask(pb as never, task.id)
+
+    if (fresh?.squadMissionId) {
+      return {
+        state: 'success',
+        data: { taskId: task.id, squadMissionId: fresh.squadMissionId, already: true }
+      }
+    }
+
     const squadMissionId = missionIdForPersonalTask(task.id)
     const mission = await this.squad.createMission({ id: squadMissionId, title: task.summary })
 
     if (mission.taskId !== squadMissionId) throw new BadRequestException('Invalid Squad mission')
 
-    await this.pocketbase.linkPersonalTask(pb, task.id, squadMissionId)
+    await this.pocketbase.linkPersonalTask(pb as never, task.id, squadMissionId)
 
     return {
       state: 'success',

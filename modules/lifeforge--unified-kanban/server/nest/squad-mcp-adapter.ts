@@ -1,7 +1,15 @@
-import { Injectable } from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { spawn } from 'node:child_process'
 
+import { homedir } from 'node:os'
+
 import type { MissionCreation } from '../data-source'
+
+export class SquadMcpException extends HttpException {
+  constructor(message: string) {
+    super(message, 502)
+  }
+}
 
 type CreateMissionInput = { id: string; title: string }
 
@@ -14,7 +22,7 @@ type RpcResponse = {
 }
 
 const MCP_TIMEOUT = 30000
-const defaultCommand = '/home/rehem/.local/share/personal-os/squad-mcp/run-squad-mcp'
+const defaultCommand = `${homedir()}/.local/share/personal-os/squad-mcp/run-squad-mcp`
 
 function responseFor(
   child: ReturnType<typeof spawn>,
@@ -24,7 +32,7 @@ function responseFor(
     let buffer = ''
 
     const timeout = setTimeout(() => {
-      reject(new Error('Squad MCP request timed out'))
+      reject(new SquadMcpException('Squad MCP request timed out'))
       child.kill()
     }, MCP_TIMEOUT)
 
@@ -54,11 +62,11 @@ function responseFor(
     }
     const onError = (error: Error) => {
       clearTimeout(timeout)
-      reject(error)
+      reject(new SquadMcpException(error.message))
     }
     const onClose = () => {
       clearTimeout(timeout)
-      reject(new Error('Squad MCP closed before replying'))
+      reject(new SquadMcpException('Squad MCP closed before replying'))
     }
 
     child.stdout!.on('data', onData)
@@ -102,11 +110,11 @@ async function callSquadMcp(
 
     const response = await responsePromise
 
-    if (response.error) throw new Error(response.error.message || 'Squad MCP request failed')
+    if (response.error) throw new SquadMcpException(response.error.message || 'Squad MCP request failed')
 
     const text = response.result?.content?.[0]?.text
 
-    if (!text) throw new Error('Squad MCP returned an empty response')
+    if (!text) throw new SquadMcpException('Squad MCP returned an empty response')
 
     const result = JSON.parse(text) as Record<string, unknown>
 
