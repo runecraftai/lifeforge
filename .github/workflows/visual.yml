@@ -243,9 +243,14 @@ jobs:
               process.env.EVIDENCE_RESULT === 'success' &&
               process.env.EVIDENCE_PUBLISH_RESULT === 'success';
             const status = passed ? '✅ Passed' : '❌ Not validated';
-            const entries = fs.existsSync(manifestPath)
-              ? JSON.parse(fs.readFileSync(manifestPath, 'utf8')).captures
-              : [];
+            let entries = [];
+            if (fs.existsSync(manifestPath)) {
+              try {
+                entries = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))?.captures ?? [];
+              } catch {
+                entries = [];
+              }
+            }
             const raw = `https://raw.githubusercontent.com/${owner}/${repo}/${process.env.EVIDENCE_REF}`;
             const rows = process.env.EVIDENCE_PUBLISH_RESULT === 'success'
               ? entries.map(entry => {
