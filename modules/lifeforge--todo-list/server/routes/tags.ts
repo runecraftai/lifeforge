@@ -3,6 +3,12 @@ import z from 'zod'
 import forge from '../forge'
 import todoListSchemas from '../schema'
 
+const tagInput = todoListSchemas.tags.omit({
+  id: true,
+  collectionId: true,
+  collectionName: true
+})
+
 export const list = forge
   .query({
     description: 'Get all todo tags',
@@ -18,11 +24,7 @@ export const create = forge
   .mutation({
     description: 'Create a new todo tag',
     input: {
-      body: todoListSchemas.tags.omit({
-        id: true,
-        collectionId: true,
-        collectionName: true
-      })
+      body: tagInput
     },
     output: {
       CREATED: todoListSchemas.tags
@@ -39,11 +41,7 @@ export const update = forge
       query: z.object({
         id: z.string()
       }),
-      body: todoListSchemas.tags.omit({
-        id: true,
-        collectionId: true,
-        collectionName: true
-      })
+      body: tagInput
     },
     existenceCheck: {
       query: { id: 'tags' }
