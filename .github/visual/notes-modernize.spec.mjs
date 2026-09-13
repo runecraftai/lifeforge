@@ -224,10 +224,10 @@ test('validates notes module layout, modal creation, and URL persistence', async
 
   await searchInput.fill('')
   await expect(
-    page.getByRole('button', { name: /Test Note Title/ })
+    page.getByRole('button', { name: 'Test Note Title Test note' })
   ).toBeVisible()
 
-  const editButton = page.getByRole('button', { name: /Edit Test Note Title/ })
+  const editButton = page.getByRole('button', { name: 'Edit Test Note Title' })
   await expect(editButton).toBeVisible()
   await editButton.click()
   await expect(page.getByRole('heading', { name: 'Edit note' })).toBeVisible()
