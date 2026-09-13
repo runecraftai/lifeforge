@@ -12,8 +12,29 @@ export class PocketBaseAdapter {
       id: record.id,
       summary: String(record.summary),
       status: record.status === 'doing' || record.status === 'done' ? record.status : 'todo',
-      priority: record.priority ? String(record.priority) : undefined
+      priority: record.priority ? String(record.priority) : undefined,
+      squadMissionId: record.squad_mission_id ? String(record.squad_mission_id) : undefined
     }))
+  }
+
+  async getPersonalTask(pb: PocketBase, id: string): Promise<PersonalTask | null> {
+    try {
+      const record = await pb.collection('todo_list__entries').getOne(id)
+
+      return {
+        id: record.id,
+        summary: String(record.summary),
+        status: record.status === 'doing' || record.status === 'done' ? record.status : 'todo',
+        priority: record.priority ? String(record.priority) : undefined,
+        squadMissionId: record.squad_mission_id ? String(record.squad_mission_id) : undefined
+      }
+    } catch {
+      return null
+    }
+  }
+
+  async linkPersonalTask(pb: PocketBase, id: string, squadMissionId: string) {
+    return pb.collection('todo_list__entries').update(id, { squad_mission_id: squadMissionId })
   }
 
   async movePersonalTask(pb: PocketBase, id: string, status: PersonalTask['status']) {

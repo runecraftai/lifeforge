@@ -1,0 +1,133 @@
+import { Injectable } from '@nestjs/common'
+import { spawn } from 'node:child_process'
+
+import type { MissionCreation } from '../data-source'
+
+type CreateMissionInput = { id: string; title: string }
+
+type RpcResponse = {
+  id?: number
+  result?: {
+    content?: Array<{ text?: string }>
+  }
+  error?: { message?: string }
+}
+
+const MCP_TIMEOUT = 30000
+const defaultCommand = '/home/rehem/.local/share/personal-os/squad-mcp/run-squad-mcp'
+
+function responseFor(
+  child: ReturnType<typeof spawn>,
+  requestId: number
+): Promise<RpcResponse> {
+  return new Promise((resolve, reject) => {
+    let buffer = ''
+
+    const timeout = setTimeout(() => {
+      reject(new Error('Squad MCP request timed out'))
+      child.kill()
+    }, MCP_TIMEOUT)
+
+    const onData = (chunk: Buffer) => {
+      buffer += chunk.toString()
+      const lines = buffer.split('\n')
+      buffer = lines.pop() ?? ''
+
+      for (const line of lines) {
+        if (!line.trim()) continue
+        let message: RpcResponse
+
+        try {
+          message = JSON.parse(line) as RpcResponse
+        } catch {
+          continue
+        }
+        if (message.id !== requestId) continue
+        clearTimeout(timeout)
+        child.stdout!.off('data', onData)
+        child.off('error', onError)
+        child.off('close', onClose)
+        resolve(message)
+
+        return
+      }
+    }
+    const onError = (error: Error) => {
+      clearTimeout(timeout)
+      reject(error)
+    }
+    const onClose = () => {
+      clearTimeout(timeout)
+      reject(new Error('Squad MCP closed before replying'))
+    }
+
+    child.stdout!.on('data', onData)
+    child.once('error', onError)
+    child.once('close', onClose)
+  })
+}
+
+async function callSquadMcp(
+  name: string,
+  arguments_: Record<string, string>
+): Promise<Record<string, unknown>> {
+  const command = process.env.SQUAD_MCP_COMMAND || defaultCommand
+  const child = spawn(command, [], { stdio: ['pipe', 'pipe', 'ignore'] })
+
+  try {
+    const responsePromise = responseFor(child, 2)
+    child.stdin.write(
+      `${JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'initialize',
+        params: {
+          protocolVersion: '2024-11-05',
+          capabilities: {},
+          clientInfo: { name: 'lifeforge-unified-kanban', version: '1.0.0' }
+        }
+      })}\n`
+    )
+    child.stdin.write(
+      `${JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' })}\n`
+    )
+    child.stdin.write(
+      `${JSON.stringify({
+        jsonrpc: '2.0',
+        id: 2,
+        method: 'tools/call',
+        params: { name, arguments: arguments_ }
+      })}\n`
+    )
+
+    const response = await responsePromise
+
+    if (response.error) throw new Error(response.error.message || 'Squad MCP request failed')
+
+    const text = response.result?.content?.[0]?.text
+
+    if (!text) throw new Error('Squad MCP returned an empty response')
+
+    const result = JSON.parse(text) as Record<string, unknown>
+
+    if (result.ok !== true) throw new Error(String(result.error || 'Squad MCP request failed'))
+
+    return result
+  } finally {
+    child.kill()
+  }
+}
+
+@Injectable()
+export class SquadMcpAdapter {
+  async createMission(input: CreateMissionInput): Promise<MissionCreation> {
+    const result = await callSquadMcp('squad_task_create', input)
+    const taskId = result.taskId
+
+    if (taskId !== input.id && taskId !== 'created') {
+      throw new Error('Squad MCP returned an unexpected mission id')
+    }
+
+    return { taskId: input.id }
+  }
+}

@@ -1,17 +1,28 @@
 import { BadRequestException, Body, Controller, Get, Post, Req } from '@nestjs/common'
 import type { Request } from 'express'
 
-import { getUnifiedBoard, moveSquadMission, type LifecycleStatus } from '../data-source'
+import {
+  getUnifiedBoard,
+  missionIdForPersonalTask,
+  moveSquadMission,
+  type LifecycleStatus
+} from '../data-source'
 import { AuthAdapter } from './auth-adapter'
 import { PocketBaseAdapter } from './pocketbase-adapter'
+import { SquadMcpAdapter } from './squad-mcp-adapter'
 
 const statuses = ['todo', 'doing', 'done'] as const
 
 type MoveBody = { source: 'personal' | 'mission'; id: string; status: LifecycleStatus }
+type PromoteBody = { taskId: string }
 
 @Controller('board')
 export class BoardController {
-  constructor(private readonly auth: AuthAdapter, private readonly pocketbase: PocketBaseAdapter) {}
+  constructor(
+    private readonly auth: AuthAdapter,
+    private readonly pocketbase: PocketBaseAdapter,
+    private readonly squad: SquadMcpAdapter
+  ) {}
 
   @Get()
   async get(@Req() request: Request) {
@@ -31,5 +42,35 @@ export class BoardController {
     else await moveSquadMission(body.id, body.status)
 
     return { state: 'success', data: { id: body.id, source: body.source, status: body.status } }
+  }
+
+  @Post('promote')
+  async promote(@Req() request: Request, @Body() body: PromoteBody) {
+    const { pb } = await this.auth.authenticate(request)
+
+    if (!body?.taskId) throw new BadRequestException('Invalid personal task')
+
+    const task = await this.pocketbase.getPersonalTask(pb, body.taskId)
+
+    if (!task) throw new BadRequestException('Personal task not found')
+
+    if (task.squadMissionId) {
+      return {
+        state: 'success',
+        data: { taskId: task.id, squadMissionId: task.squadMissionId, already: true }
+      }
+    }
+
+    const squadMissionId = missionIdForPersonalTask(task.id)
+    const mission = await this.squad.createMission({ id: squadMissionId, title: task.summary })
+
+    if (mission.taskId !== squadMissionId) throw new BadRequestException('Invalid Squad mission')
+
+    await this.pocketbase.linkPersonalTask(pb, task.id, squadMissionId)
+
+    return {
+      state: 'success',
+      data: { taskId: task.id, squadMissionId, already: false }
+    }
   }
 }

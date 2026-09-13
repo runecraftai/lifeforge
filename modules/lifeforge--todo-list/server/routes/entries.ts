@@ -199,6 +199,7 @@ export const create = forge
         completed_at: true,
         done: true,
         status: true,
+        squad_mission_id: true,
         created: true,
         updated: true
       })
@@ -245,6 +246,7 @@ export const update = forge
         completed_at: true,
         done: true,
         status: true,
+        squad_mission_id: true,
         created: true,
         updated: true
       })

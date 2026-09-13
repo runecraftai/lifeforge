@@ -113,6 +113,9 @@ export const contract = {
                 "done"
               ]
             },
+            "squad_mission_id": {
+              "type": "string"
+            },
             "completed_at": {
               "type": "string"
             },
@@ -142,6 +145,7 @@ export const contract = {
             "priority",
             "done",
             "status",
+            "squad_mission_id",
             "completed_at",
             "created",
             "updated",
@@ -216,6 +220,9 @@ export const contract = {
                 "done"
               ]
             },
+            "squad_mission_id": {
+              "type": "string"
+            },
             "completed_at": {
               "type": "string"
             },
@@ -245,6 +252,7 @@ export const contract = {
             "priority",
             "done",
             "status",
+            "squad_mission_id",
             "completed_at",
             "created",
             "updated",
@@ -374,6 +382,9 @@ export const contract = {
                   "done"
                 ]
               },
+              "squad_mission_id": {
+                "type": "string"
+              },
               "completed_at": {
                 "type": "string"
               },
@@ -403,6 +414,7 @@ export const contract = {
               "priority",
               "done",
               "status",
+              "squad_mission_id",
               "completed_at",
               "created",
               "updated",
@@ -505,6 +517,9 @@ export const contract = {
                 "done"
               ]
             },
+            "squad_mission_id": {
+              "type": "string"
+            },
             "completed_at": {
               "type": "string"
             },
@@ -534,6 +549,7 @@ export const contract = {
             "priority",
             "done",
             "status",
+            "squad_mission_id",
             "completed_at",
             "created",
             "updated",
@@ -648,6 +664,9 @@ export const contract = {
                 "done"
               ]
             },
+            "squad_mission_id": {
+              "type": "string"
+            },
             "completed_at": {
               "type": "string"
             },
@@ -677,6 +696,7 @@ export const contract = {
             "priority",
             "done",
             "status",
+            "squad_mission_id",
             "completed_at",
             "created",
             "updated",
