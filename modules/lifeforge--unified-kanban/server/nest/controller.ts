@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Delete, Get, Post, Req } from '@nestjs/common'
+import { BadRequestException, Body, Controller, Delete, Get, Post, Query, Req } from '@nestjs/common'
 import type { Request } from 'express'
 
 import {
@@ -16,7 +16,6 @@ const statuses = ['todo', 'doing', 'done'] as const
 type MoveBody = { source: 'personal' | 'mission'; id: string; status: LifecycleStatus }
 type PromoteBody = { taskId: string }
 type UndoPromoteBody = { taskId: string }
-type DeleteBody = { taskId: string }
 
 @Controller('board')
 export class BoardController {
@@ -99,12 +98,12 @@ export class BoardController {
   }
 
   @Delete('task')
-  async deleteTask(@Req() request: Request, @Body() body: DeleteBody) {
+  async deleteTask(@Req() request: Request, @Query('taskId') taskId: string) {
     const { pb } = await this.auth.authenticate(request)
 
-    if (!body?.taskId) throw new BadRequestException('Invalid personal task')
+    if (!taskId) throw new BadRequestException('Invalid personal task')
 
-    const task = await this.pocketbase.getPersonalTask(pb, body.taskId)
+    const task = await this.pocketbase.getPersonalTask(pb, taskId)
 
     if (!task) throw new BadRequestException('Personal task not found')
 

@@ -254,7 +254,7 @@ describe('BoardController', () => {
     await expect(controller.undoPromote({} as never, { taskId: 'missing' })).rejects.toThrow('Personal task not found')
   })
 
-  it('undoPropagate cancels the mission before unlinking', async () => {
+  it('undoPromote cancels the mission before unlinking', async () => {
     const authenticate = vi.fn().mockResolvedValue({ pb: {} })
     const getPersonalTask = vi.fn().mockResolvedValue({
       id: 'task-1',
@@ -315,7 +315,7 @@ describe('BoardController', () => {
       { cancelMission } as never
     )
 
-    await expect(controller.deleteTask({} as never, { taskId: 'task-1' })).resolves.toEqual({
+    await expect(controller.deleteTask({} as never, 'task-1')).resolves.toEqual({
       state: 'success',
       data: { taskId: 'task-1' }
     })
@@ -339,7 +339,7 @@ describe('BoardController', () => {
       { cancelMission } as never
     )
 
-    await expect(controller.deleteTask({} as never, { taskId: 'task-1' })).resolves.toEqual({
+    await expect(controller.deleteTask({} as never, 'task-1')).resolves.toEqual({
       state: 'success',
       data: { taskId: 'task-1' }
     })
@@ -357,7 +357,7 @@ describe('BoardController', () => {
       {} as never
     )
 
-    await expect(controller.deleteTask({} as never, { taskId: 'missing' })).rejects.toThrow('Personal task not found')
+    await expect(controller.deleteTask({} as never, 'missing')).rejects.toThrow('Personal task not found')
   })
 
   it('deleteTask fails when MCP cancel fails and retains the personal task', async () => {
@@ -376,7 +376,7 @@ describe('BoardController', () => {
       { cancelMission } as never
     )
 
-    await expect(controller.deleteTask({} as never, { taskId: 'task-1' })).rejects.toThrow('Squad MCP request failed')
+    await expect(controller.deleteTask({} as never, 'task-1')).rejects.toThrow('Squad MCP request failed')
     expect(deletePersonalTask).not.toHaveBeenCalled()
   })
 
@@ -396,7 +396,7 @@ describe('BoardController', () => {
       { cancelMission } as never
     )
 
-    await controller.deleteTask({} as never, { taskId: 'task-1' })
+    await controller.deleteTask({} as never, 'task-1')
 
     const cancelCall = cancelMission.mock.invocationCallOrder[0]
     const deleteCall = deletePersonalTask.mock.invocationCallOrder[0]

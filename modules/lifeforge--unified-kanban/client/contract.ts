@@ -155,8 +155,7 @@ export const contract = {
       isDownloadable: false,
       media: null,
       input: {
-        query: emptyQuery,
-        body: {
+        query: {
           $schema: 'https://json-schema.org/draft/2020-12/schema',
           type: 'object',
           properties: { taskId: { type: 'string' } },
