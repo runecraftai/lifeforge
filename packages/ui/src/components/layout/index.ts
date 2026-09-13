@@ -1,5 +1,11 @@
 export * from './Card'
 
+export * from './KanbanCard'
+
+export * from './KanbanColumn'
+
+export * from './KanbanLane'
+
 export * from './ContentWrapperWithSidebar'
 
 export * from './LayoutWithSidebar'

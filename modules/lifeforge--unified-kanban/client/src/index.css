@@ -1,4 +1,5 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import '@lifeforge/ui/tailwind.css';
 
 :root {
   color-scheme: light;

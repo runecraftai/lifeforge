@@ -1,0 +1,54 @@
+@source "./src";
+@source "./dist";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-primary: var(--color-custom-500);
+  --color-muted: var(--color-bg-500);
+
+  --color-lf-bg-50: var(--color-bg-50);
+  --color-lf-bg-100: var(--color-bg-100);
+  --color-lf-bg-200: var(--color-bg-200);
+  --color-lf-bg-300: var(--color-bg-300);
+  --color-lf-bg-400: var(--color-bg-400);
+  --color-lf-bg-500: var(--color-bg-500);
+  --color-lf-bg-600: var(--color-bg-600);
+  --color-lf-bg-700: var(--color-bg-700);
+  --color-lf-bg-800: var(--color-bg-800);
+  --color-lf-bg-900: var(--color-bg-900);
+  --color-lf-bg-950: var(--color-bg-950);
+
+  --color-lf-custom-50: var(--color-custom-50);
+  --color-lf-custom-100: var(--color-custom-100);
+  --color-lf-custom-200: var(--color-custom-200);
+  --color-lf-custom-300: var(--color-custom-300);
+  --color-lf-custom-400: var(--color-custom-400);
+  --color-lf-custom-500: var(--color-custom-500);
+  --color-lf-custom-600: var(--color-custom-600);
+  --color-lf-custom-700: var(--color-custom-700);
+  --color-lf-custom-800: var(--color-custom-800);
+  --color-lf-custom-900: var(--color-custom-900);
+
+  --text-lf-xs: var(--text-xs);
+  --text-lf-sm: var(--text-sm);
+  --text-lf-base: var(--text-base);
+  --text-lf-lg: var(--text-lg);
+  --text-lf-xl: var(--text-xl);
+  --text-lf-2xl: var(--text-2xl);
+  --text-lf-3xl: var(--text-3xl);
+  --text-lf-4xl: var(--text-4xl);
+  --text-lf-5xl: var(--text-5xl);
+  --text-lf-6xl: var(--text-6xl);
+  --text-lf-7xl: var(--text-7xl);
+  --text-lf-8xl: var(--text-8xl);
+  --text-lf-9xl: var(--text-9xl);
+
+  --radius-lf-sm: var(--radius-sm);
+  --radius-lf-md: var(--radius-md);
+  --radius-lf-lg: var(--radius-lg);
+  --radius-lf-xl: var(--radius-xl);
+  --radius-lf-2xl: var(--radius-2xl);
+  --radius-lf-3xl: var(--radius-3xl);
+  --spacing-lf: var(--spacing);
+}

@@ -11,14 +11,16 @@
     "lifeforge"
   ],
   "sideEffects": [
-    "src/styles/index.css"
+    "src/styles/index.css",
+    "tailwind.css"
   ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "tailwind.css"
   ],
   "publishConfig": {
     "access": "public"
@@ -70,6 +72,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
+    "@tailwindcss/vite": "^4.1.13",
     "@lifeforge/configs": "workspace:*",
     "@storybook/addon-docs": "10.5.2",
     "@storybook/react-vite": "10.5.2",
@@ -85,6 +88,7 @@
     "eslint-plugin-storybook": "10.5.2",
     "storybook": "10.5.2",
     "storybook-addon-deep-controls": "^0.10.0",
+    "tailwindcss": "^4.1.13",
     "tsup": "^8.5.0",
     "vite-tsconfig-paths": "^6.1.1"
   }

@@ -137,3 +137,5 @@ export function ModuleHeader({
     </Flex>
   )
 }
+
+export * from './ModuleHeader.tailwind'
