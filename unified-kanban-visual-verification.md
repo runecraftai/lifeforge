@@ -14,6 +14,7 @@
 1. **Styling:** Tailwind content scanning was not the cause. A clean module build contained the utility selectors used by the board, but the federated module did not inject its generated CSS into the host because Module Federation's `bundleAllCSS` option was disabled. Enabled `bundleAllCSS` in the shared module Vite configuration. The generated expose now maps `./Manifest` to `src-Cr6IRM-Q.css` and injects it when loaded.
 2. **Translations:** The module locale files only contained the `board` object. Added top-level `title` and `description` strings to all four locale files.
 3. **Data:** The client contract requests `/board/get`, while the Nest controller exposed `GET /board`. Changed the controller route to `@Get('get')`.
+4. **Accordion behavior:** The design system has no reusable accordion, disclosure, or collapsible component. Used the native HTML `<details>` and `<summary>` disclosure control in `AccordionLane`, with `nuqs` persisting collapsed lane names in the `collapsed` query parameter.
 
 ## Final proof
 

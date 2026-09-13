@@ -143,7 +143,7 @@ function BoardColumn({
   )
 }
 
-function Lane({
+function AccordionLane({
   lane,
   items,
   onDrop,
@@ -327,7 +327,7 @@ export default function UnifiedKanban() {
           </p>
         )}
         <div className="space-y-8">
-          <Lane
+          <AccordionLane
             items={board.personal}
             lane="personal"
             promotingId={promotingId}
@@ -337,7 +337,7 @@ export default function UnifiedKanban() {
             expanded={!collapsedLanes?.includes('personal')}
             onToggle={expanded => toggleLane('personal', expanded)}
           />
-          <Lane
+          <AccordionLane
             items={board.work}
             lane="work"
             promotingId={promotingId}
