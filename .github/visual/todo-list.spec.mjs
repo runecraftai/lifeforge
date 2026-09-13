@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 
 const screenshotDir = 'visual-results/screenshots'
 const manifestPath = `${screenshotDir}/manifest.json`
@@ -38,9 +38,12 @@ async function setTheme(page, theme) {
 }
 
 test.beforeAll(async () => {
-  await rm(screenshotDir, { recursive: true, force: true })
   await mkdir(screenshotDir, { recursive: true })
-  await writeFile(manifestPath, '{"captures":[]}\n')
+  try {
+    await readFile(manifestPath, 'utf8')
+  } catch {
+    await writeFile(manifestPath, '{"captures":[]}\n')
+  }
 })
 
 test('captures the To-Do List layout in both themes', async ({ page }) => {
