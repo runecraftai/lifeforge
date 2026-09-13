@@ -33,6 +33,7 @@ export function ModalWrapper({
   className,
   modalRef,
   zIndex = 0,
+  onClose,
   onExited
 }: {
   isOpen: boolean
@@ -44,6 +45,7 @@ export function ModalWrapper({
   className?: string
   modalRef?: React.RefObject<HTMLDivElement | null>
   zIndex?: number
+  onClose?: () => void
   onExited?: () => void
 }) {
   const dialogRef = useRef<HTMLDivElement>(null)
@@ -83,6 +85,12 @@ export function ModalWrapper({
   }, [isOpen, titleId])
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === 'Escape') {
+      event.preventDefault()
+      onClose?.()
+      return
+    }
+
     if (event.key !== 'Tab') return
 
     const dialog = dialogRef.current
