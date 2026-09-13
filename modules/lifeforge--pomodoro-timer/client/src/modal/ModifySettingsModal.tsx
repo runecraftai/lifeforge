@@ -57,7 +57,7 @@ export default function SettingsModal({
       submissionConfig={{
         template: 'update',
         handler: async data => {
-          await mutation.mutateAsync(data as InferInput<typeof forgeAPI.settings.update>['body'])
+          await mutation.mutateAsync(data as unknown as InferInput<typeof forgeAPI.settings.update>['body'])
         }
       }}
       uiConfig={{ title: 'Settings', namespace: 'apps.pomodoro-timer', icon: 'tabler:settings', onClose }}
