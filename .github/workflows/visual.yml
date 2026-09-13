@@ -33,6 +33,15 @@ jobs:
           cp env/.env.docker.example env/.env.docker
           docker compose down -v --remove-orphans
           docker compose up --build -d
+          echo 'Waiting for database initialization...'
+          if ! docker compose wait db-init; then
+            echo 'LifeForge database initialization failed.'
+            docker compose ps
+            docker compose logs
+            exit 1
+          fi
+          echo 'Restarting PocketBase to load the migrated schema...'
+          docker compose restart db
           echo 'Waiting for client (port 5173)...'
           for attempt in {1..60}; do
             if curl --fail --silent http://localhost:5173/ >/dev/null; then
