@@ -123,7 +123,7 @@ async function callSquadMcp(
       throw new SquadMcpException('Squad MCP returned invalid JSON')
     }
 
-    if (result.ok !== true) throw new Error(String(result.error || 'Squad MCP request failed'))
+    if (result.ok !== true) throw new SquadMcpException(String(result.error || 'Squad MCP request failed'))
 
     return result
   } finally {

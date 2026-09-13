@@ -92,8 +92,8 @@ export class BoardController {
     }
 
     const squadMissionId = task.squadMissionId
+    await this.squad.cancelMission(squadMissionId)
     await this.pocketbase.unlinkPersonalTask(pb, task.id)
-    await this.squad.cancelMission(squadMissionId).catch(() => {})
 
     return { state: 'success', data: { taskId: task.id, squadMissionId: null, unlinked: true } }
   }
@@ -109,7 +109,7 @@ export class BoardController {
     if (!task) throw new BadRequestException('Personal task not found')
 
     if (task.squadMissionId) {
-      await this.squad.cancelMission(task.squadMissionId).catch(() => {})
+      await this.squad.cancelMission(task.squadMissionId)
     }
 
     await this.pocketbase.deletePersonalTask(pb, task.id)
@@ -132,7 +132,12 @@ export class BoardController {
 
     if (mission.taskId !== squadMissionId) throw new BadRequestException('Invalid Squad mission')
 
-    await this.pocketbase.linkPersonalTask(pb as never, task.id, squadMissionId)
+    try {
+      await this.pocketbase.linkPersonalTask(pb as never, task.id, squadMissionId)
+    } catch (linkError) {
+      await this.squad.cancelMission(squadMissionId).catch(() => {})
+      throw linkError
+    }
 
     return {
       state: 'success',
