@@ -187,9 +187,8 @@ function ModifyPasswordModal({
             let generatedPassword = ''
 
             for (let i = 0; i < passwordLength; i++) {
-              generatedPassword += allCharacters[
-                randomIndices[i] % allCharacters.length
-              ]
+              generatedPassword +=
+                allCharacters[randomIndices[i] % allCharacters.length]
             }
 
             form.setValue('password', generatedPassword, {

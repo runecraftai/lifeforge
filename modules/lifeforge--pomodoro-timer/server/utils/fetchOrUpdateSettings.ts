@@ -4,7 +4,10 @@ import z from 'zod'
 
 import pomodoroTimerSchemas from '../schema'
 
-const DEFAULT_SOUND_LOCATION = path.resolve(import.meta.dirname, '../assets/bell.opus')
+const DEFAULT_SOUND_LOCATION = path.resolve(
+  import.meta.dirname,
+  '../assets/bell.opus'
+)
 
 const DEFAULT_SETTINGS: Omit<
   z.infer<typeof pomodoroTimerSchemas.settings>,

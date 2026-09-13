@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
-import { ConfirmationModal, toast, useModalStore } from '@lifeforge/ui'
 import { useModuleTranslation } from '@lifeforge/localization'
+import { ConfirmationModal, toast, useModalStore } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 

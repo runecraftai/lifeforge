@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react'
 import copy from 'copy-to-clipboard'
+import { useCallback, useState } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
 import { toast } from '@lifeforge/ui'

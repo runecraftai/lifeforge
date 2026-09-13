@@ -24,8 +24,7 @@ function generatePassword(): string {
   let password = ''
 
   for (let i = 0; i < PASSWORD_LENGTH; i++) {
-    password +=
-      ALL_CHARACTERS[randomIndices[i] % ALL_CHARACTERS.length]
+    password += ALL_CHARACTERS[randomIndices[i] % ALL_CHARACTERS.length]
   }
 
   return password

@@ -74,13 +74,10 @@ export async function unwrapVEK(
     ciphertext
   )
 
-  return crypto.subtle.importKey(
-    'raw',
-    plaintext,
-    'AES-GCM',
-    true,
-    ['encrypt', 'decrypt']
-  )
+  return crypto.subtle.importKey('raw', plaintext, 'AES-GCM', true, [
+    'encrypt',
+    'decrypt'
+  ])
 }
 
 export async function wrapVEK(

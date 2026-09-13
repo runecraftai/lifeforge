@@ -1,9 +1,9 @@
 import type { Session } from '@'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import z from 'zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
 
 import type { InferInput } from '@lifeforge/api'
 import {
@@ -36,12 +36,14 @@ function ModifySessionModal({
   }
 }) {
   const qc = useQueryClient()
+
   const mutation = useMutation(
     (openType === 'create'
       ? forgeAPI.sessions.create
       : forgeAPI.sessions.update.input({ id: initialData?.id || '' })
     ).mutationOptions({
-      onSuccess: () => qc.invalidateQueries({ queryKey: forgeAPI.sessions.list.key }),
+      onSuccess: () =>
+        qc.invalidateQueries({ queryKey: forgeAPI.sessions.list.key }),
       onError: error => {
         console.error('Error submitting form:', error)
         toast.error('An error occurred while submitting the form.')
@@ -52,11 +54,16 @@ function ModifySessionModal({
     defaultValues: {
       ...createDefaultValues(schema),
       ...initialData,
-      name: initialData?.name || `Productive Session on ${dayjs().format('MMM D')}`,
+      name:
+        initialData?.name || `Productive Session on ${dayjs().format('MMM D')}`,
       work_duration: initialData?.work_duration || DEFAULT_OPTIONS.work,
-      short_break_duration: initialData?.short_break_duration || DEFAULT_OPTIONS.short_break,
-      long_break_duration: initialData?.long_break_duration || DEFAULT_OPTIONS.long_break,
-      session_until_long_break: initialData?.session_until_long_break || DEFAULT_OPTIONS.session_until_long_break
+      short_break_duration:
+        initialData?.short_break_duration || DEFAULT_OPTIONS.short_break,
+      long_break_duration:
+        initialData?.long_break_duration || DEFAULT_OPTIONS.long_break,
+      session_until_long_break:
+        initialData?.session_until_long_break ||
+        DEFAULT_OPTIONS.session_until_long_break
     },
     resolver: zodResolver(schema)
   })
@@ -67,7 +74,9 @@ function ModifySessionModal({
       submissionConfig={{
         template: openType,
         handler: async values => {
-          await mutation.mutateAsync(values as InferInput<typeof forgeAPI.sessions.create>['body'])
+          await mutation.mutateAsync(
+            values as InferInput<typeof forgeAPI.sessions.create>['body']
+          )
         }
       }}
       uiConfig={{
@@ -77,11 +86,51 @@ function ModifySessionModal({
         namespace: 'apps.pomodoro-timer'
       }}
     >
-      <TextField autoFocus control={form.control} name="name" label="Session Name" icon="tabler:tag" placeholder="My Productive Session" required />
-      <SliderField control={form.control} name="work_duration" label="Work Duration" icon="tabler:flame" min={1} max={120} hidden={openType === 'update'} />
-      <SliderField control={form.control} name="short_break_duration" label="Short Break Duration" icon="tabler:coffee" min={1} max={60} hidden={openType === 'update'} />
-      <SliderField control={form.control} name="long_break_duration" label="Long Break Duration" icon="tabler:beach" min={1} max={120} hidden={openType === 'update'} />
-      <SliderField control={form.control} name="session_until_long_break" label="Sessions Until Long Break" icon="tabler:rotate-clockwise-2" min={1} max={10} hidden={openType === 'update'} />
+      <TextField
+        autoFocus
+        required
+        control={form.control}
+        icon="tabler:tag"
+        label="Session Name"
+        name="name"
+        placeholder="My Productive Session"
+      />
+      <SliderField
+        control={form.control}
+        hidden={openType === 'update'}
+        icon="tabler:flame"
+        label="Work Duration"
+        max={120}
+        min={1}
+        name="work_duration"
+      />
+      <SliderField
+        control={form.control}
+        hidden={openType === 'update'}
+        icon="tabler:coffee"
+        label="Short Break Duration"
+        max={60}
+        min={1}
+        name="short_break_duration"
+      />
+      <SliderField
+        control={form.control}
+        hidden={openType === 'update'}
+        icon="tabler:beach"
+        label="Long Break Duration"
+        max={120}
+        min={1}
+        name="long_break_duration"
+      />
+      <SliderField
+        control={form.control}
+        hidden={openType === 'update'}
+        icon="tabler:rotate-clockwise-2"
+        label="Sessions Until Long Break"
+        max={10}
+        min={1}
+        name="session_until_long_break"
+      />
     </FormModal>
   )
 }

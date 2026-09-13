@@ -22,9 +22,7 @@ export async function decrypt(
   encryptedBase64: string,
   vek: CryptoKey
 ): Promise<string> {
-  const encrypted = Uint8Array.from(atob(encryptedBase64), c =>
-    c.charCodeAt(0)
-  )
+  const encrypted = Uint8Array.from(atob(encryptedBase64), c => c.charCodeAt(0))
 
   const iv = encrypted.slice(0, 12)
   const ciphertext = encrypted.slice(12)

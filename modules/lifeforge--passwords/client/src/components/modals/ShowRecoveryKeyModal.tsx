@@ -27,9 +27,7 @@ function ShowRecoveryKeyModal({
         onClose={onClose}
       />
       <Stack gap="md">
-        <Alert type="caution">
-          {t('alerts.saveRecoveryKey')}
-        </Alert>
+        <Alert type="caution">{t('alerts.saveRecoveryKey')}</Alert>
         <Flex align="center" as="code" bg="bg-800" p="md" r="md">
           <Text
             as="code"
