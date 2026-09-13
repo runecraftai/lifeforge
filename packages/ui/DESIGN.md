@@ -979,6 +979,8 @@ State store context that manages a stack of open modals. It provides hooks to in
 
 Renders the portal container at the application root level. Maps over the stack and places items inside a `ModalWrapper`, which manages scaling enter/leave transitions and overlays.
 
+`ModalWrapper` is the shared dialog primitive for every modal. It applies `role="dialog"` and `aria-modal="true"`, labels the dialog via `aria-labelledby` pointing at the first heading (falling back to `aria-label="Dialog"`), traps Tab and Shift+Tab inside the open modal, closes on Escape, and restores focus to the previously focused element when the modal exits.
+
 #### 3. ConfirmationModal
 
 A pre-built confirmation dialog for destructive actions:

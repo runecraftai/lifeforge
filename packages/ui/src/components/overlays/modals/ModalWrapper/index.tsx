@@ -49,6 +49,7 @@ export function ModalWrapper({
   onExited?: () => void
 }) {
   const dialogRef = useRef<HTMLDivElement>(null)
+
   const previousActiveElement = useRef<HTMLElement | null>(
     document.activeElement instanceof HTMLElement
       ? document.activeElement
@@ -88,6 +89,7 @@ export function ModalWrapper({
     if (event.key === 'Escape') {
       event.preventDefault()
       onClose?.()
+
       return
     }
 
@@ -102,6 +104,7 @@ export function ModalWrapper({
     if (focusableElements.length === 0) {
       event.preventDefault()
       dialog.focus()
+
       return
     }
 
@@ -162,8 +165,6 @@ export function ModalWrapper({
             ref={dialogRef}
             aria-modal="true"
             bg={{ base: 'bg-50', dark: 'bg-900' }}
-            role="dialog"
-            tabIndex={-1}
             className={className}
             direction="column"
             left="50%"
@@ -178,11 +179,13 @@ export function ModalWrapper({
             p="lg"
             position="absolute"
             r="xl"
+            role="dialog"
             style={{
               transform: `translate(-50%, -50%) scale(${!isOpen ? '0.9' : isTopmost ? '1' : '0.95'})`,
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
               willChange: 'transform'
             }}
+            tabIndex={-1}
             top="50%"
             width={{
               lg: 'auto',
