@@ -222,6 +222,9 @@ test('validates notes module layout, modal creation, and URL persistence', async
   const urlAfterSearch = page.url()
   expect(urlAfterSearch).toMatch(/[?&]q=search/)
 
+  await searchInput.fill('')
+  await expect(page.getByText('Test Note Title')).toBeVisible()
+
   const editButton = page.getByRole('button', { name: /Edit Test Note Title/ })
   await expect(editButton).toBeVisible()
   await editButton.click()
