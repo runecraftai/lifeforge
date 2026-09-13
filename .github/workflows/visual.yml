@@ -61,11 +61,11 @@ jobs:
           done
           echo 'Waiting for API to initialize...'
           for attempt in {1..30}; do
-            if curl --fail --silent http://localhost:3636/api/status >/dev/null 2>&1; then
+            if curl --fail --silent http://localhost:3636/status >/dev/null 2>&1; then
               break
             fi
             if [ "$attempt" -eq 30 ]; then
-              echo 'LifeForge API did not become ready on http://localhost:3636/api/status'
+              echo 'LifeForge API did not become ready on http://localhost:3636/status'
               docker compose ps
               docker compose logs
               exit 1
