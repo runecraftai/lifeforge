@@ -1,9 +1,17 @@
-import { forgeController, forgeRouter } from '@lifeforge/server-utils'
+import z from 'zod'
 
-const list = forgeController
-  .query()
-  .description('Get all blog entries')
-  .input({})
-  .callback(({ pb }) => pb.getFullList.collection('blog__entries').execute())
+import forge from '../forge'
+import blogSchemas from '../schema'
 
-export default forgeRouter({ list })
+export const list = forge
+  .query({
+    description: 'Get all blog entries',
+    output: {
+      OK: z.array(blogSchemas.entries.schema)
+    }
+  })
+  .callback(async ({ pb, response }) =>
+    response.ok(
+      await pb.getFullList.collection('blog__entries').execute()
+    )
+  )

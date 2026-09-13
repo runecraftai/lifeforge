@@ -1,9 +1,9 @@
 import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
 
-import blogEntriesRouter from './routes/entries'
+import * as entriesRoutes from './routes/entries'
 
 const routes = forgeRouter({
-  entries: blogEntriesRouter
+  entries: entriesRoutes
 })
 
 writeContractFileToClient(routes, import.meta.dirname)

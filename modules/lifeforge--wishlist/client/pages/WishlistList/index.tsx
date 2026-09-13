@@ -9,8 +9,8 @@ import {
   WithQuery,
   useModalStore
 } from '@lifeforge/ui'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useCallback, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import type { InferOutput } from '@lifeforge/api'
 
 import { forgeAPI } from '@/manifest'
@@ -25,7 +25,7 @@ export type WishlistList = InferOutput<
 function Wishlist() {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation('apps.wishlist')
+  const { t } = useModuleTranslation()
 
   const listsQuery = useQuery(forgeAPI.wishlist.lists.list.queryOptions())
 

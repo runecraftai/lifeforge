@@ -1,5 +1,5 @@
 import { EmptyStateScreen, Scrollbar, useModalStore } from '@lifeforge/ui'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import type { WishlistEntry } from '..'
 import ModifyEntryModal from '../modals/ModifyEntryModal'
@@ -14,7 +14,7 @@ function EntryList({
 }) {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation('apps.wishlist')
+  const { t } = useModuleTranslation()
 
   if (isTotallyEmpty) {
     return (

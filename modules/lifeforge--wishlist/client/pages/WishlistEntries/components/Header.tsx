@@ -7,8 +7,8 @@ import {
   GoBackButton,
   useModalStore
 } from '@lifeforge/ui'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 
 import type { WishlistList } from '..'
@@ -22,7 +22,7 @@ function Header({
 }) {
   const open = useModalStore(state => state.open)
 
-  const { t } = useTranslation('apps.wishlist')
+  const { t } = useModuleTranslation()
 
   const { id } = useParams<{ id: string }>()
 

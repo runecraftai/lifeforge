@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { Button, EmptyStateScreen, ModuleHeader, WithQuery } from '@lifeforge/ui'
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { Link } from 'react-router'
 
 import { forgeAPI } from '@/manifest'
 
 function Blog() {
-  const { t } = useTranslation('apps.blog')
+  const { t } = useModuleTranslation()
 
   const entriesQuery = useQuery(forgeAPI.blog.entries.list.queryOptions())
 

@@ -1,11 +1,11 @@
 import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
 
-import entriesRouter from './routes/entries'
-import listsRouter from './routes/lists'
+import * as entriesRoutes from './routes/entries'
+import * as listsRoutes from './routes/lists'
 
 const routes = forgeRouter({
-  lists: listsRouter,
-  entries: entriesRouter
+  lists: listsRoutes,
+  entries: entriesRoutes
 })
 
 writeContractFileToClient(routes, import.meta.dirname)

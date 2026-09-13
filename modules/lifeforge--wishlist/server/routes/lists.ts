@@ -1,96 +1,119 @@
-import { forgeController, forgeRouter } from '@lifeforge/server-utils'
-
-import wishlistSchemas from '../schema'
 import z from 'zod'
 
-const getById = forgeController
-  .query()
-  .description('Get wishlist by ID')
-  .input({
-    query: z.object({
-      id: z.string()
-    })
+import forge from '../forge'
+import wishlistSchemas from '../schema'
+
+export const getById = forge
+  .query({
+    description: 'Get wishlist by ID',
+    input: {
+      query: z.object({
+        id: z.string()
+      })
+    },
+    existenceCheck: {
+      query: { id: 'wishlist__lists' }
+    },
+    output: {
+      OK: wishlistSchemas.lists_aggregated.schema
+    }
   })
-  .existenceCheck('query', {
-    id: 'wishlist__lists'
-  })
-  .callback(({ pb, query: { id } }) =>
-    pb.getOne.collection('wishlist__lists_aggregated').id(id).execute()
+  .callback(async ({ pb, query: { id }, response }) =>
+    response.ok(
+      await pb.getOne.collection('wishlist__lists_aggregated').id(id).execute()
+    )
   )
 
-const validate = forgeController
-  .query()
-  .description('Check if wishlist exists')
-  .input({
-    query: z.object({
-      id: z.string()
-    })
+export const validate = forge
+  .query({
+    description: 'Check if wishlist exists',
+    input: {
+      query: z.object({
+        id: z.string()
+      })
+    },
+    output: {
+      OK: z.boolean()
+    }
   })
-  .callback(
-    async ({ pb, query: { id } }) =>
-      !!(await pb.getOne
-        .collection('wishlist__lists')
-        .id(id)
-        .execute()
-        .catch(() => null))
+  .callback(async ({ pb, query: { id }, response }) => {
+    const exists = !!(await pb.getOne
+      .collection('wishlist__lists')
+      .id(id)
+      .execute()
+      .catch(() => null))
+
+    return response.ok(exists)
+  })
+
+export const list = forge
+  .query({
+    description: 'Get all wishlists with statistics',
+    output: {
+      OK: z.array(wishlistSchemas.lists_aggregated.schema)
+    }
+  })
+  .callback(async ({ pb, response }) =>
+    response.ok(
+      await pb.getFullList.collection('wishlist__lists_aggregated').execute()
+    )
   )
 
-const list = forgeController
-  .query()
-  .description('Get all wishlists with statistics')
-  .input({})
-  .callback(({ pb }) =>
-    pb.getFullList.collection('wishlist__lists_aggregated').execute()
+export const create = forge
+  .mutation({
+    description: 'Create a new wishlist',
+    input: {
+      body: wishlistSchemas.lists.schema
+    },
+    output: {
+      CREATED: wishlistSchemas.lists.schema
+    }
+  })
+  .callback(async ({ pb, body, response }) =>
+    response.created(
+      await pb.create.collection('wishlist__lists').data(body).execute()
+    )
   )
 
-const create = forgeController
-  .mutation()
-  .description('Create a new wishlist')
-  .input({
-    body: wishlistSchemas.lists.schema
+export const update = forge
+  .mutation({
+    description: 'Update an existing wishlist',
+    input: {
+      query: z.object({
+        id: z.string()
+      }),
+      body: wishlistSchemas.lists.schema
+    },
+    existenceCheck: {
+      query: { id: 'wishlist__lists' }
+    },
+    output: {
+      OK: wishlistSchemas.lists.schema
+    }
   })
-  .statusCode(201)
-  .callback(({ pb, body }) =>
-    pb.create.collection('wishlist__lists').data(body).execute()
+  .callback(async ({ pb, query: { id }, body, response }) =>
+    response.ok(
+      await pb.update.collection('wishlist__lists').id(id).data(body).execute()
+    )
   )
 
-const update = forgeController
-  .mutation()
-  .description('Update an existing wishlist')
-  .input({
-    query: z.object({
-      id: z.string()
-    }),
-    body: wishlistSchemas.lists.schema
+export const remove = forge
+  .mutation({
+    description: 'Delete a wishlist',
+    input: {
+      query: z.object({
+        id: z.string()
+      })
+    },
+    existenceCheck: {
+      query: { id: 'wishlist__lists' }
+    },
+    output: {
+      NO_CONTENT: true
+    }
   })
-  .existenceCheck('query', {
-    id: 'wishlist__lists'
-  })
-  .callback(({ pb, query: { id }, body }) =>
-    pb.update.collection('wishlist__lists').id(id).data(body).execute()
-  )
+  .callback(async ({ pb, query: { id }, response }) => {
+    await pb.delete.collection('wishlist__lists').id(id).execute()
 
-const remove = forgeController
-  .mutation()
-  .description('Delete a wishlist')
-  .input({
-    query: z.object({
-      id: z.string()
-    })
+    return response.noContent()
   })
-  .existenceCheck('query', {
-    id: 'wishlist__lists'
-  })
-  .statusCode(204)
-  .callback(({ pb, query: { id } }) =>
-    pb.delete.collection('wishlist__lists').id(id).execute()
-  )
-
-export default forgeRouter({
-  getById,
-  validate,
-  list,
-  create,
-  update,
-  remove
-})

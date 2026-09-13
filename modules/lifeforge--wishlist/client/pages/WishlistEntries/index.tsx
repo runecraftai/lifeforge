@@ -10,8 +10,8 @@ import {
   WithQuery,
   useModalStore
 } from '@lifeforge/ui'
+import { useModuleTranslation } from '@lifeforge/localization'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
 import type { InferOutput } from '@lifeforge/api'
@@ -32,7 +32,7 @@ function WishlistEntries() {
 
   const navigate = useNavigate()
 
-  const { t } = useTranslation('apps.wishlist')
+  const { t } = useModuleTranslation()
 
   const { id } = useParams<{ id: string }>()
 
