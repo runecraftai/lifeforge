@@ -1,3 +1,5 @@
 import { cleanSchemas } from '@lifeforge/pocketbase'
 
-export default cleanSchemas({})
+export const schemas = {}
+
+export default cleanSchemas(schemas)
