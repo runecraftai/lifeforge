@@ -134,7 +134,11 @@ export class BoardController {
     try {
       await this.pocketbase.linkPersonalTask(pb as never, task.id, squadMissionId)
     } catch (linkError) {
-      await this.squad.cancelMission(squadMissionId).catch(() => {})
+      try {
+        await this.squad.cancelMission(squadMissionId)
+      } catch {
+        throw new BadRequestException(`Mission ${squadMissionId} created but not linked or cancelled — manual cleanup required`)
+      }
       throw linkError
     }
 

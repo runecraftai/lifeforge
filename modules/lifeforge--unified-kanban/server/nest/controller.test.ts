@@ -112,6 +112,32 @@ describe('BoardController', () => {
     expect(task.squadMissionId).toBeUndefined()
   })
 
+  it('surfaces combined error when both link and compensation cancel fail', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const task: { id: string; summary: string; status: 'todo'; squadMissionId?: string } = {
+      id: 'task-1',
+      summary: 'Ship it',
+      status: 'todo'
+    }
+    const getPersonalTask = vi.fn().mockResolvedValue(task)
+    const linkPersonalTask = vi.fn().mockRejectedValue(new Error('PocketBase write failed'))
+    const createMission = vi.fn().mockResolvedValue({ taskId: 'lifeforge-task-1' })
+    const cancelMission = vi.fn().mockRejectedValue(new Error('MCP unavailable'))
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask, linkPersonalTask } as never,
+      { createMission, cancelMission } as never
+    )
+
+    await expect(controller.promote({} as never, { taskId: 'task-1' })).rejects.toThrow(
+      /lifeforge-task-1.*manual cleanup required/
+    )
+
+    expect(createMission).toHaveBeenCalledOnce()
+    expect(cancelMission).toHaveBeenCalledWith('lifeforge-task-1')
+    expect(task.squadMissionId).toBeUndefined()
+  })
+
   it('returns already-true when a concurrent request linked the task while the lock was held', async () => {
     const authenticate = vi.fn().mockResolvedValue({ pb: {} })
     const taskFirst: { id: string; summary: string; status: 'todo'; squadMissionId?: string } = {
