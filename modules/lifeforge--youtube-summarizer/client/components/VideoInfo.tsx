@@ -1,7 +1,12 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import humanNumber from 'human-number'
 import { Widget } from '@lifeforge/ui'
+
+dayjs.extend(duration)
+dayjs.extend(relativeTime)
 
 import type { YoutubeInfo } from '../src/index'
 

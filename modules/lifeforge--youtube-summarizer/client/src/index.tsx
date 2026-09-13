@@ -87,14 +87,13 @@ function YoutubeSummarizer() {
         label="video URL"
         namespace="apps.youtubeSummarizer"
         placeholder="https://www.youtube.com/watch?v=..."
-        setValue={setVideoUrl}
+        onChange={setVideoUrl}
         value={videoUrl}
       />
       {videoID?.length !== 11 ? (
         <EmptyStateScreen
           icon="tabler:link-off"
-          name="videoURL"
-          namespace="apps.youtubeSummarizer"
+          message={{ id: 'videoURL', namespace: 'apps.youtubeSummarizer' }}
         />
       ) : (
         <div className="my-6">
@@ -113,8 +112,7 @@ function YoutubeSummarizer() {
               ) : (
                 <EmptyStateScreen
                   icon="tabler:link-off"
-                  name="videoURL"
-                  namespace="apps.youtubeSummarizer"
+                  message={{ id: 'videoURL', namespace: 'apps.youtubeSummarizer' }}
                 />
               )
             }

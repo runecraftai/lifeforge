@@ -1,10 +1,18 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
+import z from 'zod'
 
-import { FormModal, defineForm, toast } from '@lifeforge/ui'
+import { FormModal, createDefaultValues, toast } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 
 import type { MusicEntry } from '../../providers/MusicProvider'
+
+const schema = z.object({
+  author: z.string().min(1, 'Required'),
+  name: z.string().min(1, 'Required')
+})
 
 function UpdateMusicModal({
   data: { initialData },
@@ -34,71 +42,35 @@ function UpdateMusicModal({
       })
   )
 
-  const { formProps, formStateStore } = defineForm<{
-    name: string
-    author: string
-  }>({
-    namespace: 'apps.music',
-    icon: 'tabler:pencil',
-    title: 'updateMusic',
-    submitButton: 'update',
-    onClose
+  const form = useForm({
+    defaultValues: {
+      ...createDefaultValues(schema),
+      name: initialData?.name || '',
+      author: initialData?.author || ''
+    },
+    resolver: zodResolver(schema)
   })
-    .typesMap({
-      name: 'text',
-      author: 'text'
-    })
-    .setupFields({
-      name: {
-        label: 'Music Name',
-        placeholder: "John Doe's Music",
-        icon: 'tabler:music',
-        required: true,
-        actionButtonProps: {
-          icon: 'mage:stars-c',
-          onClick: parseAi
+
+  return (
+    <FormModal
+      form={form}
+      submissionConfig={{
+        template: 'update',
+        handler: async values => {
+          await mutation.mutateAsync(values)
         }
-      },
-      author: {
-        label: 'Music Author',
-        placeholder: 'John Doe',
-        icon: 'tabler:user',
-        required: true
-      }
-    })
-    .initialData(initialData)
-    .onSubmit(async data => {
-      await mutation.mutateAsync(data)
-    })
-    .build()
-
-  async function parseAi() {
-    try {
-      const { name, author } = formStateStore.getState()
-
-      const response = await forgeAPI.youtube.parseMusicNameAndAuthor.mutate({
-        title: name || '',
-        uploader: author || ''
-      })
-
-      if (!response) {
-        toast.error('Failed to parse music name and author')
-
-        return
-      }
-
-      formStateStore.setState(() => ({
-        name: response.name || '',
-        author: response.author || ''
-      }))
-    } catch (error) {
-      toast.error(
-        `Failed to parse music name and author: ${error instanceof Error ? error.message : String(error)}`
-      )
-    }
-  }
-
-  return <FormModal {...formProps} />
+      }}
+      uiConfig={{
+        icon: 'tabler:pencil',
+        loading: false,
+        namespace: 'apps.music',
+        title: 'updateMusic',
+        onClose
+      }}
+    >
+      <></>
+    </FormModal>
+  )
 }
 
 export default UpdateMusicModal

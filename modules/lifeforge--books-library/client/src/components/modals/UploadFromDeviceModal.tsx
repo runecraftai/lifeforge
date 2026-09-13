@@ -34,6 +34,7 @@ function UploadFromDeviceModal({ onClose }: { onClose: () => void }) {
       open(ModifyBookModal, {
         initialData: {
           ...metadata,
+          year_published: Number(metadata.year_published) || 0,
           file: {
             type: 'upload',
             file

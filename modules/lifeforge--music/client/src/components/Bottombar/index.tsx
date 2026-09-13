@@ -16,9 +16,7 @@ function BottomBar() {
     <div className="absolute bottom-8 left-0 w-full space-y-3">
       <ContextMenu
         buttonComponent={<FAB className="static!" visibilityBreakpoint="md" />}
-        classNames={{
-          wrapper: 'fixed bottom-6 right-6'
-        }}
+        className="fixed bottom-6 right-6"
       >
         <ContextMenuItem
           icon="tabler:brand-youtube"

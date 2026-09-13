@@ -137,7 +137,7 @@ function QuickAudioCapture() {
               ? 'tabler:player-stop-filled'
               : 'tabler:microphone'
           }
-          iconClassName="size-full! sm:size-10!"
+          iconProps={{ className: 'size-full! sm:size-10!' }}
           loading={state === 'submitting'}
           variant={state === 'recording' ? 'secondary' : 'primary'}
           onPointerDown={handlePointerDown}

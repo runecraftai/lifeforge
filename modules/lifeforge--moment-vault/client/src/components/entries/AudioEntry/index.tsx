@@ -110,7 +110,7 @@ function AudioEntry({
       <p className="text-bg-500 mt-4 flex items-center gap-2">
         <Icon icon="tabler:clock" /> {dayjs(entry.created).fromNow()}
       </p>
-      <ContextMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
+      <ContextMenu className="absolute top-4 right-4">
         {entry.transcription === '' ? (
           <ContextMenuItem
             icon="tabler:file-text"

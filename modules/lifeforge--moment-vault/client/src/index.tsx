@@ -60,7 +60,6 @@ function MomentVault() {
                 new
               </Button>
             }
-            classNames={{ button: 'hidden:md:block' }}
           >
             {[
               { icon: 'tabler:file-text', type: 'text' },
@@ -81,9 +80,7 @@ function MomentVault() {
       <EntryList dataQuery={dataQuery} page={page} setPage={setPage} />
       <ContextMenu
         buttonComponent={<FAB className="static!" visibilityBreakpoint="md" />}
-        classNames={{
-          wrapper: 'fixed bottom-6 right-6'
-        }}
+        className="fixed bottom-6 right-6"
       >
         {[
           { icon: 'tabler:file-text', type: 'text' },

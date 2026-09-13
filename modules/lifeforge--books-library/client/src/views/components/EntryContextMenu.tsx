@@ -85,7 +85,14 @@ export default function EntryContextMenu({
   const handleUpdateEntry = useCallback(() => {
     open(ModifyBookModal, {
       type: 'update',
-      initialData: item
+      initialData: {
+        ...item,
+        file: {
+          type: 'existing' as const,
+          id: item.id,
+          filename: item.file
+        }
+      }
     })
   }, [item])
 

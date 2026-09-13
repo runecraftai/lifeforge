@@ -40,7 +40,7 @@ function TextEntry({
           <Icon icon="tabler:clock" /> {dayjs(entry.created).fromNow()}
         </p>
       </div>
-      <ContextMenu classNames={{ wrapper: 'absolute top-4 right-4' }}>
+      <ContextMenu className="absolute top-4 right-4">
         <ContextMenuItem
           icon="tabler:pencil"
           label="Edit"

@@ -83,12 +83,13 @@ function CaptionSelector({
       >
         <EmptyStateScreen
           smaller
-          description={t('empty.captions.description', {
-            type: t(`captionTypes.any`)
-          })}
           icon="tabler:language-off"
-          name={false}
-          title={t('empty.captions.title')}
+          message={{
+            title: t('empty.captions.title'),
+            description: t('empty.captions.description', {
+              type: t(`captionTypes.any`)
+            })
+          }}
         />
       </Widget>
     )
@@ -102,7 +103,7 @@ function CaptionSelector({
       title="Select Language"
     >
       <ListboxInput
-        buttonContent={
+        renderContent={() => (
           <>
             {captionType ? (
               <>
@@ -123,12 +124,12 @@ function CaptionSelector({
               <span className="text-bg-500">Select Language</span>
             )}
           </>
-        }
+        )}
         disabled={summarizeLoading}
         icon="tabler:text-grammar"
         label="Caption Type"
         namespace="apps.youtubeSummarizer"
-        setValue={setCaptionType}
+        onChange={setCaptionType}
         value={captionType}
       >
         <ListboxOption
@@ -151,7 +152,7 @@ function CaptionSelector({
         ).length > 0 ? (
           <>
             <ListboxInput
-              buttonContent={
+              renderContent={() => (
                 <>
                   <Icon icon="tabler:language" />
                   <span>
@@ -160,12 +161,12 @@ function CaptionSelector({
                       : ''}
                   </span>
                 </>
-              }
+              )}
               disabled={summarizeLoading}
               icon="tabler:language"
               label="Language"
               namespace="apps.youtubeSummarizer"
-              setValue={setSelectedLanguage}
+              onChange={setSelectedLanguage}
               value={selectedLanguage}
             >
               {Object.entries(
@@ -212,12 +213,13 @@ function CaptionSelector({
           <div className="mt-4">
             <EmptyStateScreen
               smaller
-              description={t('empty.captions.description', {
-                type: t(`captionTypes.${captionType}`)
-              })}
               icon="tabler:language-off"
-              name={false}
-              title={t('empty.captions.title')}
+              message={{
+                title: t('empty.captions.title'),
+                description: t('empty.captions.description', {
+                  type: t(`captionTypes.${captionType}`)
+                })
+              }}
             />
           </div>
         ))}
