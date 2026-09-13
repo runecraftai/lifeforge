@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { ModuleHeaderTailwind, useModalStore } from '@lifeforge/ui'
 
@@ -85,6 +85,7 @@ function NotesContent({
 
 export function NotesPage() {
   const { open } = useModalStore()
+  const queryClient = useQueryClient()
 
   const { searchQuery, selectedNoteId, setSearchQuery, setSelectedNoteId } =
     useNoteFilter()
@@ -105,7 +106,7 @@ export function NotesPage() {
   }
 
   function handleSearch() {
-    void notesQuery.refetch()
+    void queryClient.invalidateQueries({ queryKey: forgeAPI.notes.key })
   }
 
   function handleSelect(id: string) {
