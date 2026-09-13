@@ -15,13 +15,10 @@
     "typecheck:server": "cd server && tsc",
     "build": "pnpm run build:client && pnpm run build:server",
     "build:client": "cd client && vite build",
-    "build:server": "cd server && vite build",
-    "test": "cd client && vitest run",
-    "lint": "find client/src -type f \\( -name '*.ts' -o -name '*.tsx' \\) -print0 | xargs -0 oxlint --config .oxlintrc.json"
+    "build:server": "cd server && vite build"
   },
-  "devDependencies": {
-    "oxlint": "^1.82.0"
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "lifeforge": {
     "icon": "tabler:list-check",
     "category": "Productivity"

@@ -1,16 +1,17 @@
-import { Flex, ModuleHeader } from '@lifeforge/ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
-import { TodoListProvider } from '@/entities/task'
-import { TodoListPage } from '@/pages/todo-list'
+import { TodoListProvider } from '@/providers/TodoListProvider'
 
-export function TodoList() {
+import TodoListContainer from './components/TodoListContainer'
+
+function TodoList() {
   return (
-    <Flex direction="column" flex="1" minHeight="0">
+    <>
       <ModuleHeader />
       <TodoListProvider>
-        <TodoListPage />
+        <TodoListContainer />
       </TodoListProvider>
-    </Flex>
+    </>
   )
 }
 

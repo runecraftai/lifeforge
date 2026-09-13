@@ -5,8 +5,6 @@ import * as listsRouter from './routes/lists'
 import * as prioritiesRouter from './routes/priorities'
 import * as tagsRouter from './routes/tags'
 
-export { backfillEntryStatuses } from './backfill'
-
 const routes = forgeRouter({
   entries: entriesRouter,
   priorities: prioritiesRouter,
