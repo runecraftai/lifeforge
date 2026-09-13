@@ -182,14 +182,14 @@ function ModifyPasswordModal({
 
             const passwordLength = 16
 
+            const randomIndices = new Uint32Array(passwordLength)
+            crypto.getRandomValues(randomIndices)
             let generatedPassword = ''
 
             for (let i = 0; i < passwordLength; i++) {
-              const randomIndex = Math.floor(
-                Math.random() * allCharacters.length
-              )
-
-              generatedPassword += allCharacters[randomIndex]
+              generatedPassword += allCharacters[
+                randomIndices[i] % allCharacters.length
+              ]
             }
 
             form.setValue('password', generatedPassword, {

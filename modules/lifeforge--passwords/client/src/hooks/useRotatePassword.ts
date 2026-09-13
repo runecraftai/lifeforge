@@ -19,11 +19,13 @@ const ALL_CHARACTERS = `${ALPHABETS}${ALPHABETS_UPPER}${NUMBERS}${SYMBOLS}`
 const PASSWORD_LENGTH = 16
 
 function generatePassword(): string {
+  const randomIndices = new Uint32Array(PASSWORD_LENGTH)
+  crypto.getRandomValues(randomIndices)
   let password = ''
 
   for (let i = 0; i < PASSWORD_LENGTH; i++) {
     password +=
-      ALL_CHARACTERS[Math.floor(Math.random() * ALL_CHARACTERS.length)]
+      ALL_CHARACTERS[randomIndices[i] % ALL_CHARACTERS.length]
   }
 
   return password
