@@ -33,12 +33,53 @@ jobs:
           cp env/.env.docker.example env/.env.docker
           docker compose down -v --remove-orphans
           docker compose up --build -d
+          echo 'Waiting for client (port 5173)...'
           for attempt in {1..60}; do
             if curl --fail --silent http://localhost:5173/ >/dev/null; then
               break
             fi
             if [ "$attempt" -eq 60 ]; then
-              echo 'LifeForge did not become reachable on http://localhost:5173'
+              echo 'LifeForge client did not become reachable on http://localhost:5173'
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Waiting for API server (port 3636)...'
+          for attempt in {1..60}; do
+            if curl --fail --silent http://localhost:3636/ >/dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 60 ]; then
+              echo 'LifeForge API did not become reachable on http://localhost:3636'
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Waiting for API to initialize...'
+          for attempt in {1..30}; do
+            if curl --fail --silent http://localhost:3636/status >/dev/null 2>&1; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo 'LifeForge API did not become ready on http://localhost:3636/status'
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Waiting for API + PocketBase connectivity (listEnabled)...'
+          for attempt in {1..30}; do
+            HTTP_CODE=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5173/api/auth/oauth/providers/listEnabled 2>/dev/null || true)
+            if [ "$HTTP_CODE" = '200' ]; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo "LifeForge API listEnabled endpoint did not become ready (HTTP $HTTP_CODE)"
               docker compose ps
               docker compose logs
               exit 1
@@ -205,6 +246,16 @@ jobs:
           fi
           if ! compgen -G "$SCREENSHOTS/*.png" >/dev/null; then
             echo 'No screenshots were produced; skipping evidence publication.'
+            exit 0
+          fi
+          USABLE=$(node -e "
+            const fs = require('fs');
+            const manifest = JSON.parse(fs.readFileSync(process.env.SCREENSHOTS + '/manifest.json', 'utf8'));
+            const hasUsable = (manifest.captures || []).some(c => c.usable === true);
+            process.stdout.write(hasUsable ? 'true' : 'false');
+          ")
+          if [ "$USABLE" != 'true' ]; then
+            echo 'No usable captures in manifest; skipping evidence publication.'
             exit 0
           fi
 

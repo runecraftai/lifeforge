@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 
 const screenshotDir = 'visual-results/screenshots'
 const manifestPath = `${screenshotDir}/manifest.json`
@@ -38,15 +38,14 @@ async function setTheme(page, theme) {
 }
 
 test.beforeAll(async () => {
+  await rm(screenshotDir, { recursive: true, force: true })
   await mkdir(screenshotDir, { recursive: true })
-  try {
-    await readFile(manifestPath, 'utf8')
-  } catch {
-    await writeFile(manifestPath, '{"captures":[]}\n')
-  }
+  await writeFile(manifestPath, '{"captures":[]}\n')
 })
 
-test('captures the To-Do List layout in both themes', async ({ page }) => {
+test('validates notes module layout, modal creation, and URL persistence', async ({
+  page
+}) => {
   page.on('console', message => {
     if (message.type() === 'error' || message.type() === 'warning') {
       console.log(`[visual browser ${message.type()}] ${message.text()}`)
@@ -79,12 +78,12 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
   if (!loginFormVisible) {
     console.log('[visual] Login form not visible - API may be unavailable')
     await recordCapture(
-      '00-auth-error-state.png',
-      'Authentication error state: login form unavailable',
+      '00-notes-auth-error-state.png',
+      'Authentication error state: login form unavailable (notes)',
       () =>
         page.screenshot({
           fullPage: true,
-          path: `${screenshotDir}/00-auth-error-state.png`
+          path: `${screenshotDir}/00-notes-auth-error-state.png`
         }),
       false
     )
@@ -130,12 +129,12 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
       .catch(() => null)
     const errorMsg = errorVisible ? ` Error: ${errorVisible}` : ''
     await recordCapture(
-      '00-login-failed.png',
+      '00-notes-login-failed.png',
       `Authentication failed: login did not reach the dashboard (${currentUrl})`,
       () =>
         page.screenshot({
           fullPage: true,
-          path: `${screenshotDir}/00-login-failed.png`
+          path: `${screenshotDir}/00-notes-login-failed.png`
         }),
       false
     )
@@ -144,81 +143,125 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
     )
   }
 
-  await setTheme(page, 'dark')
-  await page.goto('/todo-list', { waitUntil: 'domcontentloaded' })
-  await page.waitForTimeout(1_000)
-  await expect(page.getByRole('heading', { name: /All Tasks/ })).toBeVisible()
-
-  const taskSummary = `Visual validation task ${Date.now()}`
-  await page.getByRole('button', { name: /New Task/ }).click()
-  await expect(page.getByText('Include Time')).toBeVisible()
-  await page.getByPlaceholder('An urgent task').fill(taskSummary)
-  await page.getByRole('button', { name: 'Create' }).click()
-  await expect(page.getByText(taskSummary)).toBeVisible()
-
-  await recordCapture(
-    '01-task-list-dark.png',
-    'To-Do List task list in dark theme with a created task',
-    () =>
-      page.screenshot({
-        fullPage: true,
-        path: `${screenshotDir}/01-task-list-dark.png`
-      })
-  )
-  await recordCapture(
-    '02-sidebar-dark.png',
-    'To-Do List module sidebar in dark theme',
-    () =>
-      page
-        .locator('aside')
-        .nth(1)
-        .screenshot({ path: `${screenshotDir}/02-sidebar-dark.png` })
-  )
-
-  await page.getByRole('button', { name: `Edit ${taskSummary}` }).click()
-  await expect(page.getByText('Include Time')).toBeVisible()
-  await recordCapture(
-    '05-task-edit-drawer-dark.png',
-    'To-Do List edit drawer in dark theme with the Include Time field',
-    () =>
-      page.screenshot({
-        fullPage: true,
-        path: `${screenshotDir}/05-task-edit-drawer-dark.png`
-      })
-  )
-
   await setTheme(page, 'light')
-  await page.goto('/todo-list', { waitUntil: 'domcontentloaded' })
+  await page.goto('/notes', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(1_000)
-  await expect(page.getByText(taskSummary)).toBeVisible()
+
+  const newNoteButton = page.getByRole('button', { name: /New note/ })
+  await expect(newNoteButton).toBeVisible()
+
+  const searchInput = page.getByPlaceholder(/search/i)
+  const searchButton = page.getByRole('button', { name: 'Search' })
+  await expect(searchInput).toBeVisible()
+  await expect(searchButton).toBeVisible()
+
   await recordCapture(
-    '03-task-list-light.png',
-    'To-Do List task list in light theme with a created task',
+    '01-notes-layout-light.png',
+    'Notes module layout in light theme',
     () =>
       page.screenshot({
         fullPage: true,
-        path: `${screenshotDir}/03-task-list-light.png`
+        path: `${screenshotDir}/01-notes-layout-light.png`
       })
   )
-  await recordCapture(
-    '04-sidebar-light.png',
-    'To-Do List module sidebar in light theme',
-    () =>
-      page
-        .locator('aside')
-        .nth(1)
-        .screenshot({ path: `${screenshotDir}/04-sidebar-light.png` })
-  )
 
-  await page.getByRole('button', { name: `Edit ${taskSummary}` }).click()
-  await expect(page.getByText('Include Time')).toBeVisible()
+  await expect(page.getByText('Select a note')).toBeVisible()
+
+  await newNoteButton.click()
+  const modalTitle = page.getByRole('heading', { name: 'New note' })
+  await expect(modalTitle).toBeVisible()
+  await expect(page.getByLabel('Title')).toBeVisible()
+  await expect(page.getByLabel('Content')).toBeVisible()
+
   await recordCapture(
-    '06-task-edit-drawer-light.png',
-    'To-Do List edit drawer in light theme with the Include Time field',
+    '02-notes-create-modal-light.png',
+    'Notes create modal in light theme',
     () =>
       page.screenshot({
         fullPage: true,
-        path: `${screenshotDir}/06-task-edit-drawer-light.png`
+        path: `${screenshotDir}/02-notes-create-modal-light.png`
+      })
+  )
+
+  await page.getByLabel('Title').fill('Test Note Title')
+  await page.getByLabel('Content').fill('Test note content body')
+  await page.getByRole('button', { name: 'Create' }).click()
+
+  await expect(page.getByText('Test Note Title')).toBeVisible()
+
+  await recordCapture(
+    '03-notes-after-create-light.png',
+    'Notes list after creating a note in light theme',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/03-notes-after-create-light.png`
+      })
+  )
+
+  await page.getByText('Test Note Title').click()
+  await expect(page.getByText('Test note content body')).toBeVisible()
+
+  await recordCapture(
+    '04-notes-selected-light.png',
+    'Notes detail view in light theme',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/04-notes-selected-light.png`
+      })
+  )
+
+  const url = page.url()
+  expect(url).toMatch(/[?&]note=/)
+
+  await searchInput.fill('search term')
+  await page.waitForTimeout(500)
+  const urlAfterSearch = page.url()
+  expect(urlAfterSearch).toMatch(/[?&]q=search/)
+
+  const editButton = page.getByRole('button', { name: /Edit Test Note Title/ })
+  await expect(editButton).toBeVisible()
+  await editButton.click()
+  await expect(page.getByRole('heading', { name: 'Edit note' })).toBeVisible()
+
+  await recordCapture(
+    '05-notes-edit-modal-light.png',
+    'Notes edit modal in light theme',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/05-notes-edit-modal-light.png`
+      })
+  )
+
+  await page.keyboard.press('Escape')
+  await page.waitForTimeout(500)
+
+  await setTheme(page, 'dark')
+  await page.goto('/notes', { waitUntil: 'domcontentloaded' })
+  await page.waitForTimeout(1_000)
+
+  await expect(newNoteButton).toBeVisible()
+  await recordCapture(
+    '06-notes-layout-dark.png',
+    'Notes module layout in dark theme',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/06-notes-layout-dark.png`
+      })
+  )
+
+  await newNoteButton.click()
+  await expect(modalTitle).toBeVisible()
+  await recordCapture(
+    '07-notes-create-modal-dark.png',
+    'Notes create modal in dark theme',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/07-notes-create-modal-dark.png`
       })
   )
 })
