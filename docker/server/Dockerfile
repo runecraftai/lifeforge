@@ -35,9 +35,9 @@ RUN pnpm install --frozen-lockfile --ignore-scripts
 # Copy source
 COPY . .
 
-# Build the API and module server bundles used by the production image
+# Build the API and module bundles used by the production image
 RUN pnpm turbo build --filter=@lifeforge/server... && \
-    pnpm --filter './modules/*' run build:server
+    pnpm --filter './modules/*' run build
 
 # ── Collect production node_modules for the API ──────────────────────
 # Create a clean package.json with only production dependencies,
