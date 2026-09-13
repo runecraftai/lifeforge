@@ -1,9 +1,30 @@
+import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import { Box, Flex } from '@/components/primitives'
 import { Transition } from '@/components/primitives/Transition'
 
 import * as styles from './ModalWrapper.css'
+
+const focusableSelector = [
+  'a[href]',
+  'area[href]',
+  'button:not([disabled])',
+  'input:not([disabled]):not([type="hidden"])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  'iframe',
+  'object',
+  'embed',
+  '[contenteditable]',
+  '[tabindex]:not([tabindex="-1"])'
+].join(',')
+
+function getFocusableElements(element: HTMLElement) {
+  return Array.from(
+    element.querySelectorAll<HTMLElement>(focusableSelector)
+  ).filter(item => item.offsetParent !== null)
+}
 
 export function ModalWrapper({
   isOpen,
@@ -25,6 +46,77 @@ export function ModalWrapper({
   zIndex?: number
   onExited?: () => void
 }) {
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const previousActiveElement = useRef<HTMLElement | null>(
+    document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null
+  )
+  const titleId = `modal-title-${useId().replaceAll(':', '')}`
+
+  useEffect(
+    () => () => {
+      previousActiveElement.current?.focus()
+    },
+    []
+  )
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+
+    if (!dialog) return
+
+    const heading = dialog.querySelector<HTMLElement>('h1, h2, h3, h4, h5, h6')
+
+    if (heading) {
+      heading.id ||= titleId
+      dialog.setAttribute('aria-labelledby', heading.id)
+      dialog.removeAttribute('aria-label')
+    } else {
+      dialog.setAttribute('aria-label', 'Dialog')
+    }
+
+    if (isOpen && !dialog.contains(document.activeElement)) {
+      const firstFocusableElement = getFocusableElements(dialog)[0]
+      ;(firstFocusableElement ?? dialog).focus()
+    }
+  }, [isOpen, titleId])
+
+  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key !== 'Tab') return
+
+    const dialog = dialogRef.current
+
+    if (!dialog) return
+
+    const focusableElements = getFocusableElements(dialog)
+
+    if (focusableElements.length === 0) {
+      event.preventDefault()
+      dialog.focus()
+      return
+    }
+
+    const firstFocusableElement = focusableElements[0]
+    const lastFocusableElement = focusableElements.at(-1)
+
+    if (
+      event.shiftKey &&
+      (document.activeElement === firstFocusableElement ||
+        document.activeElement === dialog)
+    ) {
+      event.preventDefault()
+      lastFocusableElement?.focus()
+    } else if (
+      !event.shiftKey &&
+      (document.activeElement === lastFocusableElement ||
+        !dialog.contains(document.activeElement))
+    ) {
+      event.preventDefault()
+      firstFocusableElement.focus()
+    }
+  }
+
   return createPortal(
     <Transition
       property={
@@ -59,7 +151,11 @@ export function ModalWrapper({
       >
         <Transition easing="ease-out" property="transform">
           <Flex
+            ref={dialogRef}
+            aria-modal="true"
             bg={{ base: 'bg-50', dark: 'bg-900' }}
+            role="dialog"
+            tabIndex={-1}
             className={className}
             direction="column"
             left="50%"
@@ -84,6 +180,7 @@ export function ModalWrapper({
               lg: 'auto',
               base: '100%'
             }}
+            onKeyDown={handleKeyDown}
           >
             {children}
           </Flex>
