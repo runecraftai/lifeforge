@@ -189,4 +189,176 @@ describe('BoardController', () => {
 
     expect((controller as any).promoteLocks.has('task-1')).toBe(false)
   })
+
+  it('undoPromote clears the link and cancels the Squad mission', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const task: { id: string; summary: string; status: 'todo'; squadMissionId?: string } = {
+      id: 'task-1',
+      summary: 'Ship it',
+      status: 'todo',
+      squadMissionId: 'lifeforge-task-1'
+    }
+    const getPersonalTask = vi.fn().mockResolvedValue(task)
+    const unlinkPersonalTask = vi.fn().mockResolvedValue(undefined)
+    const cancelMission = vi.fn().mockResolvedValue(undefined)
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask, unlinkPersonalTask } as never,
+      { cancelMission } as never
+    )
+
+    await expect(controller.undoPromote({} as never, { taskId: 'task-1' })).resolves.toEqual({
+      state: 'success',
+      data: { taskId: 'task-1', squadMissionId: null, unlinked: true }
+    })
+
+    expect(unlinkPersonalTask).toHaveBeenCalledWith({}, 'task-1')
+    expect(cancelMission).toHaveBeenCalledWith('lifeforge-task-1')
+  })
+
+  it('undoPromote is a no-op when the task has no linked mission', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const getPersonalTask = vi.fn().mockResolvedValue({
+      id: 'task-1',
+      summary: 'Ship it',
+      status: 'todo'
+    })
+    const unlinkPersonalTask = vi.fn()
+    const cancelMission = vi.fn()
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask, unlinkPersonalTask } as never,
+      { cancelMission } as never
+    )
+
+    await expect(controller.undoPromote({} as never, { taskId: 'task-1' })).resolves.toEqual({
+      state: 'success',
+      data: { taskId: 'task-1', squadMissionId: null, unlinked: false }
+    })
+
+    expect(unlinkPersonalTask).not.toHaveBeenCalled()
+    expect(cancelMission).not.toHaveBeenCalled()
+  })
+
+  it('undoPromote throws when the personal task is not found', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const getPersonalTask = vi.fn().mockResolvedValue(null)
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask } as never,
+      {} as never
+    )
+
+    await expect(controller.undoPromote({} as never, { taskId: 'missing' })).rejects.toThrow('Personal task not found')
+  })
+
+  it('undoPromote clears the local link even when the Squad mission is already cancelled', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const getPersonalTask = vi.fn().mockResolvedValue({
+      id: 'task-1',
+      summary: 'Ship it',
+      status: 'todo',
+      squadMissionId: 'lifeforge-task-1'
+    })
+    const unlinkPersonalTask = vi.fn().mockResolvedValue(undefined)
+    const cancelMission = vi.fn().mockRejectedValue(new Error('Mission not found'))
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask, unlinkPersonalTask } as never,
+      { cancelMission } as never
+    )
+
+    await expect(controller.undoPromote({} as never, { taskId: 'task-1' })).resolves.toEqual({
+      state: 'success',
+      data: { taskId: 'task-1', squadMissionId: null, unlinked: true }
+    })
+
+    expect(unlinkPersonalTask).toHaveBeenCalledWith({}, 'task-1')
+    expect(cancelMission).toHaveBeenCalledWith('lifeforge-task-1')
+  })
+
+  it('deleteTask removes the personal task and cancels a linked Squad mission', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const getPersonalTask = vi.fn().mockResolvedValue({
+      id: 'task-1',
+      summary: 'Ship it',
+      status: 'todo',
+      squadMissionId: 'lifeforge-task-1'
+    })
+    const deletePersonalTask = vi.fn().mockResolvedValue(undefined)
+    const cancelMission = vi.fn().mockResolvedValue(undefined)
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask, deletePersonalTask } as never,
+      { cancelMission } as never
+    )
+
+    await expect(controller.deleteTask({} as never, { taskId: 'task-1' })).resolves.toEqual({
+      state: 'success',
+      data: { taskId: 'task-1' }
+    })
+
+    expect(cancelMission).toHaveBeenCalledWith('lifeforge-task-1')
+    expect(deletePersonalTask).toHaveBeenCalledWith({}, 'task-1')
+  })
+
+  it('deleteTask removes the personal task without calling MCP when no mission is linked', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const getPersonalTask = vi.fn().mockResolvedValue({
+      id: 'task-1',
+      summary: 'Ship it',
+      status: 'todo'
+    })
+    const deletePersonalTask = vi.fn().mockResolvedValue(undefined)
+    const cancelMission = vi.fn()
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask, deletePersonalTask } as never,
+      { cancelMission } as never
+    )
+
+    await expect(controller.deleteTask({} as never, { taskId: 'task-1' })).resolves.toEqual({
+      state: 'success',
+      data: { taskId: 'task-1' }
+    })
+
+    expect(cancelMission).not.toHaveBeenCalled()
+    expect(deletePersonalTask).toHaveBeenCalledWith({}, 'task-1')
+  })
+
+  it('deleteTask throws when the personal task is not found', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const getPersonalTask = vi.fn().mockResolvedValue(null)
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask } as never,
+      {} as never
+    )
+
+    await expect(controller.deleteTask({} as never, { taskId: 'missing' })).rejects.toThrow('Personal task not found')
+  })
+
+  it('deleteTask still removes the personal task when MCP cancel fails', async () => {
+    const authenticate = vi.fn().mockResolvedValue({ pb: {} })
+    const getPersonalTask = vi.fn().mockResolvedValue({
+      id: 'task-1',
+      summary: 'Ship it',
+      status: 'todo',
+      squadMissionId: 'lifeforge-task-1'
+    })
+    const deletePersonalTask = vi.fn().mockResolvedValue(undefined)
+    const cancelMission = vi.fn().mockRejectedValue(new Error('MCP unavailable'))
+    const controller = new BoardController(
+      { authenticate } as never,
+      { getPersonalTask, deletePersonalTask } as never,
+      { cancelMission } as never
+    )
+
+    await expect(controller.deleteTask({} as never, { taskId: 'task-1' })).resolves.toEqual({
+      state: 'success',
+      data: { taskId: 'task-1' }
+    })
+
+    expect(deletePersonalTask).toHaveBeenCalledWith({}, 'task-1')
+  })
 })

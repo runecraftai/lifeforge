@@ -143,4 +143,8 @@ export class SquadMcpAdapter {
 
     return { taskId: input.id }
   }
+
+  async cancelMission(id: string): Promise<void> {
+    await callSquadMcp('squad_task_cancel', { id })
+  }
 }

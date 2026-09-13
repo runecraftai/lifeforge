@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, Req } from '@nestjs/common'
+import { BadRequestException, Body, Controller, Delete, Get, Post, Req } from '@nestjs/common'
 import type { Request } from 'express'
 
 import {
@@ -15,6 +15,8 @@ const statuses = ['todo', 'doing', 'done'] as const
 
 type MoveBody = { source: 'personal' | 'mission'; id: string; status: LifecycleStatus }
 type PromoteBody = { taskId: string }
+type UndoPromoteBody = { taskId: string }
+type DeleteBody = { taskId: string }
 
 @Controller('board')
 export class BoardController {
@@ -73,6 +75,46 @@ export class BoardController {
     return locked.finally(() => {
       this.promoteLocks.delete(task.id)
     })
+  }
+
+  @Post('undo-promote')
+  async undoPromote(@Req() request: Request, @Body() body: UndoPromoteBody) {
+    const { pb } = await this.auth.authenticate(request)
+
+    if (!body?.taskId) throw new BadRequestException('Invalid personal task')
+
+    const task = await this.pocketbase.getPersonalTask(pb, body.taskId)
+
+    if (!task) throw new BadRequestException('Personal task not found')
+
+    if (!task.squadMissionId) {
+      return { state: 'success', data: { taskId: task.id, squadMissionId: null, unlinked: false } }
+    }
+
+    const squadMissionId = task.squadMissionId
+    await this.pocketbase.unlinkPersonalTask(pb, task.id)
+    await this.squad.cancelMission(squadMissionId).catch(() => {})
+
+    return { state: 'success', data: { taskId: task.id, squadMissionId: null, unlinked: true } }
+  }
+
+  @Delete('task')
+  async deleteTask(@Req() request: Request, @Body() body: DeleteBody) {
+    const { pb } = await this.auth.authenticate(request)
+
+    if (!body?.taskId) throw new BadRequestException('Invalid personal task')
+
+    const task = await this.pocketbase.getPersonalTask(pb, body.taskId)
+
+    if (!task) throw new BadRequestException('Personal task not found')
+
+    if (task.squadMissionId) {
+      await this.squad.cancelMission(task.squadMissionId).catch(() => {})
+    }
+
+    await this.pocketbase.deletePersonalTask(pb, task.id)
+
+    return { state: 'success', data: { taskId: task.id } }
   }
 
   private async promoteLocked(pb: unknown, task: { id: string; summary: string; squadMissionId?: string }): Promise<{ state: string; data: { taskId: string; squadMissionId: string; already: boolean } }> {

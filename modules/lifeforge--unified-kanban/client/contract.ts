@@ -115,6 +115,64 @@ export const contract = {
           additionalProperties: false
         }
       }
+    },
+    undoPromote: {
+      method: 'post',
+      description: 'Remove the link between a personal task and its Squad mission',
+      noAuth: false,
+      encrypted: false,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: emptyQuery,
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: { taskId: { type: 'string' } },
+          required: ['taskId'],
+          additionalProperties: false
+        }
+      },
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            taskId: { type: 'string' },
+            squadMissionId: { type: ['string', 'null'] },
+            unlinked: { type: 'boolean' }
+          },
+          required: ['taskId', 'squadMissionId', 'unlinked'],
+          additionalProperties: false
+        }
+      }
+    },
+    deleteTask: {
+      method: 'delete',
+      description: 'Delete a personal task and clean up its Squad mission link',
+      noAuth: false,
+      encrypted: false,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: emptyQuery,
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: { taskId: { type: 'string' } },
+          required: ['taskId'],
+          additionalProperties: false
+        }
+      },
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: { taskId: { type: 'string' } },
+          required: ['taskId'],
+          additionalProperties: false
+        }
+      }
     }
   }
 } as const
