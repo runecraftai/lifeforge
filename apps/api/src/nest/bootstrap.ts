@@ -1,12 +1,13 @@
 import { ROOT_DIR } from '@constants'
 import ensureCredentials from '@functions/initialization/ensureCredentials'
 import { LocaleService } from '@functions/initialization/localeService'
-import { checkDB } from '@lifeforge/pocketbase'
 import dotenv from 'dotenv'
-import fs from 'node:fs'
-import path from 'node:path'
 import type { Express } from 'express'
+import fs from 'node:fs'
 import type { Server as HttpServer } from 'node:http'
+import path from 'node:path'
+
+import { checkDB } from '@lifeforge/pocketbase'
 
 const TEST_PORT = 13636
 
@@ -94,9 +95,8 @@ export async function bootstrap(): Promise<BootstrapRuntime> {
   nestExpress.use('/api', expressApp)
   nestExpress.use(expressApp)
 
-  const { default: createSocketServer } = await import(
-    '@functions/socketio/createSocketServer'
-  )
+  const { default: createSocketServer } =
+    await import('@functions/socketio/createSocketServer')
   const server = createSocketServer(nestExpress)
   await listen(server)
   console.log(`[nest-bootstrap] listening ${TEST_PORT}`)
