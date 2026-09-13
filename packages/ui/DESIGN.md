@@ -1548,7 +1548,7 @@ Before submitting a pull request, verify that you have adhered to all core desig
 
 - [ ] **Use the module's styling stack:** Existing modules use primitives and recipes; Tailwind-native modules import `@lifeforge/ui/tailwind.css`. Do not use `@apply` or `@reference`.
 - [ ] **No arbitrary inline styles:** Inline `style` is only used for properties computed at runtime (e.g. coordinates or scales). Standard layouts use `p`, `m`, `width`, `height`, etc.
-- [ ] **Strict font-sizing rules:** Prohibited `text-xs` is never used. Default size is `text-base` (omit size prop), and titles use sizes `>= text-lg`.
+- [ ] **Strict font-sizing rules:** For Vanilla Extract components, `text-xs` is never used. Default size is `text-base` (omit size prop), and titles use sizes `>= text-lg`. Tailwind-native components follow the module's own styling stack (see Rule 1) and are not bound by the vanilla-extract font-size prohibition.
 - [ ] **Correct loaders:** Form/button loading states use the pre-animated `svg-spinners:ring-resize` icon and **never** use custom `animate-spin` utilities.
 - [ ] **Type safety:** Typescript `any` is never used. All prop overrides and custom handlers are explicitly typed.
 - [ ] **Datetime manipulation:** Standard JavaScript `Date` is never used. `day.js` is imported for any date calculations.
