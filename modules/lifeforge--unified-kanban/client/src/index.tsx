@@ -200,6 +200,7 @@ export default function UnifiedKanban() {
   const [dragged, setDragged] = useState<BoardItem | null>(null)
   const [promotingId, setPromotingId] = useState<string | null>(null)
   const [error, setError] = useState(false)
+
   const [collapsedLanes, setCollapsedLanes] = useQueryState(
     'collapsed',
     parseAsArrayOf(parseAsString)
@@ -328,23 +329,23 @@ export default function UnifiedKanban() {
         )}
         <div className="space-y-8">
           <AccordionLane
+            expanded={!collapsedLanes?.includes('personal')}
             items={board.personal}
             lane="personal"
             promotingId={promotingId}
             onDragStart={setDragged}
             onDrop={onDrop}
             onPromote={onPromote}
-            expanded={!collapsedLanes?.includes('personal')}
             onToggle={expanded => toggleLane('personal', expanded)}
           />
           <AccordionLane
+            expanded={!collapsedLanes?.includes('work')}
             items={board.work}
             lane="work"
             promotingId={promotingId}
             onDragStart={setDragged}
             onDrop={onDrop}
             onPromote={onPromote}
-            expanded={!collapsedLanes?.includes('work')}
             onToggle={expanded => toggleLane('work', expanded)}
           />
         </div>
