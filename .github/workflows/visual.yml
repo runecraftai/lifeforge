@@ -262,7 +262,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           SCREENSHOTS: ${{ github.workspace }}/visual-results/screenshots
-          EVIDENCE_REF: visual-validation-evidence/pr-${{ github.event.pull_request.number }}/run-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          EVIDENCE_REF: visual-validation-evidence-pr-${{ github.event.pull_request.number }}-run-${{ github.run_id }}-attempt-${{ github.run_attempt }}
         run: |
           set -euo pipefail
           if [ ! -f "$SCREENSHOTS/manifest.json" ]; then
@@ -304,7 +304,7 @@ jobs:
           VISUAL_RESULT: ${{ steps.visual.outcome }}
           EVIDENCE_RESULT: ${{ steps.evidence.outcome }}
           EVIDENCE_PUBLISH_RESULT: ${{ steps.publish.outcome }}
-          EVIDENCE_REF: visual-validation-evidence/pr-${{ github.event.pull_request.number }}/run-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          EVIDENCE_REF: visual-validation-evidence-pr-${{ github.event.pull_request.number }}-run-${{ github.run_id }}-attempt-${{ github.run_attempt }}
         with:
           script: |
             const fs = require('node:fs');

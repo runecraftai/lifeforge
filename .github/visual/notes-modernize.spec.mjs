@@ -171,7 +171,7 @@ test('validates notes module layout, modal creation, and URL persistence', async
   const modalTitle = page.getByRole('heading', { name: 'New note' })
   await expect(modalTitle).toBeVisible()
   await expect(page.getByLabel('Title')).toBeVisible()
-  await expect(page.getByLabel('Content')).toBeVisible()
+  await expect(page.getByPlaceholder('Write your note...')).toBeVisible()
 
   await recordCapture(
     '02-notes-create-modal-light.png',
@@ -184,7 +184,7 @@ test('validates notes module layout, modal creation, and URL persistence', async
   )
 
   await page.getByLabel('Title').fill('Test Note Title')
-  await page.getByLabel('Content').fill('Test note content body')
+  await page.getByPlaceholder('Write your note...').fill('Test note content body')
   await page.getByRole('button', { name: 'Create' }).click()
 
   await expect(page.getByText('Test Note Title')).toBeVisible()
