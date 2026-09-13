@@ -33,6 +33,7 @@ COPY modules/lifeforge--moment-vault/package.json   modules/lifeforge--moment-va
 COPY modules/lifeforge--movies/package.json         modules/lifeforge--movies/package.json
 COPY modules/lifeforge--music/package.json          modules/lifeforge--music/package.json
 COPY modules/lifeforge--youtube-summarizer/package.json modules/lifeforge--youtube-summarizer/package.json
+COPY modules/lifeforge--unified-kanban/package.json modules/lifeforge--unified-kanban/package.json
 COPY locales/lang-en/package.json                   locales/lang-en/package.json
 
 # Install deps only (skip postinstall build – source not copied yet)
