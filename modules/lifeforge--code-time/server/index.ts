@@ -507,7 +507,6 @@ const eventLog = forge
 const readme = forge
   .query({
     description: 'Generate README stats image',
-    noAuth: true,
     encrypted: false,
     output: 'custom'
   })
