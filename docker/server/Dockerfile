@@ -39,6 +39,10 @@ COPY modules/lifeforge--calendar/package.json       modules/lifeforge--calendar/
 COPY modules/lifeforge--passwords/package.json      modules/lifeforge--passwords/package.json
 COPY modules/lifeforge--pomodoro-timer/package.json modules/lifeforge--pomodoro-timer/package.json
 COPY modules/lifeforge--wallet/package.json         modules/lifeforge--wallet/package.json
+COPY modules/lifeforge--blog/package.json            modules/lifeforge--blog/package.json
+COPY modules/lifeforge--wishlist/package.json        modules/lifeforge--wishlist/package.json
+COPY modules/lifeforge--idea-box/package.json        modules/lifeforge--idea-box/package.json
+COPY modules/lifeforge--local-ip-widget/package.json modules/lifeforge--local-ip-widget/package.json
 COPY locales/lang-en/package.json                   locales/lang-en/package.json
 
 # Install deps only (skip postinstall build – source not copied yet)
