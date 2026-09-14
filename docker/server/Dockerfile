@@ -52,7 +52,10 @@ RUN pnpm install --frozen-lockfile --ignore-scripts
 COPY . .
 
 # Build the API and module bundles used by the production image
-RUN pnpm turbo build --filter=@lifeforge/server... && \
+RUN pnpm turbo build --filter=@lifeforge/server... \
+      --filter=@lifeforge/federation \
+      --filter=@lifeforge/localization \
+      --filter=@lifeforge/ui && \
     pnpm --filter './modules/*' run build
 
 # ── Collect production node_modules for the API ──────────────────────
