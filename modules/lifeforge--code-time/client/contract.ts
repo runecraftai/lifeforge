@@ -380,7 +380,7 @@ export const contract = {
   "readme": {
     "method": "get",
     "description": "Generate README stats image",
-    "noAuth": true,
+    "noAuth": false,
     "encrypted": false,
     "isDownloadable": false,
     "media": null,
