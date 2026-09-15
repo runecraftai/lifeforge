@@ -7,7 +7,7 @@ export const list = forge
   .query({
     description: 'Get all blog entries',
     output: {
-      OK: z.array(blogSchemas.entries.schema)
+      OK: z.array(blogSchemas.entries)
     }
   })
   .callback(async ({ pb, response }) =>
