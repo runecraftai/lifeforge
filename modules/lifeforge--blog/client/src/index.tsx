@@ -13,12 +13,12 @@ import { forgeAPI } from '@/manifest'
 
 function Blog() {
   const { t } = useModuleTranslation()
-  const entriesQuery = useQuery(forgeAPI.blog.entries.list.queryOptions())
+  const entriesQuery = useQuery(forgeAPI.entries.list.queryOptions())
 
   return (
     <>
       <ModuleHeader
-        actionButton={
+        trailing={
           <Button
             as={Link}
             icon="tabler:plus"
@@ -41,7 +41,7 @@ function Blog() {
               icon="tabler:article-off"
               message={{
                 id: 'entries',
-                namespace: 'apps.blog'
+                namespace: 'apps.@lifeforge/lifeforge--blog'
               }}
             />
           )
