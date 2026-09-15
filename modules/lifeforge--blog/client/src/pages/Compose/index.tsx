@@ -31,13 +31,10 @@ function Compose() {
     title: '',
     excerpt: '',
     visibility: 'private',
-    featuredImage: null,
-    featuredImagePreview: null,
+    featuredImage: { type: 'empty' as const },
     category: null,
     labels: [] as string[]
   })
-
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   return (
     <>
@@ -53,12 +50,7 @@ function Compose() {
             <div ref={quillRef} className="flex-1" />
           </div>
         </ContentWrapperWithSidebar>
-        <Sidebar
-          data={blogPost}
-          isOpen={isSidebarOpen}
-          setData={setBlogPost}
-          setOpen={setIsSidebarOpen}
-        />
+        <Sidebar data={blogPost} setData={setBlogPost} />
       </LayoutWithSidebar>
     </>
   )
