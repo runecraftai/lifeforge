@@ -34,7 +34,7 @@ function CaptionSelector({
   summarizeLoading,
   onSummarize
 }: CaptionSelectorProps) {
-  const { t } = useTranslation('apps.youtubeSummarizer')
+  const { t } = useTranslation('apps.@lifeforge/lifeforge--youtube-summarizer')
 
   const [captionType, setCaptionType] = useState<'auto' | 'manual' | null>(null)
 
@@ -78,7 +78,7 @@ function CaptionSelector({
       <Widget
         className="mt-6 h-min"
         icon="tabler:text-caption"
-        namespace="apps.youtubeSummarizer"
+        namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
         title="Select Language"
       >
         <EmptyStateScreen
@@ -99,7 +99,7 @@ function CaptionSelector({
     <Widget
       className="mt-6 h-min"
       icon="tabler:text-caption"
-      namespace="apps.youtubeSummarizer"
+      namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
       title="Select Language"
     >
       <ListboxInput
@@ -128,7 +128,7 @@ function CaptionSelector({
         disabled={summarizeLoading}
         icon="tabler:text-grammar"
         label="Caption Type"
-        namespace="apps.youtubeSummarizer"
+        namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
         onChange={setCaptionType}
         value={captionType}
       >
@@ -165,7 +165,7 @@ function CaptionSelector({
               disabled={summarizeLoading}
               icon="tabler:language"
               label="Language"
-              namespace="apps.youtubeSummarizer"
+              namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
               onChange={setSelectedLanguage}
               value={selectedLanguage}
             >
@@ -192,7 +192,7 @@ function CaptionSelector({
                 <Button
                   className="mt-6"
                   icon="tabler:download"
-                  namespace="apps.youtubeSummarizer"
+                  namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
                   variant="secondary"
                   onClick={handleDownloadCaptions}
                 >
@@ -201,7 +201,7 @@ function CaptionSelector({
                 <Button
                   icon="mage:stars-c"
                   loading={summarizeLoading}
-                  namespace="apps.youtubeSummarizer"
+                  namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
                   onClick={handleSummarize}
                 >
                   Summarize This Video
