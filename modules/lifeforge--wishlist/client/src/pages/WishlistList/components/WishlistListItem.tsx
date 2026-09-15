@@ -19,10 +19,10 @@ import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
 
 function WishlistListItem({ list }: { list: WishlistList }) {
   const queryClient = useQueryClient()
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const deleteMutation = useMutation(
-    forgeAPI.wishlist.lists.remove
+    forgeAPI.lists.remove
       .input({
         id: list.id
       })

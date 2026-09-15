@@ -38,8 +38,8 @@ function ModifyWishlistListModal({
 
   const mutation = useMutation(
     (type === 'create'
-      ? forgeAPI.wishlist.lists.create
-      : forgeAPI.wishlist.lists.update.input({
+      ? forgeAPI.lists.create
+      : forgeAPI.lists.update.input({
           id: initialData?.id || ''
         })
     ).mutationOptions({
@@ -67,14 +67,14 @@ function ModifyWishlistListModal({
         handler: async data => {
           await mutation.mutateAsync(
             data as InferInput<
-              (typeof forgeAPI.wishlist.lists)[typeof type]
+              (typeof forgeAPI.lists)[typeof type]
             >['body']
           )
         }
       }}
       uiConfig={{
         icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-        namespace: 'apps.wishlist',
+        namespace: 'apps.@lifeforge/lifeforge--wishlist',
         title: `wishlist.${type}`,
         onClose
       }}

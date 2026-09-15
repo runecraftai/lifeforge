@@ -17,7 +17,7 @@ export const listByListId = forge
       })
     },
     existenceCheck: {
-      query: { id: 'wishlist__lists' }
+      query: { id: 'lists' }
     },
     output: {
       OK: z.array(wishlistSchemas.entries.schema)
@@ -26,7 +26,7 @@ export const listByListId = forge
   .callback(async ({ pb, query: { id, bought }, response }) =>
     response.ok(
       await pb.getFullList
-        .collection('wishlist__entries')
+        .collection('entries')
         .filter([
           {
             field: 'list',
@@ -85,7 +85,7 @@ export const create = forge
       }
     },
     existenceCheck: {
-      body: { list: 'wishlist__lists' }
+      body: { list: 'lists' }
     },
     output: {
       CREATED: wishlistSchemas.entries.schema
@@ -105,7 +105,7 @@ export const create = forge
 
       return response.created(
         await pb.create
-          .collection('wishlist__entries')
+          .collection('entries')
           .data({
             ...body,
             bought: false,
@@ -136,8 +136,8 @@ export const update = forge
       }
     },
     existenceCheck: {
-      query: { id: 'wishlist__entries' },
-      body: { list: 'wishlist__lists' }
+      query: { id: 'entries' },
+      body: { list: 'lists' }
     },
     output: {
       OK: wishlistSchemas.entries.schema
@@ -158,7 +158,7 @@ export const update = forge
 
       return response.ok(
         await pb.update
-          .collection('wishlist__entries')
+          .collection('entries')
           .id(id)
           .data({
             list,
@@ -181,7 +181,7 @@ export const updateBoughtStatus = forge
       })
     },
     existenceCheck: {
-      query: { id: 'wishlist__entries' }
+      query: { id: 'entries' }
     },
     output: {
       OK: wishlistSchemas.entries.schema
@@ -189,13 +189,13 @@ export const updateBoughtStatus = forge
   })
   .callback(async ({ pb, query: { id }, response }) => {
     const oldEntry = await pb.getOne
-      .collection('wishlist__entries')
+      .collection('entries')
       .id(id)
       .execute()
 
     return response.ok(
       await pb.update
-        .collection('wishlist__entries')
+        .collection('entries')
         .id(id)
         .data({
           bought: !oldEntry.bought,
@@ -214,14 +214,14 @@ export const remove = forge
       })
     },
     existenceCheck: {
-      query: { id: 'wishlist__entries' }
+      query: { id: 'entries' }
     },
     output: {
       NO_CONTENT: true
     }
   })
   .callback(async ({ pb, query: { id }, response }) => {
-    await pb.delete.collection('wishlist__entries').id(id).execute()
+    await pb.delete.collection('entries').id(id).execute()
 
     return response.noContent()
   })

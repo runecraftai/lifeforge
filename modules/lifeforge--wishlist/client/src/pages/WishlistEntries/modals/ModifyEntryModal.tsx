@@ -48,8 +48,8 @@ function ModifyEntryModal({
 
   const mutation = useMutation(
     (type === 'create'
-      ? forgeAPI.wishlist.entries.create
-      : forgeAPI.wishlist.entries.update.input({
+      ? forgeAPI.entries.create
+      : forgeAPI.entries.update.input({
           id: initialData?.id || ''!
         })
     ).mutationOptions({
@@ -62,7 +62,7 @@ function ModifyEntryModal({
     })
   )
 
-  const listsQuery = useQuery(forgeAPI.wishlist.lists.list.queryOptions())
+  const listsQuery = useQuery(forgeAPI.lists.list.queryOptions())
 
   const form = useForm({
     defaultValues: {
@@ -99,14 +99,14 @@ function ModifyEntryModal({
 
           await mutation.mutateAsync(
             data as InferInput<
-              (typeof forgeAPI.wishlist.entries)[typeof type]
+              (typeof forgeAPI.entries)[typeof type]
             >['body']
           )
         }
       }}
       uiConfig={{
         icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-        namespace: 'apps.wishlist',
+        namespace: 'apps.@lifeforge/lifeforge--wishlist',
         title: `entry.${type}`,
         onClose
       }}

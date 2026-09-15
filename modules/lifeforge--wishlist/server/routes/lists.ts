@@ -12,7 +12,7 @@ export const getById = forge
       })
     },
     existenceCheck: {
-      query: { id: 'wishlist__lists' }
+      query: { id: 'lists' }
     },
     output: {
       OK: wishlistSchemas.lists_aggregated.schema
@@ -20,7 +20,7 @@ export const getById = forge
   })
   .callback(async ({ pb, query: { id }, response }) =>
     response.ok(
-      await pb.getOne.collection('wishlist__lists_aggregated').id(id).execute()
+      await pb.getOne.collection('lists_aggregated').id(id).execute()
     )
   )
 
@@ -38,7 +38,7 @@ export const validate = forge
   })
   .callback(async ({ pb, query: { id }, response }) => {
     const exists = !!(await pb.getOne
-      .collection('wishlist__lists')
+      .collection('lists')
       .id(id)
       .execute()
       .catch(() => null))
@@ -55,7 +55,7 @@ export const list = forge
   })
   .callback(async ({ pb, response }) =>
     response.ok(
-      await pb.getFullList.collection('wishlist__lists_aggregated').execute()
+      await pb.getFullList.collection('lists_aggregated').execute()
     )
   )
 
@@ -71,7 +71,7 @@ export const create = forge
   })
   .callback(async ({ pb, body, response }) =>
     response.created(
-      await pb.create.collection('wishlist__lists').data(body).execute()
+      await pb.create.collection('lists').data(body).execute()
     )
   )
 
@@ -85,7 +85,7 @@ export const update = forge
       body: wishlistSchemas.lists.schema
     },
     existenceCheck: {
-      query: { id: 'wishlist__lists' }
+      query: { id: 'lists' }
     },
     output: {
       OK: wishlistSchemas.lists.schema
@@ -93,7 +93,7 @@ export const update = forge
   })
   .callback(async ({ pb, query: { id }, body, response }) =>
     response.ok(
-      await pb.update.collection('wishlist__lists').id(id).data(body).execute()
+      await pb.update.collection('lists').id(id).data(body).execute()
     )
   )
 
@@ -106,14 +106,14 @@ export const remove = forge
       })
     },
     existenceCheck: {
-      query: { id: 'wishlist__lists' }
+      query: { id: 'lists' }
     },
     output: {
       NO_CONTENT: true
     }
   })
   .callback(async ({ pb, query: { id }, response }) => {
-    await pb.delete.collection('wishlist__lists').id(id).execute()
+    await pb.delete.collection('lists').id(id).execute()
 
     return response.noContent()
   })
