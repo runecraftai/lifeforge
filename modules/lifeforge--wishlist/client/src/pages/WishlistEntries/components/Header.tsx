@@ -21,7 +21,7 @@ function Header({
 }: {
   wishlistListDetails: WishlistList
 }) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
   const { t } = useModuleTranslation()
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
@@ -99,13 +99,13 @@ function Header({
           <ContextMenuItem
             icon="tabler:plus"
             label="Add Manually"
-            namespace="apps.wishlist"
+            namespace="apps.@lifeforge/lifeforge--wishlist"
             onClick={handleAddManually}
           />
           <ContextMenuItem
             icon="tabler:apps"
             label="From Other Apps"
-            namespace="apps.wishlist"
+            namespace="apps.@lifeforge/lifeforge--wishlist"
             onClick={handleAddFromOtherApps}
           />
         </ContextMenu>

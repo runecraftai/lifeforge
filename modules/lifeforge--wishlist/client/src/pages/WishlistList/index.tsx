@@ -20,13 +20,13 @@ import WishlistListItem from './components/WishlistListItem'
 import ModifyWishlistListModal from './modals/ModifyWishlistModal'
 
 export type WishlistList = InferOutput<
-  typeof forgeAPI.wishlist.lists.list
+  typeof forgeAPI.lists.list
 >[number]
 
 function Wishlist() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
   const { t } = useModuleTranslation()
-  const listsQuery = useQuery(forgeAPI.wishlist.lists.list.queryOptions())
+  const listsQuery = useQuery(forgeAPI.lists.list.queryOptions())
   const [searchQuery, setSearchQuery] = useState('')
   const debouncedSearchQuery = useDebounce(searchQuery.trim(), 300)
 
@@ -45,9 +45,8 @@ function Wishlist() {
   return (
     <>
       <ModuleHeader
-        actionButton={
+        trailing={
           <Button
-            className="hidden md:flex"
             icon="tabler:plus"
             tProps={{ item: t('items.wishlist') }}
             onClick={handleCreateWishlistList}
@@ -57,7 +56,7 @@ function Wishlist() {
         }
       />
       <SearchInput
-        namespace="apps.wishlist"
+        namespace="apps.@lifeforge/lifeforge--wishlist"
         searchTarget="wishlist"
         value={searchQuery}
         onChange={setSearchQuery}
@@ -71,7 +70,7 @@ function Wishlist() {
                   icon="tabler:box-off"
                   message={{
                     id: 'wishlists',
-                    namespace: 'apps.wishlist'
+                    namespace: 'apps.@lifeforge/lifeforge--wishlist'
                   }}
                 />
               )
@@ -83,7 +82,7 @@ function Wishlist() {
                   icon="tabler:search-off"
                   message={{
                     id: 'search',
-                    namespace: 'apps.wishlist'
+                    namespace: 'apps.@lifeforge/lifeforge--wishlist'
                   }}
                 />
               )

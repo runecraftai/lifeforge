@@ -1,0 +1,94 @@
+{
+  "title": "Movies",
+  "description": "Your personal log for every movie you’ve watched.",
+  "items": {
+    "movie": "Movie"
+  },
+  "modals": {
+    "browseTgv": {
+      "title": "Browse TGV"
+    },
+    "importFromTgv": {
+      "title": "Import from TGV"
+    },
+    "screeningDetails": {
+      "title": "Screening Details"
+    },
+    "searchTmdb": {
+      "title": "Search Movie"
+    },
+    "ticket": {
+      "create": "Add Ticket",
+      "update": "Update Ticket",
+      "view": "View Ticket"
+    }
+  },
+  "empty": {
+    "tmdb": {
+      "title": "Powered by The Movie DB",
+      "description": "Millions of movies to discover."
+    },
+    "search": {
+      "title": "Movies Not Found",
+      "description": "Please try entering a different search keyword."
+    },
+    "library": {
+      "title": "No Movies in Library",
+      "description": "Add movies to your library by clicking the button below."
+    }
+  },
+  "buttons": {
+    "addToLibrary": "Add to Library",
+    "alreadyInLibrary": "Already in Library",
+    "linkToLibrary": "Link to Library",
+    "addTicket": "Add Ticket",
+    "updateTicket": "Update Ticket",
+    "markAsWatched": "Mark as Watched",
+    "markAsUnwatched": "Mark as Unwatched",
+    "watched": "Watched",
+    "showTicket": "Show Ticket",
+    "addToCalendar": "Add to Calendar",
+    "addedToCalendar": "Added to Calendar",
+    "buyTicket": "Buy Ticket",
+    "updateMovieData": "Update Movie Data",
+    "importFromTgv": "Import from TGV",
+    "fromTmdb": "From TMDB",
+    "fromTgv": "From TGV",
+    "screeningDetails": "Screening Details"
+  },
+  "inputs": {
+    "area": "Area",
+    "cinema": "Cinema",
+    "date": "Date",
+    "email": "Email",
+    "pin": "PIN",
+    "experience": "Experience",
+    "time": "Time",
+    "ticketNumber": "Ticket Number",
+    "theatreSeat": "Theatre Seat",
+    "theatreLocation": "Theatre Location",
+    "theatreShowtime": "Theatre Showtime",
+    "theatreNumber": "Theatre Number",
+    "category": "Category"
+  },
+  "tabs": {
+    "nowShowing": "Now Showing",
+    "comingSoon": "Coming Soon",
+    "watched": "Watched",
+    "unwatched": "Unwatched"
+  },
+  "metadata": {
+    "genres": "Genres",
+    "releaseDate": "Release Date",
+    "duration": "Duration",
+    "language": "Language",
+    "dataSource": "Data Source"
+  },
+  "misc": {
+    "watched": "Watched on {{date}}"
+  },
+  "viewModes": {
+    "grid": "Grid",
+    "list": "List"
+  }
+}

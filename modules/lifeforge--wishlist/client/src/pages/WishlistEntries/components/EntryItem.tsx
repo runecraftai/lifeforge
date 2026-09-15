@@ -24,12 +24,12 @@ import ModifyEntryModal from '../modals/ModifyEntryModal'
 dayjs.extend(relativeTime)
 
 function EntryItem({ entry }: { entry: WishlistEntry }) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
   const queryClient = useQueryClient()
   const [bought, setBought] = useState(entry.bought)
 
   const toggleBoughtMutation = useMutation(
-    forgeAPI.wishlist.entries.updateBoughtStatus
+    forgeAPI.entries.updateBoughtStatus
       .input({
         id: entry.id
       })
@@ -51,7 +51,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
   )
 
   const deleteMutation = useMutation(
-    forgeAPI.wishlist.entries.remove
+    forgeAPI.entries.remove
       .input({
         id: entry.id
       })
@@ -139,7 +139,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
           href={entry.url}
           icon="iconamoon:arrow-top-right-1"
           iconPosition="end"
-          namespace="apps.wishlist"
+          namespace="apps.@lifeforge/lifeforge--wishlist"
           target="_blank"
           variant="plain"
         >
