@@ -13,7 +13,7 @@ import { NoteList } from './components/note-list'
 function CreateNoteButton({ onClick }: { onClick: () => void }) {
   return (
     <button
-      className="inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+      className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-zinc-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
       type="button"
       onClick={onClick}
     >
@@ -121,6 +121,7 @@ export function NotesPage() {
     <div className="flex min-h-0 flex-1 flex-col px-4 pb-6 pt-2 sm:px-6">
       <ModuleHeaderTailwind
         namespace={false}
+        title="Notes"
         trailing={<CreateNoteButton onClick={openCreateModal} />}
       />
       <main className="flex min-h-0 flex-1 flex-col">
