@@ -22,7 +22,7 @@ export type YoutubeInfo = InferOutput<
 >
 
 function YoutubeSummarizer() {
-  const { t } = useTranslation('apps.youtubeSummarizer')
+  const { t } = useTranslation('apps.@lifeforge/lifeforge--youtube-summarizer')
 
   const [videoUrl, setVideoUrl] = useState<string>('')
 
@@ -85,7 +85,7 @@ function YoutubeSummarizer() {
         disabled={summarizeLoading}
         icon="tabler:link"
         label="video URL"
-        namespace="apps.youtubeSummarizer"
+        namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
         placeholder="https://www.youtube.com/watch?v=..."
         onChange={setVideoUrl}
         value={videoUrl}
@@ -93,7 +93,7 @@ function YoutubeSummarizer() {
       {videoID?.length !== 11 ? (
         <EmptyStateScreen
           icon="tabler:link-off"
-          message={{ id: 'videoURL', namespace: 'apps.youtubeSummarizer' }}
+          message={{ id: 'videoURL', namespace: 'apps.@lifeforge/lifeforge--youtube-summarizer' }}
         />
       ) : (
         <div className="my-6">
@@ -112,7 +112,7 @@ function YoutubeSummarizer() {
               ) : (
                 <EmptyStateScreen
                   icon="tabler:link-off"
-                  message={{ id: 'videoURL', namespace: 'apps.youtubeSummarizer' }}
+                  message={{ id: 'videoURL', namespace: 'apps.@lifeforge/lifeforge--youtube-summarizer' }}
                 />
               )
             }
