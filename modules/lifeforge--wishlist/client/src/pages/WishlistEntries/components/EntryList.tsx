@@ -12,7 +12,7 @@ function EntryList({
   filteredEntries: WishlistEntry[]
   isTotallyEmpty: boolean
 }) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
   const { t } = useModuleTranslation()
 
   if (isTotallyEmpty) {
@@ -30,7 +30,7 @@ function EntryList({
         }}
         icon="tabler:shopping-cart-off"
         name="entries"
-        namespace="apps.wishlist"
+        namespace="apps.@lifeforge/lifeforge--wishlist"
       />
     )
   }
@@ -40,7 +40,7 @@ function EntryList({
       <EmptyStateScreen
         icon="tabler:search-off"
         name="search"
-        namespace="apps.wishlist"
+        namespace="apps.@lifeforge/lifeforge--wishlist"
       />
     )
   }

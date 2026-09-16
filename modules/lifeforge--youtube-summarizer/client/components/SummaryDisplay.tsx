@@ -12,7 +12,7 @@ function SummaryDisplay({ summary }: SummaryDisplayProps) {
     <Widget
       className="mt-6 h-min"
       icon="tabler:file-text"
-      namespace="apps.youtubeSummarizer"
+      namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
       title="Video Summary"
     >
       <div className="text-bg-500 prose max-w-full!">

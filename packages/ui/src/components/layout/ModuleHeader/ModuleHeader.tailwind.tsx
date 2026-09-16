@@ -68,7 +68,7 @@ export function ModuleHeaderTailwind({
 
   return (
     <header className="mb-6 flex w-full min-w-0 items-center justify-between gap-8">
-      <div className="flex min-w-0 w-full items-center gap-4">
+      <div className="flex min-w-0 flex-1 items-center gap-4">
         {!sidebarExpanded && (
           <button
             aria-label="Open navigation"
@@ -97,7 +97,7 @@ export function ModuleHeaderTailwind({
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-2">{trailing}</div>
+      <div className="flex shrink-0 items-center gap-2">{trailing}</div>
     </header>
   )
 }

@@ -27,6 +27,7 @@ COPY packages/ui/package.json           packages/ui/package.json
 COPY tools/package.json                 tools/package.json
 COPY docs/package.json                  docs/package.json
 COPY modules/package.json               modules/package.json
+COPY modules/lifeforge--blog/package.json modules/lifeforge--blog/package.json
 COPY modules/lifeforge--notes/package.json           modules/lifeforge--notes/package.json
 COPY modules/lifeforge--squad-backlog/package.json modules/lifeforge--squad-backlog/package.json
 COPY modules/lifeforge--todo-list/package.json      modules/lifeforge--todo-list/package.json

@@ -14,6 +14,8 @@ import {
   TextInput
 } from '@lifeforge/ui'
 
+const BLOG_NAMESPACE = 'apps.@lifeforge/lifeforge--blog'
+
 const VISIBILITY_OPTIONS = [
   {
     label: 'Public',
@@ -31,17 +33,13 @@ const VISIBILITY_OPTIONS = [
 
 function Sidebar({
   data,
-  setData,
-  isOpen,
-  setOpen
+  setData
 }: {
   data: any
   setData: React.Dispatch<React.SetStateAction<any>>
-  isOpen: boolean
-  setOpen: (isOpen: boolean) => void
 }) {
   return (
-    <SidebarWrapper isOpen={isOpen} setOpen={setOpen}>
+    <SidebarWrapper>
       <div className="h-full space-y-3 p-4">
         <div className="mb-4 flex items-center gap-2">
           <Icon className="size-7" icon="tabler:file-settings" />
@@ -50,47 +48,43 @@ function Sidebar({
         <TextInput
           icon="tabler:article"
           label="Title"
-          namespace="apps.blog"
+          namespace={BLOG_NAMESPACE}
           placeholder="Enter the title of your post..."
-          setValue={(title: string) => {
+          value={data.title}
+          onChange={(title: string) => {
             setData(prevData => ({ ...prevData, title }))
           }}
-          value={data.title}
         />
         <TextAreaInput
           icon="tabler:quote"
           label="Excerpt"
-          namespace="apps.blog"
+          namespace={BLOG_NAMESPACE}
           placeholder="Write a short excerpt for your post..."
-          setValue={(excerpt: string) => {
+          value={data.excerpt}
+          onChange={(excerpt: string) => {
             setData(prevData => ({ ...prevData, excerpt }))
           }}
-          value={data.excerpt}
         />
         <ListboxInput
-          buttonContent={
-            <>
-              <Icon
-                icon={
-                  VISIBILITY_OPTIONS.find(
-                    option => option.label.toLowerCase() === data.visibility
-                  )?.icon || 'tabler:eye'
-                }
-              />
-              <span>
-                {VISIBILITY_OPTIONS.find(
-                  option => option.label.toLowerCase() === data.visibility
-                )?.label || 'Public'}
-              </span>
-            </>
-          }
           icon="tabler:eye"
           label="Visibility"
-          namespace="apps.blog"
-          setValue={(visibility: typeof data.visibility) => {
-            setData(prevData => ({ ...prevData, visibility }))
+          namespace={BLOG_NAMESPACE}
+          renderContent={visibility => {
+            const selected = VISIBILITY_OPTIONS.find(
+              option => option.label.toLowerCase() === visibility
+            )
+
+            return (
+              <>
+                <Icon icon={selected?.icon || 'tabler:eye'} />
+                <span>{selected?.label || 'Public'}</span>
+              </>
+            )
           }}
           value={data.visibility}
+          onChange={(visibility: typeof data.visibility) => {
+            setData(prevData => ({ ...prevData, visibility }))
+          }}
         >
           {VISIBILITY_OPTIONS.map(option => (
             <ListboxOption
@@ -102,39 +96,29 @@ function Sidebar({
           ))}
         </ListboxInput>
         <FileInput
-          enableAI
-          enablePixabay
-          acceptedMimeTypes={{
-            image: ['image/*']
-          }}
-          file={data.featuredImage}
           icon="tabler:photo"
           label="Featured Image"
-          namespace="apps.blog"
-          preview={data.featuredImagePreview}
-          setData={(data: {
-            image: File | string | null
-            preview: string | null
-          }) => {
-            setData(prevData => ({
-              ...prevData,
-              featuredImage: data.image,
-              featuredImagePreview: data.preview
-            }))
+          mimeTypes={{
+            image: ['jpeg', 'png', 'gif', 'webp', 'svg+xml']
           }}
-          onImageRemoved={() => {
-            setData(prevData => ({
-              ...prevData,
-              featuredImage: null,
-              featuredImagePreview: null
-            }))
+          namespace={BLOG_NAMESPACE}
+          sources={{
+            ai: {
+              defaultPrompt: 'featured image for a blog post'
+            },
+            pixabay: true,
+            url: true
+          }}
+          value={data.featuredImage}
+          onChange={value => {
+            setData(prevData => ({ ...prevData, featuredImage: value }))
           }}
         />
         {/* <ListboxInput
           icon="tabler:category"
           label="Category"
-          namespace="apps.blog"
-          setValue={(category: string | null) => {
+          namespace={BLOG_NAMESPACE}
+          onChange={(category: string | null) => {
             setData(prevData => ({ ...prevData, category }))
           }}
           value={data.category}
@@ -142,22 +126,27 @@ function Sidebar({
         <TagsInput
           icon="tabler:tags"
           label="labels"
-          namespace="apps.blog"
+          namespace={BLOG_NAMESPACE}
           placeholder="Add tags to your post..."
-          setValue={(labels: string[]) => {
+          value={data.labels}
+          onChange={(labels: string[]) => {
             setData(prevData => ({ ...prevData, labels }))
           }}
-          value={data.labels}
         />
         <div className="flex flex-1 flex-col justify-end gap-3">
           <Button
             className="mt-6 w-full"
             icon="tabler:file"
+            namespace={BLOG_NAMESPACE}
             variant="secondary"
           >
             Save to Drafts
           </Button>
-          <Button className="w-full" icon="tabler:send">
+          <Button
+            className="w-full"
+            icon="tabler:send"
+            namespace={BLOG_NAMESPACE}
+          >
             Publish
           </Button>
         </div>

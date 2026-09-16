@@ -1,6 +1,6 @@
-@import 'tailwindcss' source ('.');
-
-@reference '../../../node_modules/lifeforge-ui/dist';
+@import 'quill/dist/quill.snow.css';
+@import 'tailwindcss';
+@import '@lifeforge/ui/tailwind.css';
 
 .ql-editor {
   @apply max-h-[calc(100vh-16rem)]! min-h-0! overflow-auto!;
@@ -16,11 +16,11 @@
 }
 
 .ql-toolbar.ql-snow {
-  @apply component-bg-lighter shadow-custom rounded-md border-none p-4;
+  @apply bg-lf-bg-200! shadow-lg rounded-md border-none p-4;
 }
 
 .ql-editor.ql-blank::before {
-  @apply text-bg-500;
+  @apply text-lf-bg-500;
 }
 
 .ql-editor * {
@@ -30,48 +30,50 @@
 .ql-toolbar {
   & .ql-active,
   & .ql-active * {
-    @apply text-custom-500!;
+    @apply text-lf-custom-500!;
 
     & .ql-fill {
-      @apply fill-custom-500!;
+      @apply fill-lf-custom-500!;
     }
 
     & .ql-stroke {
-      @apply stroke-custom-500!;
+      @apply stroke-lf-custom-500!;
     }
   }
 
   & button *,
   & .ql-picker * {
-    @apply text-bg-500!;
+    @apply text-lf-bg-500!;
 
     & .ql-fill {
-      @apply fill-bg-500;
+      @apply fill-lf-bg-500;
     }
 
     & .ql-stroke {
-      @apply stroke-bg-500;
+      @apply stroke-lf-bg-500;
     }
   }
 
   & button:not(.ql-active):hover,
   & .ql-picker:hover {
-    @apply text-bg-700! dark:text-bg-300!;
+    @apply text-lf-bg-700! dark:text-lf-bg-300!;
 
     & .ql-fill {
-      @apply fill-bg-700 dark:fill-bg-300;
+      @apply fill-lf-bg-700 dark:fill-lf-bg-300;
     }
 
     & .ql-stroke {
-      @apply stroke-bg-700 dark:stroke-bg-300;
+      @apply stroke-lf-bg-700 dark:stroke-lf-bg-300;
     }
   }
 
   & .ql-picker-options {
-    @apply bg-bg-50! dark:bg-bg-800! shadow-custom mt-2! rounded-md border-none! px-4!;
+    @apply bg-lf-bg-50! dark:bg-lf-bg-800! shadow-lg mt-2! rounded-md border-none! px-4!;
   }
 
   & .ql-picker-label {
     @apply rounded-sm;
   }
 }
+
+/* Blog editor theme */

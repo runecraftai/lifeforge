@@ -39,7 +39,7 @@ const PROVIDERS = [
 ]
 
 function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
   const { id } = useParams<{ id: string }>()
   const [provider, setProvider] = useState('')
   const [url, setUrl] = useState('')
@@ -47,7 +47,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
   async function fetchData() {
     try {
       const { name, price, image } =
-        await forgeAPI.wishlist.entries.scrapeExternal.mutate({
+        await forgeAPI.entries.scrapeExternal.mutate({
           provider,
           url
         })
@@ -90,7 +90,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
     <div className="min-w-[50vw]">
       <ModalHeader
         icon="tabler:apps"
-        namespace="apps.wishlist"
+        namespace="apps.@lifeforge/lifeforge--wishlist"
         title="Import from other apps"
         onClose={onClose}
       />
@@ -115,7 +115,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
           }
           icon="tabler:apps"
           label="Provider"
-          namespace="apps.wishlist"
+          namespace="apps.@lifeforge/lifeforge--wishlist"
           setValue={setProvider}
           value={provider}
         >
@@ -132,7 +132,7 @@ function FromOtherAppsModal({ onClose }: { onClose: () => void }) {
         <TextInput
           icon="tabler:link"
           label="Product URL"
-          namespace="apps.wishlist"
+          namespace="apps.@lifeforge/lifeforge--wishlist"
           placeholder={
             provider === 'shopee'
               ? 'https://my.shp.ee/....'

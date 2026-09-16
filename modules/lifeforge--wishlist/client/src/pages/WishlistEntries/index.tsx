@@ -24,20 +24,20 @@ import FromOtherAppsModal from './modals/FromOtherAppsModal'
 import ModifyEntryModal from './modals/ModifyEntryModal'
 
 export type WishlistEntry = InferOutput<
-  typeof forgeAPI.wishlist.entries.listByListId
+  typeof forgeAPI.entries.listByListId
 >[number]
 
-export type WishlistList = InferOutput<typeof forgeAPI.wishlist.lists.getById>
+export type WishlistList = InferOutput<typeof forgeAPI.lists.getById>
 
 function WishlistEntries() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
   const navigate = useNavigate()
   const { t } = useModuleTranslation()
   const { id } = useParams<{ id: string }>()
   const [activeTab, setActiveTab] = useState('wishlist')
 
   const validQuery = useQuery(
-    forgeAPI.wishlist.lists.validate
+    forgeAPI.lists.validate
       .input({
         id: id ?? ''
       })
@@ -45,7 +45,7 @@ function WishlistEntries() {
   )
 
   const wishlistListDetailsQuery = useQuery(
-    forgeAPI.wishlist.lists.getById
+    forgeAPI.lists.getById
       .input({
         id: id ?? ''
       })
@@ -55,7 +55,7 @@ function WishlistEntries() {
   )
 
   const entriesQuery = useQuery(
-    forgeAPI.wishlist.entries.listByListId
+    forgeAPI.entries.listByListId
       .input({
         id: id ?? '',
         bought: activeTab === 'bought' ? 'true' : 'false'
@@ -128,7 +128,7 @@ function WishlistEntries() {
                   />
                   <SearchInput
                     className="mt-4 mb-6"
-                    namespace="apps.wishlist"
+                    namespace="apps.@lifeforge/lifeforge--wishlist"
                     searchTarget="entry"
                     setValue={setSearchQuery}
                     value={searchQuery}
@@ -153,13 +153,13 @@ function WishlistEntries() {
           <ContextMenuItem
             icon="tabler:plus"
             label="Add Manually"
-            namespace="apps.wishlist"
+            namespace="apps.@lifeforge/lifeforge--wishlist"
             onClick={handleAddManually}
           />
           <ContextMenuItem
             icon="tabler:apps"
             label="From Other Apps"
-            namespace="apps.wishlist"
+            namespace="apps.@lifeforge/lifeforge--wishlist"
             onClick={handleAddFromOtherApps}
           />
         </MenuItems>

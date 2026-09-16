@@ -15,7 +15,7 @@ function VideoInfo({ videoInfo }: { videoInfo: YoutubeInfo }) {
     <Widget
       className="h-min"
       icon="tabler:info-circle"
-      namespace="apps.youtubeSummarizer"
+      namespace="apps.@lifeforge/lifeforge--youtube-summarizer"
       title="Video Info"
     >
       <div className="flex flex-col gap-6 md:flex-row md:items-center">
