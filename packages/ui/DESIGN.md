@@ -8,7 +8,7 @@ Welcome to the **LifeForge UI Library Guide**. This document serves as the singl
 
 The LifeForge UI library is built on a **zero-runtime CSS-in-JS** architecture powered by **[Vanilla Extract](https://vanilla-extract.style/)** and **[Sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/)**. This provides total type safety, compile-time optimization, and rich theme integration without the performance overhead of traditional CSS-in-JS solutions.
 
-> **Migration in progress:** `Box` and `Flex` have been migrated to emit Tailwind utility classes via `tailwindStyles()`. Other primitives (`Text`, `Grid`, `Prose`, etc.) still use the vanilla-extract `resolveStyles()` resolver. Both paths coexist until the full migration is complete.
+> **Migration in progress:** `Box` and `Flex` emit Tailwind utility classes via `tailwindStyles()` alongside their existing vanilla-extract output. Other primitives (`Text`, `Grid`, `Prose`, etc.) still use only the vanilla-extract `resolveStyles()` resolver. Both paths coexist until the full migration is complete.
 
 ### Two Strict Rules
 
@@ -276,7 +276,7 @@ Any responsive property accepts a scalar or a responsive configuration object:
 <Box display={{ base: 'block', print: 'none' }} />
 ```
 
-_How it works under the hood:_ The engine applies `.lf-w` and `.md:lf-w` classes while defining CSS variables (`--lf-w: 100%`, `--lf-w-md: 50%`) inline, keeping output stylesheet sizes extremely small.
+_How it works under the hood:_ The Tailwind resolver applies static classes such as `w-[var(--lf-w)]` and `md:w-[var(--lf-w-md)]` while defining CSS variables (`--lf-w: 100%`, `--lf-w-md: 50%`) inline. Raw CSS values, including `calc()` expressions with spaces, remain unchanged in those variables.
 
 ---
 

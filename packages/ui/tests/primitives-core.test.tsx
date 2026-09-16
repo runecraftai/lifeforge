@@ -101,10 +101,10 @@ describe('primitives core Tailwind output', () => {
     const markup = renderToStaticMarkup(
       <Flex
         centered
+        align="start"
         direction="column"
         gap="sm"
         justify="end"
-        align="start"
         wrap="wrap"
       >
         child
