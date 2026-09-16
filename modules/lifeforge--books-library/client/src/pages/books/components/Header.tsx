@@ -4,7 +4,7 @@ import { Button, Flex, TagsFilter, Text, useModuleSidebarState } from '@lifeforg
 
 import { forgeAPI } from '@/shared/api'
 
-import useFilter from '../hooks/useFilter'
+import useFilter from '../model/useFilter'
 
 function Header({ itemCount }: { itemCount: number }) {
   const { setIsSidebarOpen } = useModuleSidebarState()

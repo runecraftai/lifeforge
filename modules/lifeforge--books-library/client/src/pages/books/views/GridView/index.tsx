@@ -1,4 +1,4 @@
-import type { BooksLibraryEntry } from '@'
+import type { BooksLibraryEntry } from '@/entities/book'
 
 import { Grid, Scrollbar } from '@lifeforge/ui'
 

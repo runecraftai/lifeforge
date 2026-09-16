@@ -1,4 +1,4 @@
-import type { BooksLibraryEntry } from '@'
+import type { BooksLibraryEntry } from '@/entities/book'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 
