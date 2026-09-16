@@ -96,7 +96,8 @@ function colorClasses(
     if (isColorWithOpacity(entry)) {
       const suffix = variant.replace(/:$/, '').replaceAll(':', '-')
       const variable = `--lf-${prefix}${suffix ? `-${suffix}` : ''}`
-      style[variable as keyof CSSProperties] = `color-mix(in srgb, ${COLORS[entry.token]} ${entry.opacity}, transparent)` as never
+      style[variable as keyof CSSProperties] =
+        `color-mix(in srgb, ${COLORS[entry.token]} ${entry.opacity}, transparent)` as never
       classes.push(`${variant}${prefix}-[var(${variable})]`)
       continue
     }
@@ -128,17 +129,24 @@ export function tailwindStyles(
     'box-border',
     ...entries(props.display)
       .filter(([, entry]) => entry !== undefined)
-      .map(([variant, entry]) => `${variant}${({
-        block: 'block',
-        inline: 'inline',
-        'inline-block': 'inline-block',
-        flex: 'flex',
-        'inline-flex': 'inline-flex',
-        grid: 'grid',
-        'inline-grid': 'inline-grid',
-        none: 'hidden',
-        contents: 'contents'
-      } as Record<string, string>)[String(entry)] ?? String(entry)}`),
+      .map(
+        ([variant, entry]) =>
+          `${variant}${
+            (
+              {
+                block: 'block',
+                inline: 'inline',
+                'inline-block': 'inline-block',
+                flex: 'flex',
+                'inline-flex': 'inline-flex',
+                grid: 'grid',
+                'inline-grid': 'inline-grid',
+                none: 'hidden',
+                contents: 'contents'
+              } as Record<string, string>
+            )[String(entry)] ?? String(entry)
+          }`
+      ),
     ...entries(props.position)
       .filter(([, entry]) => entry !== undefined)
       .map(([variant, entry]) => `${variant}${String(entry)}`),

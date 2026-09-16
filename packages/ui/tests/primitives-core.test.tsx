@@ -3,8 +3,8 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, it } from 'vitest'
 
 import { Box, Flex } from '../src/components/primitives'
-import { colorWithOpacity } from '../src/system'
 import { tailwindStyles } from '../src/components/primitives/tailwind'
+import { colorWithOpacity } from '../src/system'
 
 describe('primitives core Tailwind output', () => {
   it('C1 maps public values and responsive values to utility classes', () => {
@@ -71,13 +71,7 @@ describe('primitives core Tailwind output', () => {
 
   it('C4 renders Flex mapped classes including centered behavior', () => {
     const markup = renderToStaticMarkup(
-      <Flex
-        centered
-        direction="column"
-        gap="sm"
-        justify="end"
-        align="start"
-      >
+      <Flex centered direction="column" gap="sm" justify="end" align="start">
         child
       </Flex>
     )

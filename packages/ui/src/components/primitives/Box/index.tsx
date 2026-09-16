@@ -147,7 +147,11 @@ export function Box<T extends ElementType = 'div'>({
     },
     style
   )
-  styles.className = [styles.className, className, shadow && 'shadow-[var(--custom-shadow)]']
+  styles.className = [
+    styles.className,
+    className,
+    shadow && 'shadow-[var(--custom-shadow)]'
+  ]
     .filter(Boolean)
     .join(' ')
 
