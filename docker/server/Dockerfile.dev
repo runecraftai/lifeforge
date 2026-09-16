@@ -1,0 +1,45 @@
+# syntax=docker/dockerfile:1
+
+# Dev server — Node.js with pnpm for workspace builds and API dev server
+FROM node:22-alpine
+
+RUN corepack enable && corepack prepare pnpm@11.21.0 --activate
+
+WORKDIR /lifeforge
+
+# Copy workspace manifest files for dependency resolution
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json .npmrc .pnpmfile.cjs ./
+COPY apps/api/package.json              apps/api/package.json
+COPY apps/web/package.json              apps/web/package.json
+COPY packages/configs/package.json      packages/configs/package.json
+COPY packages/log/package.json          packages/log/package.json
+COPY packages/pocketbase/package.json   packages/pocketbase/package.json
+COPY packages/server-utils/package.json packages/server-utils/package.json
+COPY packages/api/package.json          packages/api/package.json
+COPY packages/federation/package.json   packages/federation/package.json
+COPY packages/localization/package.json packages/localization/package.json
+COPY packages/ui/package.json           packages/ui/package.json
+COPY tools/package.json                 tools/package.json
+COPY docs/package.json                  docs/package.json
+COPY modules/package.json               modules/package.json
+COPY modules/lifeforge--notes/package.json           modules/lifeforge--notes/package.json
+COPY modules/lifeforge--squad-backlog/package.json modules/lifeforge--squad-backlog/package.json
+COPY modules/lifeforge--todo-list/package.json      modules/lifeforge--todo-list/package.json
+COPY modules/lifeforge--books-library/package.json  modules/lifeforge--books-library/package.json
+COPY modules/lifeforge--code-time/package.json      modules/lifeforge--code-time/package.json
+COPY modules/lifeforge--moment-vault/package.json   modules/lifeforge--moment-vault/package.json
+COPY modules/lifeforge--movies/package.json         modules/lifeforge--movies/package.json
+COPY modules/lifeforge--music/package.json          modules/lifeforge--music/package.json
+COPY modules/lifeforge--youtube-summarizer/package.json modules/lifeforge--youtube-summarizer/package.json
+COPY modules/lifeforge--unified-kanban/package.json modules/lifeforge--unified-kanban/package.json
+COPY modules/lifeforge--api-endpoint-explorer/package.json modules/lifeforge--api-endpoint-explorer/package.json
+COPY modules/lifeforge--calendar/package.json       modules/lifeforge--calendar/package.json
+COPY modules/lifeforge--passwords/package.json      modules/lifeforge--passwords/package.json
+COPY modules/lifeforge--pomodoro-timer/package.json modules/lifeforge--pomodoro-timer/package.json
+COPY modules/lifeforge--wallet/package.json         modules/lifeforge--wallet/package.json
+COPY locales/lang-en/package.json                   locales/lang-en/package.json
+
+# Install deps only (skip postinstall build – source not copied yet)
+RUN pnpm install --frozen-lockfile --ignore-scripts
+
+EXPOSE 3637
