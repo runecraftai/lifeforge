@@ -118,10 +118,8 @@ describe('S3 - Coexistence validation', () => {
 
     it('C10: unified-kanban module uses both Tailwind and vanilla-extract coexistence pattern', () => {
       const kanbanCssPath = resolve(UI_ROOT, '../../modules/lifeforge--unified-kanban/client/src/index.css')
-      if (!existsSync(kanbanCssPath)) {
-        console.log('  ⚠ unified-kanban index.css not found, skipping')
-        return
-      }
+
+      assert.ok(existsSync(kanbanCssPath), 'unified-kanban index.css must exist at expected path')
 
       const kanbanCss = readFileSync(kanbanCssPath, 'utf-8')
 

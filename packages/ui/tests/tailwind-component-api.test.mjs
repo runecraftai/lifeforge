@@ -55,10 +55,7 @@ describe('S2 - Component API and import verification', () => {
       const tailwindCss = readFileSync(resolve(UI_ROOT, 'tailwind.css'), 'utf-8')
       const distCssPath = resolve(UI_ROOT, 'dist/index.css')
 
-      if (!existsSync(distCssPath)) {
-        console.log('  ⚠ dist/index.css not found, skipping compiled CSS check')
-        return
-      }
+      assert.ok(existsSync(distCssPath), 'dist/index.css must exist — run `pnpm build` in packages/ui before testing coexistence')
 
       const distCss = readFileSync(distCssPath, 'utf-8')
 
