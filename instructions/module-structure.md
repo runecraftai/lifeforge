@@ -2,12 +2,13 @@
 
 How a typical Lifeforge module is laid out when it has both a **client** (React
 frontend) and a **server** (Bun/PocketBase backend). Reference implementation:
-`modules/lifeforge--wallet` (multi-page with subsections and widgets).
+`modules/lifeforge--wishlist` (flat structure).
 
-> Some modules (e.g. `books-library`, `notes`, `calendar`, `squad-backlog`) have
-> been migrated to Feature-Sliced Design (FSD). Their `client/src/` uses
-> `entities/`, `features/`, `pages/`, `shared/` layers instead of the flat
-> structure described below. See the oxlint `fsd-boundaries` plugin for the
+> Some modules have been migrated to Feature-Sliced Design (FSD). Their
+> `client/src/` uses `entities/`, `features/`, `pages/`, `shared/` layers
+> instead of the flat structure described below. Currently FSD:
+> `books-library`, `calendar`, `movies`, `music`, `notes`, `passwords`,
+> `todo-list`, `wallet`. See the oxlint `fsd-boundaries` plugin for the
 > enforced import rules.
 
 ## Top-Level Layout
