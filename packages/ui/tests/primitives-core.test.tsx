@@ -17,6 +17,7 @@ describe('primitives core Tailwind output', () => {
       justify: 'between',
       p: 'md',
       position: 'absolute',
+      width: 'calc(100% - 8px)',
       r: 'lg',
       transform: 'uppercase'
     })
@@ -30,8 +31,9 @@ describe('primitives core Tailwind output', () => {
       'flex-col',
       'sm:flex-row',
       'justify-between',
-      'p-[calc(var(--spacing) * 4)]',
+      'p-[calc(var(--spacing)_*_4)]',
       'absolute',
+      'w-[calc(100%_-_8px)]',
       'rounded-[var(--radius-lg)]',
       'uppercase'
     ]) {

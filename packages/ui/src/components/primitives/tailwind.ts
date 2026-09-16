@@ -70,7 +70,7 @@ function mapped(
 }
 
 function arbitrary(prefix: string, value: unknown): string[] {
-  return utility(prefix, value, entry => `[${String(entry)}]`)
+  return utility(prefix, value, entry => `[${String(entry).replace(/\s+/g, '_')}]`)
 }
 
 function tokenized(
@@ -80,7 +80,9 @@ function tokenized(
 ): string[] {
   return utility(prefix, value, entry => {
     const token = tokens[String(entry)]
-    return token ? `[${token}]` : `[${String(entry)}]`
+    return token
+      ? `[${token.replace(/\s+/g, '_')}]`
+      : `[${String(entry).replace(/\s+/g, '_')}]`
   })
 }
 
@@ -109,7 +111,9 @@ function colorClasses(
       !['transparent', 'inherit', 'primary', 'muted'].includes(token)
     ) {
       const cssValue = COLORS[token as keyof typeof COLORS]
-      classes.push(`${variant}${prefix}-[${cssValue}]`)
+      classes.push(
+        `${variant}${prefix}-[${cssValue.replace(/\s+/g, '_')}]`
+      )
     } else {
       classes.push(`${variant}${prefix}-${token}`)
     }
