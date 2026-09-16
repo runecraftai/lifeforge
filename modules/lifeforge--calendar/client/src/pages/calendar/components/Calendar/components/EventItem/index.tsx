@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { memo, useMemo } from 'react'
 
-import { useInternalCategories } from '../../../../model/useInternalCategories'
 import { forgeAPI } from '@/shared/api'
 
+import { useInternalCategories } from '../../../../model/useInternalCategories'
 import type { CalendarCategory, CalendarEvent } from '../../index.js'
 import EventItemButton from './components/EventItemButton.js'
 import EventItemTooltip from './components/EventItemTooltip.js'
@@ -27,10 +27,12 @@ function EventItem({ event }: { event: CalendarEvent }) {
     return calendarsQuery.data?.find(calendar => calendar.id === event.calendar)
   }, [calendarsQuery, event.calendar])
 
+  const eventColor = category?.color || calendar?.color || ''
+
   return (
     <>
       <EventItemButton
-        color={category?.color || calendar?.color || ''}
+        color={eventColor}
         icon={category?.icon ?? ''}
         id={event.id}
         isStrikethrough={event.is_strikethrough}

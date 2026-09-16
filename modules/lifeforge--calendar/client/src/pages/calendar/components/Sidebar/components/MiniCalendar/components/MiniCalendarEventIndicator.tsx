@@ -30,6 +30,8 @@ function MiniCalendarEventIndicator({
 
             const calendar = getCalendar(event)
 
+            const dotColor = category?.color || calendar?.color || '#000000'
+
             return (
               <Box
                 key={event.id}
@@ -37,8 +39,7 @@ function MiniCalendarEventIndicator({
                 style={{
                   width: '0.25rem',
                   height: '0.25rem',
-                  backgroundColor:
-                    category?.color || calendar?.color || '#000000'
+                  backgroundColor: dotColor
                 }}
               />
             )

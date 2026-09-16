@@ -10,9 +10,9 @@ import {
   Text
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/shared/api'
-import type { Task, Filters } from '@/entities/task'
+import type { Filters, Task } from '@/entities/task'
 import { holdKinds, isHoldKind } from '@/entities/task'
+import { forgeAPI } from '@/shared/api'
 
 const stateOptions = [
   ['in_flight', 'In Flight'],
@@ -40,6 +40,7 @@ export function SquadBacklogPage() {
   } | null>(null)
   const refresh = useCallback(async () => {
     setRefreshing(true)
+
     try {
       setTasks(
         (await forgeAPI.backlog.list
@@ -69,6 +70,7 @@ export function SquadBacklogPage() {
     )
     events.onmessage = event => {
       const data = JSON.parse(event.data) as { type: string; mode?: string }
+
       if (data.type === 'mode')
         setMode(
           data.mode === 'watch'
@@ -77,16 +79,20 @@ export function SquadBacklogPage() {
         )
       else void refresh()
     }
+
     events.onerror = () => {
       setMode('polling (SSE unavailable)')
     }
+
     return () => events.close()
   }, [refresh])
   useEffect(() => {
     if (!mode.startsWith('polling')) return
+
     const timer = window.setInterval(() => {
       if (!document.hidden) void refresh()
     }, 30000)
+
     return () => window.clearInterval(timer)
   }, [mode, refresh])
   const repos = useMemo(
@@ -95,18 +101,23 @@ export function SquadBacklogPage() {
   )
   const move = async (task: Task, target: string) => {
     const current = task.state
+
     if (target === 'blocked') return setForm({ type: 'block', task })
     if (target === 'held') return setForm({ type: 'hold', task })
+
     const invalid =
       (current === 'done' && target === 'in_flight') ||
       (current === 'held' && target === 'done') ||
       (current === 'queued' && target === 'done')
+
     if (invalid) {
       setError(
         `Cannot move directly to ${target}; use the required multi-step path first.`
       )
+
       return
     }
+
     try {
       if (target === 'in_flight')
         await forgeAPI.mutation.start.input({ id: task.id }).mutate(undefined)
@@ -124,7 +135,9 @@ export function SquadBacklogPage() {
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!form) return
+
     const data = new FormData(event.currentTarget)
+
     try {
       if (form.type === 'block')
         await forgeAPI.mutation.block
@@ -132,8 +145,10 @@ export function SquadBacklogPage() {
           .mutate(undefined)
       else {
         const kind = String(data.get('kind'))
+
         if (!isHoldKind(kind)) {
           setError('Invalid hold kind')
+
           return
         }
         await forgeAPI.mutation.hold
@@ -149,10 +164,11 @@ export function SquadBacklogPage() {
       await refresh()
     }
   }
+
   return (
     <Flex direction="column" height="100%">
       <ModuleHeader />
-      <Box p="md" overflow="auto">
+      <Box overflow="auto" p="md">
         <Flex align="center" gap="sm" justify="between" wrap="wrap">
           <Text as="h1" size="xl" weight="semibold">
             Squad Backlog
@@ -164,8 +180,8 @@ export function SquadBacklogPage() {
             <Button
               icon="tabler:refresh"
               loading={refreshing}
-              onClick={() => void refresh()}
               variant="secondary"
+              onClick={() => void refresh()}
             >
               Refresh
             </Button>
@@ -213,8 +229,8 @@ export function SquadBacklogPage() {
           <label>
             <input
               aria-label="Blocked filter"
-              type="checkbox"
               checked={filters.blocked}
+              type="checkbox"
               onChange={event =>
                 setFilters({ ...filters, blocked: event.target.checked })
               }
@@ -277,72 +293,77 @@ export function SquadBacklogPage() {
                           task.blocked !== 'yes' &&
                           task.held !== 'yes'
                   )
-                  .map(task => (
-                    <Card
-                      key={task.id}
-                      draggable
-                      isInteractive
-                      onDragEnd={event => {
-                        const target = (event.currentTarget as HTMLElement)
-                          .dataset.dropTarget
-                        if (target) void move(task, target)
-                      }}
-                      onDragStart={event =>
-                        event.dataTransfer.setData('text/plain', task.id)
-                      }
-                    >
-                      <Box p="sm" data-drop-target={state}>
-                        <Text weight="semibold">{task.title}</Text>
-                        <Text color="muted" size="xs">
-                          {task.id}
-                        </Text>
-                        <Flex gap="xs" mt="xs" wrap="wrap">
-                          <TagChip label={task.kind} />
-                          <TagChip label={task.repo} variant="outlined" />
-                          {task.priority !== '-' && (
-                            <TagChip label={`P${task.priority}`} />
-                          )}
-                        </Flex>
-                        <Flex gap="xs" mt="xs">
-                          {task.state === 'queued' && (
-                            <Button
-                              icon="tabler:player-play"
-                              onClick={event => {
-                                event.stopPropagation()
-                                void move(task, 'in_flight')
-                              }}
-                              variant="secondary"
-                            >
-                              Start
-                            </Button>
-                          )}
-                          {task.state === 'in_flight' && (
-                            <Button
-                              icon="tabler:check"
-                              onClick={event => {
-                                event.stopPropagation()
-                                void move(task, 'done')
-                              }}
-                            >
-                              Complete
-                            </Button>
-                          )}
-                          {task.state === 'done' && (
-                            <Button
-                              icon="tabler:rotate"
-                              onClick={event => {
-                                event.stopPropagation()
-                                void move(task, 'queued')
-                              }}
-                              variant="secondary"
-                            >
-                              Reopen
-                            </Button>
-                          )}
-                          {task.blocked === 'yes' &&
-                            task.blocked_by !== 'none' && (
+                  .map(task => {
+                    const canUnblock =
+                      task.blocked === 'yes' && task.blocked_by !== 'none'
+
+                    return (
+                      <Card
+                        key={task.id}
+                        draggable
+                        isInteractive
+                        onDragEnd={event => {
+                          const target = (event.currentTarget as HTMLElement)
+                            .dataset.dropTarget
+
+                          if (target) void move(task, target)
+                        }}
+                        onDragStart={event =>
+                          event.dataTransfer.setData('text/plain', task.id)
+                        }
+                      >
+                        <Box data-drop-target={state} p="sm">
+                          <Text weight="semibold">{task.title}</Text>
+                          <Text color="muted" size="xs">
+                            {task.id}
+                          </Text>
+                          <Flex gap="xs" mt="xs" wrap="wrap">
+                            <TagChip label={task.kind} />
+                            <TagChip label={task.repo} variant="outlined" />
+                            {task.priority !== '-' && (
+                              <TagChip label={`P${task.priority}`} />
+                            )}
+                          </Flex>
+                          <Flex gap="xs" mt="xs">
+                            {task.state === 'queued' && (
+                              <Button
+                                icon="tabler:player-play"
+                                variant="secondary"
+                                onClick={event => {
+                                  event.stopPropagation()
+                                  void move(task, 'in_flight')
+                                }}
+                              >
+                                Start
+                              </Button>
+                            )}
+                            {task.state === 'in_flight' && (
+                              <Button
+                                icon="tabler:check"
+                                onClick={event => {
+                                  event.stopPropagation()
+                                  void move(task, 'done')
+                                }}
+                              >
+                                Complete
+                              </Button>
+                            )}
+                            {task.state === 'done' && (
+                              <Button
+                                icon="tabler:rotate"
+                                variant="secondary"
+                                onClick={event => {
+                                  event.stopPropagation()
+                                  void move(task, 'queued')
+                                }}
+                              >
+                                Reopen
+                              </Button>
+                            )}
+                            {canUnblock && (
                               <Button
                                 icon="tabler:lock-open"
+                                variant="secondary"
                                 onClick={event => {
                                   event.stopPropagation()
                                   void forgeAPI.mutation.unblock
@@ -356,76 +377,77 @@ export function SquadBacklogPage() {
                                       void refresh()
                                     })
                                 }}
-                                variant="secondary"
                               >
                                 Unblock
                               </Button>
                             )}
-                          {task.held === 'yes' && (
+                            {task.held === 'yes' && (
+                              <Button
+                                icon="tabler:player-play"
+                                variant="secondary"
+                                onClick={event => {
+                                  event.stopPropagation()
+                                  void forgeAPI.mutation.unhold
+                                    .input({ id: task.id })
+                                    .mutate(undefined)
+                                    .then(refresh)
+                                    .catch(() => {
+                                      setError(
+                                        'Release failed; the card was reverted to the real backlog state'
+                                      )
+                                      void refresh()
+                                    })
+                                }}
+                              >
+                                Release
+                              </Button>
+                            )}
                             <Button
-                              icon="tabler:player-play"
+                              icon="tabler:lock"
+                              variant="plain"
                               onClick={event => {
                                 event.stopPropagation()
-                                void forgeAPI.mutation.unhold
-                                  .input({ id: task.id })
-                                  .mutate(undefined)
-                                  .then(refresh)
-                                  .catch(() => {
-                                    setError(
-                                      'Release failed; the card was reverted to the real backlog state'
-                                    )
-                                    void refresh()
-                                  })
+                                setForm({ type: 'block', task })
                               }}
-                              variant="secondary"
                             >
-                              Release
+                              Block
                             </Button>
+                            <Button
+                              icon="tabler:pause"
+                              variant="plain"
+                              onClick={event => {
+                                event.stopPropagation()
+                                setForm({ type: 'hold', task })
+                              }}
+                            >
+                              Hold
+                            </Button>
+                          </Flex>
+                          {task.blocked_by !== 'none' && (
+                            <Text color="dangerous" size="xs">
+                              Blocked by: {task.blocked_by}
+                            </Text>
                           )}
-                          <Button
-                            icon="tabler:lock"
-                            onClick={event => {
-                              event.stopPropagation()
-                              setForm({ type: 'block', task })
-                            }}
-                            variant="plain"
-                          >
-                            Block
-                          </Button>
-                          <Button
-                            icon="tabler:pause"
-                            onClick={event => {
-                              event.stopPropagation()
-                              setForm({ type: 'hold', task })
-                            }}
-                            variant="plain"
-                          >
-                            Hold
-                          </Button>
-                        </Flex>
-                        {task.blocked_by !== 'none' && (
-                          <Text color="dangerous" size="xs">
-                            Blocked by: {task.blocked_by}
-                          </Text>
-                        )}
-                        {task.held === 'yes' && (
-                          <Text color="orange-500" size="xs">
-                            Held: {task.hold_reason} ({task.hold_kind})
-                          </Text>
-                        )}
-                      </Box>
-                    </Card>
-                  ))}
+                          {task.held === 'yes' && (
+                            <Text color="orange-500" size="xs">
+                              Held: {task.hold_reason} ({task.hold_kind})
+                            </Text>
+                          )}
+                        </Box>
+                      </Card>
+                    )
+                  })}
               </Flex>
               <Box
+                style={{ minHeight: 40 }}
                 onDragOver={event => event.preventDefault()}
                 onDrop={event => {
                   event.currentTarget.setAttribute('data-drop-target', state)
                   const id = event.dataTransfer.getData('text/plain')
                   const task = tasks.find(item => item.id === id)
+
                   if (task) void move(task, state)
                 }}
-                style={{ minHeight: 40 }}
               />
             </Box>
           ))}
@@ -438,20 +460,20 @@ export function SquadBacklogPage() {
               </Text>
               {form.type === 'block' ? (
                 <input
-                  name="by"
                   required
+                  name="by"
                   pattern="[a-z0-9][a-z0-9-]*"
                   placeholder="blocker task id"
                 />
               ) : (
                 <Flex direction="column" gap="sm">
                   <input
-                    name="reason"
-                    maxLength={200}
                     required
+                    maxLength={200}
+                    name="reason"
                     placeholder="reason"
                   />
-                  <select name="kind" required defaultValue="commander">
+                  <select required defaultValue="commander" name="kind">
                     {holdKinds.map(kind => (
                       <option key={kind}>{kind}</option>
                     ))}

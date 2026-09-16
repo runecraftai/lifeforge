@@ -1,9 +1,9 @@
 import { useForgeMutation } from '@lifeforge/api'
 import { ConfirmationModal, Icon, useModalStore } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/shared/api'
 import type { Note } from '@/entities/note'
 import { NoteFormModal } from '@/features/edit-note'
+import { forgeAPI } from '@/shared/api'
 
 function NoteDetailEmpty() {
   return (
@@ -94,7 +94,7 @@ export function NoteDetail({
         </div>
       </header>
       <p className="whitespace-pre-wrap break-words pt-6 text-sm leading-7 text-zinc-700 dark:text-zinc-300">
-        {currentNote.content || 'No content'}
+        {currentNote.content ?? 'No content'}
       </p>
     </article>
   )

@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query'
 
 import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
 
-import useFilter from '../../model/useFilter'
 import { forgeAPI } from '@/shared/api'
 
+import useFilter from '../../model/useFilter'
 import SidebarSection from './components/SidebarSection'
 
 function Sidebar() {

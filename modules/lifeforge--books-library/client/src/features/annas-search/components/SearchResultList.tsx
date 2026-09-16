@@ -22,7 +22,7 @@ function SearchResultList({
       <Pagination
         mb="md"
         page={currentPage}
-        totalPages={data.totalPages || 1}
+        totalPages={data.totalPages ?? 1}
         onPageChange={onPageChange}
       />
       <Stack gap="sm">
@@ -33,7 +33,7 @@ function SearchResultList({
       <Pagination
         mt="md"
         page={currentPage}
-        totalPages={data.totalPages || 1}
+        totalPages={data.totalPages ?? 1}
         onPageChange={onPageChange}
       />
     </Flex>

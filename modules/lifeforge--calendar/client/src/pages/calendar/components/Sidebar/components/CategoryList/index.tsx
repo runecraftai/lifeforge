@@ -8,10 +8,10 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import ModifyCategoryModal from '../../../../modals/ModifyCategoryModal'
-import { useInternalCategories } from '../../../../model/useInternalCategories'
 import { forgeAPI } from '@/shared/api'
 
+import ModifyCategoryModal from '../../../../modals/ModifyCategoryModal'
+import { useInternalCategories } from '../../../../model/useInternalCategories'
 import CategoryListItem from './components/CategoryListItem'
 
 function CategoryList({

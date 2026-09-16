@@ -1,4 +1,3 @@
-import type { BooksLibraryEntry } from '@/entities/book'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 
@@ -9,6 +8,7 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
+import type { BooksLibraryEntry } from '@/entities/book'
 import ModifyBookModal from '@/features/modify-book/ModifyBookModal'
 import SendToKindleModal from '@/features/send-to-kindle/SendToKindleModal'
 import { forgeAPI } from '@/shared/api'

@@ -1,9 +1,10 @@
-import type { BooksLibraryEntry } from '@/entities/book'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
 import { useModuleTranslation } from '@lifeforge/localization'
 import { TagChip, usePersonalization } from '@lifeforge/ui'
+
+import type { BooksLibraryEntry } from '@/entities/book'
 
 dayjs.extend(relativeTime)
 

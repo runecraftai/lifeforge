@@ -1,1 +1,5 @@
-export type { CalendarEvent, CalendarCategory, CalendarCalendar } from './calendar-model'
+export type {
+  CalendarEvent,
+  CalendarCategory,
+  CalendarCalendar
+} from './calendar-model'

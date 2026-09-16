@@ -6,9 +6,8 @@ import { Link } from 'react-router'
 
 import { Box, Button, Flex, Icon, Prose, Stack, Text } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/shared/api'
-
 import type { CalendarEvent } from '@/pages/calendar/components/Calendar'
+import { forgeAPI } from '@/shared/api'
 
 function EventDetailsDescription({ event }: { event: CalendarEvent }) {
   const calendarsQuery = useQuery(forgeAPI.calendars.list.queryOptions())

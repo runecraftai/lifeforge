@@ -14,6 +14,7 @@ import {
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/shared/api'
+
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
 import ModifyEventModal from './modals/ModifyEventModal'
@@ -55,8 +56,8 @@ export function CalendarPage() {
       <ModuleHeader />
       <LayoutWithSidebar>
         <Sidebar
-          selectedCalendar={calendar || null}
-          selectedCategory={category || null}
+          selectedCalendar={calendar ?? null}
+          selectedCategory={category ?? null}
           setSelectedCalendar={value => updateFilter('calendar', value ?? '')}
           setSelectedCategory={value => updateFilter('category', value ?? '')}
         />

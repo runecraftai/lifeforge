@@ -3,7 +3,6 @@ import dayjs from 'dayjs'
 import { Grid, Text, usePersonalization } from '@lifeforge/ui'
 
 import type { CalendarEvent } from '../../../../../components/Calendar'
-
 import MiniCalendarDateItem from './MiniCalendarDateItem'
 
 function MiniCalendarContent({
@@ -24,16 +23,20 @@ function MiniCalendarContent({
         'zh-CN': ['日', '一', '二', '三', '四', '五', '六'],
         'zh-TW': ['日', '一', '二', '三', '四', '五', '六'],
         ms: ['Ah', 'Is', 'Se', 'Ra', 'Kh', 'Ju', 'Sa']
-      }[language ?? 'en']?.map((day, index) => (
-        <Text
-          key={day}
-          align="center"
-          color={index === 0 || index === 6 ? 'dangerous' : 'muted'}
-          size="sm"
-        >
-          {day}
-        </Text>
-      ))}
+      }[language ?? 'en']?.map((day, index) => {
+        const isWeekend = index === 0 || index === 6
+
+        return (
+          <Text
+            key={day}
+            align="center"
+            color={isWeekend ? 'dangerous' : 'muted'}
+            size="sm"
+          >
+            {day}
+          </Text>
+        )
+      })}
       {Array(
         Math.ceil(
           (dayjs().year(currentYear).month(currentMonth).daysInMonth() +

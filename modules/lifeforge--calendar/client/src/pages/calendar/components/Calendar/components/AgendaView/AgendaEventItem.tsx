@@ -4,10 +4,10 @@ import { useMemo } from 'react'
 import { Box, Card } from '@lifeforge/ui'
 
 import EventDetails from '@/features/event-details'
-import { useInternalCategories } from '../../../../model/useInternalCategories'
 import { forgeAPI } from '@/shared/api'
 
 import type { CalendarCategory, CalendarEvent } from '../..'
+import { useInternalCategories } from '../../../../model/useInternalCategories'
 
 function AgendaEventItem({ event }: { event: CalendarEvent }) {
   const categoriesQuery = useQuery(forgeAPI.categories.list.queryOptions())

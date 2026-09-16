@@ -1,8 +1,9 @@
 import { useQueries } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
-import type { CalendarCategory } from '../components/Calendar'
 import { forgeAPI } from '@/shared/api'
+
+import type { CalendarCategory } from '../components/Calendar'
 
 interface InternalCategory {
   id: string

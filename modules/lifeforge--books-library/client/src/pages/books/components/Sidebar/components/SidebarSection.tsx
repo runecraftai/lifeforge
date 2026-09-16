@@ -12,7 +12,7 @@ import ModifyModal from '@/features/modify-book/ModifyModal'
 
 import SidebarItem from './SidebarItem'
 
-function SidebarSection({
+function SidebarSection<T>({
   stuff,
   fallbackIcon,
   hasActionButton = true,
@@ -24,7 +24,7 @@ function SidebarSection({
   fallbackIcon?: string
   hasActionButton?: boolean
   hasContextMenu?: boolean
-  dataQuery: UseQueryResult<any[]>
+  dataQuery: UseQueryResult<T[]>
   useNamespace?: boolean
 }) {
   const { open } = useModalStore()

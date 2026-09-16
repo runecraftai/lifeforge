@@ -10,8 +10,8 @@ import {
   createDefaultValues
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/shared/api'
 import type { Note } from '@/entities/note'
+import { forgeAPI } from '@/shared/api'
 
 const schema = z.object({
   content: z.string(),

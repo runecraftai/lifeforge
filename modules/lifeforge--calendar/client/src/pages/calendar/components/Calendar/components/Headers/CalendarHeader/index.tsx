@@ -13,7 +13,6 @@ import {
 
 import ModifyEventModal from '../../../../../modals/ModifyEventModal'
 import ScanImageModal from '../../../../../modals/ScanImageModal'
-
 import NavigationControl from './components/NavigationControl'
 import ViewSelector from './components/ViewSelector'
 

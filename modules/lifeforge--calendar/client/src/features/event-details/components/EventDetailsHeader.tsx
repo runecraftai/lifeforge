@@ -14,11 +14,13 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
+import type {
+  CalendarCategory,
+  CalendarEvent
+} from '@/pages/calendar/components/Calendar'
 import ModifyEventModal from '@/pages/calendar/modals/ModifyEventModal'
 import useFilter from '@/pages/calendar/model/useFilter'
 import { forgeAPI } from '@/shared/api'
-
-import type { CalendarCategory, CalendarEvent } from '@/pages/calendar/components/Calendar'
 
 function EventDetailsHeader({
   event,
@@ -90,6 +92,8 @@ function EventDetailsHeader({
     })
   }, [event])
 
+  const canShowActions = !event.category.startsWith('_') && editable
+
   return (
     <Flex align="start" as="header" gap="2xl" justify="between">
       <Flex direction="column">
@@ -115,7 +119,7 @@ function EventDetailsHeader({
           {event.title}
         </Text>
       </Flex>
-      {!event.category.startsWith('_') && editable && (
+      {canShowActions && (
         <ContextMenu>
           <ContextMenuItem
             icon="tabler:pencil"

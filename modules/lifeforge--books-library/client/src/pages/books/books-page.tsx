@@ -15,11 +15,12 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/shared/api'
-import Header from './components/Header'
-import Sidebar from './components/Sidebar'
 import AnnasModal from '@/features/annas-search'
 import UploadFromDeviceModal from '@/features/upload-from-device'
+import { forgeAPI } from '@/shared/api'
+
+import Header from './components/Header'
+import Sidebar from './components/Sidebar'
 import useFilter from './model/useFilter'
 import BookListing, { ViewMode } from './views'
 
@@ -97,7 +98,7 @@ export function BooksPage() {
       <LayoutWithSidebar>
         <Sidebar />
         <ContentWrapperWithSidebar>
-          <Header itemCount={dataQuery.data?.totalItems || 0} />
+          <Header itemCount={dataQuery.data?.totalItems ?? 0} />
           <Flex align="center" gap="xs" mb="lg" mt="md">
             <SearchInput
               debounceMs={300}

@@ -1,4 +1,8 @@
-import type { CalendarCategory, CalendarEvent } from '@/pages/calendar/components/Calendar'
+import type {
+  CalendarCategory,
+  CalendarEvent
+} from '@/pages/calendar/components/Calendar'
+
 import EventDetailsDescription from './components/EventDetailsDescription'
 import EventDetailsHeader from './components/EventDetailsHeader'
 

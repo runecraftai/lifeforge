@@ -3,10 +3,10 @@ import { useCallback, useMemo } from 'react'
 import { useForgeMutation } from '@lifeforge/api'
 import { ConfirmationModal, SidebarItem, useModalStore } from '@lifeforge/ui'
 
-import type { CalendarCategory } from '../../../../../components/Calendar'
-import ModifyCategoryModal from '../../../../../modals/ModifyCategoryModal'
 import { forgeAPI } from '@/shared/api'
 
+import type { CalendarCategory } from '../../../../../components/Calendar'
+import ModifyCategoryModal from '../../../../../modals/ModifyCategoryModal'
 import ActionMenu from './ActionMenu'
 
 function CategoryListItem({

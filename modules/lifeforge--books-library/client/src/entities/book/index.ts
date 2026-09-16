@@ -1,1 +1,6 @@
-export type { BooksLibraryEntry, BooksLibraryCollection, BooksLibraryLanguage, BooksLibraryFileType } from './book-model'
+export type {
+  BooksLibraryEntry,
+  BooksLibraryCollection,
+  BooksLibraryLanguage,
+  BooksLibraryFileType
+} from './book-model'

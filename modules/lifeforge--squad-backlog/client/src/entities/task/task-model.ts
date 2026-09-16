@@ -1,13 +1,20 @@
-const stateOptions = [
+export const stateOptions = [
   ['in_flight', 'In Flight'],
   ['queued', 'Queued'],
   ['held', 'Held'],
   ['done', 'Done']
 ] as const
 
-export const holdKinds = ['commander', 'external', 'load', 'parked', 'future'] as const
+export const holdKinds = [
+  'commander',
+  'external',
+  'load',
+  'parked',
+  'future'
+] as const
 
 export type State = (typeof stateOptions)[number][0]
+
 export type HoldKind = (typeof holdKinds)[number]
 
 export type Task = {

@@ -1,8 +1,8 @@
-import type { BooksLibraryEntry } from '@/entities/book'
 import { useQuery } from '@tanstack/react-query'
 
 import { Box, Card, ContextMenu, Flex, Icon, Text } from '@lifeforge/ui'
 
+import type { BooksLibraryEntry } from '@/entities/book'
 import { forgeAPI } from '@/shared/api'
 
 import BookMeta from '../../components/BookMeta'

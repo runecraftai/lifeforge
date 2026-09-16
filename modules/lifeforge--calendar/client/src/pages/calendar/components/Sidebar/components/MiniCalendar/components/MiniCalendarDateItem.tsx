@@ -5,10 +5,13 @@ import { useCallback, useMemo } from 'react'
 
 import { Flex, Text } from '@lifeforge/ui'
 
-import type { CalendarCategory, CalendarEvent } from '../../../../../components/Calendar'
-import { useInternalCategories } from '../../../../../model/useInternalCategories'
 import { forgeAPI } from '@/shared/api'
 
+import type {
+  CalendarCategory,
+  CalendarEvent
+} from '../../../../../components/Calendar'
+import { useInternalCategories } from '../../../../../model/useInternalCategories'
 import * as styles from './MiniCalendarDateItem.css'
 import MiniCalendarEventDetails from './MiniCalendarEventDetails'
 import MiniCalendarEventIndicator from './MiniCalendarEventIndicator'
@@ -56,6 +59,8 @@ function MiniCalendarDateItem({
         })
       : []
   }, [events, firstDay, index, lastDate, date, actualIndex])
+
+  const showIndicator = isInThisMonth && eventsOnTheDay.length > 0
 
   const isToday = useMemo(
     () =>
@@ -111,13 +116,13 @@ function MiniCalendarDateItem({
         >
           {actualIndex}
         </Text>
-        {isInThisMonth && eventsOnTheDay.length > 0 && (
+        {showIndicator ? (
           <MiniCalendarEventIndicator
             eventsOnTheDay={eventsOnTheDay}
             getCalendar={getCalendar}
             getCategory={getCategory}
           />
-        )}
+        ) : null}
       </Flex>
       {eventsOnTheDay.length > 0 && (
         <MiniCalendarEventDetails

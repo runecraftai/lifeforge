@@ -66,6 +66,22 @@ function ModifyCalendarModal({
 
   const icsUrl = form.watch('icsUrl')
 
+  const subscribeButton =
+    type !== 'update' ? (
+      <Button
+        key="subscribe-ics"
+        icon="tabler:calendar-code"
+        variant="plain"
+        onClick={() =>
+          open(SubscribeICSModal, {
+            onSubmit: icsUrl => {
+              form.setValue('icsUrl', icsUrl)
+            }
+          })
+        }
+      />
+    ) : undefined
+
   return (
     <FormModal
       form={form}
@@ -80,21 +96,7 @@ function ModifyCalendarModal({
       uiConfig={{
         icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
         title: `calendar.${type}`,
-        headerActions:
-          type !== 'update' ? (
-            <Button
-              key="subscribe-ics"
-              icon="tabler:calendar-code"
-              variant="plain"
-              onClick={() =>
-                open(SubscribeICSModal, {
-                  onSubmit: icsUrl => {
-                    form.setValue('icsUrl', icsUrl)
-                  }
-                })
-              }
-            />
-          ) : undefined,
+        headerActions: subscribeButton,
         onClose
       }}
     >

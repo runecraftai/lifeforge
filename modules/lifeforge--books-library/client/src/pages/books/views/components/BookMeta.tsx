@@ -1,10 +1,10 @@
-import type { BooksLibraryEntry } from '@/entities/book'
 import { useQuery } from '@tanstack/react-query'
 import humanNumber from 'human-number'
 import prettyBytes from 'pretty-bytes'
 
 import { Box, Flex, Icon, Text } from '@lifeforge/ui'
 
+import type { BooksLibraryEntry } from '@/entities/book'
 import { forgeAPI } from '@/shared/api'
 
 function Separator({ isGridView }: { isGridView?: boolean }) {

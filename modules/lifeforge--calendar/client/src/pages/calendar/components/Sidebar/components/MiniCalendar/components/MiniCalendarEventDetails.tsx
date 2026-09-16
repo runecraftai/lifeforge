@@ -70,6 +70,8 @@ function MiniCalendarEventDetails({
 
               const calendar = getCalendar(event)
 
+              const eventColor = category?.color || calendar?.color || '#000000'
+
               return (
                 <Flex
                   key={event.id}
@@ -89,8 +91,7 @@ function MiniCalendarEventDetails({
                       transform: 'translateY(-50%)',
                       backgroundColor: 'var(--bg-color)',
                       // @ts-expect-error - CSS Variables
-                      '--bg-color':
-                        category?.color || calendar?.color || '#000000'
+                      '--bg-color': eventColor
                     }}
                     top="50%"
                     width="0.25rem"

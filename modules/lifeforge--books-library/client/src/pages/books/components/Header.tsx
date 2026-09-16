@@ -1,6 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { Button, Flex, TagsFilter, Text, useModuleSidebarState } from '@lifeforge/ui'
+import {
+  Button,
+  Flex,
+  TagsFilter,
+  Text,
+  useModuleSidebarState
+} from '@lifeforge/ui'
 
 import { forgeAPI } from '@/shared/api'
 
@@ -22,13 +28,14 @@ function Header({ itemCount }: { itemCount: number }) {
     readStatus
   } = useFilter()
 
-  const isFiltered = !Object.values([
-    collection,
-    favourite,
-    fileType,
-    language,
-    readStatus
-  ]).every(value => !value) || !!searchQuery.trim()
+  const isFiltered =
+    !Object.values([
+      collection,
+      favourite,
+      fileType,
+      language,
+      readStatus
+    ]).every(value => !value) || !!searchQuery.trim()
 
   return (
     <Flex direction="column">

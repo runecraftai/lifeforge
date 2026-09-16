@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react'
 import {
   Calendar,
   type Components,
+  type ToolbarProps,
   type View,
   dayjsLocalizer
 } from 'react-big-calendar'
@@ -15,10 +16,10 @@ import dragAndDropModule, {
 import type { InferOutput } from '@lifeforge/api'
 import { useModalStore } from '@lifeforge/ui'
 
-import useFilter from '../../model/useFilter'
 import { forgeAPI } from '@/shared/api'
 
 import ModifyEventModal from '../../modals/ModifyEventModal'
+import useFilter from '../../model/useFilter'
 import AgendaDate from './components/AgendaView/AgendaDate'
 import AgendaEventItem from './components/AgendaView/AgendaEventItem'
 import EventItem from './components/EventItem'
@@ -130,7 +131,7 @@ function CalendarComponent({
 
   const calendarComponents = useMemo(
     (): Components => ({
-      toolbar: (props: any) => {
+      toolbar: (props: ToolbarProps) => {
         return <CalendarHeader {...props} />
       },
       event: ({ event }: { event: object }) => {
@@ -176,7 +177,9 @@ function CalendarComponent({
           id: event.id
         })
         .mutate({
-          ...(event as any),
+          ...(event as InferOutput<
+            typeof forgeAPI.events.getByDateRange.outputSchema
+          >),
           start: dayjs(start).toISOString(),
           end: dayjs(end).toISOString()
         })

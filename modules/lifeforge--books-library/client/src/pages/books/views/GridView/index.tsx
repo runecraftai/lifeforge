@@ -1,6 +1,6 @@
-import type { BooksLibraryEntry } from '@/entities/book'
-
 import { Grid, Scrollbar } from '@lifeforge/ui'
+
+import type { BooksLibraryEntry } from '@/entities/book'
 
 import EntryItem from './components/EntryItem'
 
