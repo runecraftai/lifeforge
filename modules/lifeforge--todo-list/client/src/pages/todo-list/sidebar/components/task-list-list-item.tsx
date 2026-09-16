@@ -12,7 +12,7 @@ import {
 import type { TaskList } from '@/entities/list'
 import { useTodoListContext } from '@/entities/task'
 import { ModifyListModal } from '@/features/manage-lists'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 export function TaskListListItem({ item }: { item: TaskList }) {
   const queryClient = useQueryClient()

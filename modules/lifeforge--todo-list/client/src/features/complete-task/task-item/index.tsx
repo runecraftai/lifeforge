@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { Box, Card, Checkbox, Flex, toast } from '@lifeforge/ui'
 
 import { type Task, useTodoListContext } from '@/entities/task'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import { TaskDueDate } from './components/task-due-date'
 import { TaskHeader } from './components/task-header'

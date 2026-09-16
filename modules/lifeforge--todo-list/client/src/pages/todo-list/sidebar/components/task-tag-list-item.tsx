@@ -12,7 +12,7 @@ import {
 import type { TaskTag } from '@/entities/tag'
 import { useTodoListContext } from '@/entities/task'
 import { ModifyTagModal } from '@/features/manage-tags'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 export function TaskTagListItem({ item }: { item: TaskTag }) {
   const queryClient = useQueryClient()

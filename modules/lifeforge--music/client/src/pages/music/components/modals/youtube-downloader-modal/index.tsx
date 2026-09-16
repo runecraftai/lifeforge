@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { type SocketEvent, useSocketContext } from '@lifeforge/api'
 import { Button, ModalHeader, TextInput, WithQuery, toast } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import VideoInfo from './components/video-info'
 

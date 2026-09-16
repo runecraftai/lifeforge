@@ -6,7 +6,7 @@ import type { TaskList } from '@/entities/list'
 import type { TaskPriority } from '@/entities/priority'
 import type { TaskTag } from '@/entities/tag'
 import type { Task } from '@/entities/task'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 type TaskFilter = {
   status: string | null

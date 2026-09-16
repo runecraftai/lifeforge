@@ -12,7 +12,7 @@ import {
 } from '@lifeforge/ui'
 
 import type { TaskList } from '@/entities/list'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 const schema = z.object({
   name: z.string().min(1, 'Required'),
