@@ -1,0 +1,109 @@
+# Development compose override — sync source instead of rebuilding images.
+#
+# Usage:
+#   docker compose -f docker-compose.yaml -f docker-compose.dev.yaml --project-name lfdev up --build
+#
+# Uses alternate host ports to avoid colliding with the live stack:
+#   PB_PORT=8091  API_PORT=3637  WEB_PORT=5174
+
+services:
+  db:
+    container_name: lifeforge-db-dev
+    ports:
+      - '${PB_PORT:-8091}:8090'
+
+  db-init:
+    container_name: lifeforge-db-init-dev
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile.dev
+    container_name: lifeforge-server-dev
+    environment:
+      - NODE_ENV=development
+      - PB_HOST=http://db:8090
+      - PORT=3636
+      - TRUST_PROXY=1
+    ports:
+      - target: 3636
+        published: '${API_PORT:-3637}'
+        protocol: tcp
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '--spider', 'http://localhost:3636/']
+      interval: 30s
+      timeout: 5s
+      start_period: 180s
+      retries: 3
+    volumes:
+      - ./apps/api:/lifeforge/apps/api
+      - ./apps/web:/lifeforge/apps/web
+      - ./modules:/lifeforge/modules
+      - ./packages:/lifeforge/packages
+      - ./docker/server/entrypoint.dev.sh:/entrypoint.dev.sh
+      - ./env:/lifeforge/env
+    develop:
+      watch:
+        - path: apps/api
+          action: sync
+          target: /lifeforge/apps/api
+        - path: modules
+          action: sync
+          target: /lifeforge/modules
+        - path: packages
+          action: sync
+          target: /lifeforge/packages
+        - path: docker/server
+          action: rebuild
+        - path: package.json
+          action: rebuild
+        - path: pnpm-lock.yaml
+          action: rebuild
+    entrypoint: ["/bin/sh", "/entrypoint.dev.sh"]
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/client/Dockerfile.dev
+    container_name: lifeforge-client-dev
+    ports:
+      - target: 80
+        published: '${WEB_PORT:-5174}'
+        protocol: tcp
+    volumes:
+      - ./apps/web/src:/app/apps/web/src
+      - ./apps/web/index.html:/app/apps/web/index.html
+      - ./apps/web/public:/app/apps/web/public
+      - ./apps/web/vite.config.dev.ts:/app/apps/web/vite.config.dev.ts
+      - ./modules:/app/modules
+      - ./packages/ui/src:/app/packages/ui/src
+      - ./packages/localization/src:/app/packages/localization/src
+      - ./packages/api/src:/app/packages/api/src
+      - ./packages/federation/src:/app/packages/federation/src
+      - ./docker/client/entrypoint.dev.sh:/entrypoint.dev.sh
+      - ./env:/app/env
+    develop:
+      watch:
+        - path: apps/web
+          action: sync
+          target: /app/apps/web
+        - path: modules
+          action: sync
+          target: /app/modules
+        - path: packages
+          action: sync
+          target: /app/packages
+        - path: docker/client
+          action: rebuild
+        - path: package.json
+          action: rebuild
+        - path: pnpm-lock.yaml
+          action: rebuild
+    entrypoint: ["/bin/sh", "/entrypoint.dev.sh"]
+    depends_on:
+      server:
+        condition: service_healthy
+
+volumes:
+  pb_data:
+    name: lifeforge-pb-data-dev
