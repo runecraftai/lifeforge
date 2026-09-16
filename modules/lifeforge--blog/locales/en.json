@@ -5,11 +5,16 @@
     "post": "Post"
   },
   "inputs": {
+    "title": "Title",
     "excerpt": "Excerpt",
     "visibility": "Visibility",
     "featuredImage": "Featured Image",
     "category": "Category",
     "labels": "Labels"
+  },
+  "buttons": {
+    "saveToDrafts": "Save to Drafts",
+    "publish": "Publish"
   },
   "empty": {
     "entries": {

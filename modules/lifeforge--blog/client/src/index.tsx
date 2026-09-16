@@ -11,6 +11,8 @@ import {
 
 import { forgeAPI } from '@/manifest'
 
+import '../index.css'
+
 function Blog() {
   const { t } = useModuleTranslation()
   const entriesQuery = useQuery(forgeAPI.entries.list.queryOptions())

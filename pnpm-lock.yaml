@@ -544,9 +544,19 @@ importers:
       '@lifeforge/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      quill:
+        specifier: ^2.0.3
+        version: 2.0.3
       react-quilljs:
         specifier: ^2.0.5
         version: 2.0.5(quill@2.0.3)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+    devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.3.3
+        version: 4.3.3(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+      tailwindcss:
+        specifier: ^4.3.3
+        version: 4.3.3
 
   modules/lifeforge--books-library:
     dependencies:

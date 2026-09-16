@@ -137,11 +137,16 @@ function Sidebar({
           <Button
             className="mt-6 w-full"
             icon="tabler:file"
+            namespace={BLOG_NAMESPACE}
             variant="secondary"
           >
             Save to Drafts
           </Button>
-          <Button className="w-full" icon="tabler:send">
+          <Button
+            className="w-full"
+            icon="tabler:send"
+            namespace={BLOG_NAMESPACE}
+          >
             Publish
           </Button>
         </div>
