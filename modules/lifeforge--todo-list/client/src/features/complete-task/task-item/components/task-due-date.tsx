@@ -6,8 +6,6 @@ import { Text } from '@lifeforge/ui'
 
 import type { Task } from '@/entities/task'
 
-import * as styles from '../task-item.css'
-
 dayjs.extend(relativeTime)
 
 export function TaskDueDate({ entry }: { entry: Task }) {
@@ -27,7 +25,7 @@ export function TaskDueDate({ entry }: { entry: Task }) {
   } else if (hasDueDate) {
     content = (
       <Text
-        className={styles.dueDate}
+        className="shrink-0 truncate"
         color={dueDateColor}
         size="sm"
         whiteSpace="nowrap"
