@@ -1,6 +1,6 @@
+import type { BooksLibraryEntry, BooksLibraryCollection, BooksLibraryLanguage, BooksLibraryFileType } from '@/entities/book'
 import { useQuery } from '@tanstack/react-query'
 
-import type { InferOutput } from '@lifeforge/api'
 import { useModuleTranslation } from '@lifeforge/localization'
 import {
   Box,
@@ -23,22 +23,6 @@ import AnnasModal from '@/features/annas-search'
 import UploadFromDeviceModal from '@/features/upload-from-device'
 import useFilter from './model/useFilter'
 import BookListing, { ViewMode } from './views'
-
-export type BooksLibraryEntry = InferOutput<
-  typeof forgeAPI.entries.list
->['items'][number]
-
-export type BooksLibraryCollection = InferOutput<
-  typeof forgeAPI.collections.list
->[number]
-
-export type BooksLibraryLanguage = InferOutput<
-  typeof forgeAPI.languages.list
->[number]
-
-export type BooksLibraryFileType = InferOutput<
-  typeof forgeAPI.fileTypes.list
->[number]
 
 export function BooksPage() {
   const { t } = useModuleTranslation()

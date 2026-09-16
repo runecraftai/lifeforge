@@ -14,7 +14,7 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import type { CalendarCalendar } from '../Calendar'
+import type { CalendarCalendar } from '../components/Calendar'
 import SubscribeICSModal from './SubscribeICSModal'
 
 const schema = z.object({

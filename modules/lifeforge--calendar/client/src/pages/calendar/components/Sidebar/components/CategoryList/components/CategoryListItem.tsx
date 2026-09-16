@@ -3,8 +3,8 @@ import { useCallback, useMemo } from 'react'
 import { useForgeMutation } from '@lifeforge/api'
 import { ConfirmationModal, SidebarItem, useModalStore } from '@lifeforge/ui'
 
-import type { CalendarCategory } from '../Calendar'
-import ModifyCategoryModal from '../modals/ModifyCategoryModal'
+import type { CalendarCategory } from '../../../../../components/Calendar'
+import ModifyCategoryModal from '../../../../../modals/ModifyCategoryModal'
 import { forgeAPI } from '@/shared/api'
 
 import ActionMenu from './ActionMenu'

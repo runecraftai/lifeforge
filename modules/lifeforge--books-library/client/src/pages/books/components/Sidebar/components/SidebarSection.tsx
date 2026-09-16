@@ -8,7 +8,7 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import ModifyModal from '@/components/modals/ModifyModal'
+import ModifyModal from '@/features/modify-book/ModifyModal'
 
 import SidebarItem from './SidebarItem'
 

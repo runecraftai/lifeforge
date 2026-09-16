@@ -4,7 +4,7 @@ import type {
   CalendarCalendar,
   CalendarCategory,
   CalendarEvent
-} from '../Calendar'
+} from '../../../../../components/Calendar'
 
 function MiniCalendarEventIndicator({
   eventsOnTheDay,

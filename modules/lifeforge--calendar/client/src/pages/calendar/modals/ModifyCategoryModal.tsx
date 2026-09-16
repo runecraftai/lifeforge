@@ -13,7 +13,7 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import type { CalendarCategory } from '../Calendar'
+import type { CalendarCategory } from '../components/Calendar'
 
 const schema = z.object({
   name: z.string().min(1, 'Category name is required'),

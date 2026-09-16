@@ -3,7 +3,7 @@ import type { NavigateAction } from 'react-big-calendar'
 
 import { Button, Flex, Icon, Text } from '@lifeforge/ui'
 
-import { useCalendarStore } from '../model/useCalendarStore'
+import { useCalendarStore } from '../../../../../../../model/useCalendarStore'
 
 import DateRangeLabel from './components/DateRangeLabel'
 

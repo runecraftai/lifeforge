@@ -5,8 +5,8 @@ import { useCallback, useMemo } from 'react'
 
 import { Flex, Text } from '@lifeforge/ui'
 
-import type { CalendarCategory, CalendarEvent } from '../Calendar'
-import { useInternalCategories } from '../model/useInternalCategories'
+import type { CalendarCategory, CalendarEvent } from '../../../../../components/Calendar'
+import { useInternalCategories } from '../../../../../model/useInternalCategories'
 import { forgeAPI } from '@/shared/api'
 
 import * as styles from './MiniCalendarDateItem.css'

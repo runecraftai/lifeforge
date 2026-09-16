@@ -14,8 +14,8 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import ModifyEventModal from '../modals/ModifyEventModal'
-import useFilter from '../model/useFilter'
+import ModifyEventModal from '@/pages/calendar/modals/ModifyEventModal'
+import useFilter from '@/pages/calendar/model/useFilter'
 import { forgeAPI } from '@/shared/api'
 
 import type { CalendarCategory, CalendarEvent } from '../../..'

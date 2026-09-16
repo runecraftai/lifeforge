@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { memo, useMemo } from 'react'
 
-import { useInternalCategories } from '../model/useInternalCategories'
+import { useInternalCategories } from '../../../../model/useInternalCategories'
 import { forgeAPI } from '@/shared/api'
 
 import type { CalendarCategory, CalendarEvent } from '../../index.js'

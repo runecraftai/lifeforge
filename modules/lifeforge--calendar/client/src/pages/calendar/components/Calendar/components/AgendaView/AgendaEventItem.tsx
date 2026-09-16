@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import { Box, Card } from '@lifeforge/ui'
 
 import EventDetails from '@/features/event-details'
-import { useInternalCategories } from '../model/useInternalCategories'
+import { useInternalCategories } from '../../../../model/useInternalCategories'
 import { forgeAPI } from '@/shared/api'
 
 import type { CalendarCategory, CalendarEvent } from '../..'

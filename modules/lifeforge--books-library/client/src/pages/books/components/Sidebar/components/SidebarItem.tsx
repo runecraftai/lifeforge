@@ -2,7 +2,7 @@ import type {
   BooksLibraryCollection,
   BooksLibraryFileType,
   BooksLibraryLanguage
-} from '@'
+} from '@/entities/book'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
@@ -14,8 +14,8 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import ModifyModal from '@/components/modals/ModifyModal'
-import useFilter from './model/useFilter'
+import ModifyModal from '@/features/modify-book/ModifyModal'
+import useFilter from '../../../model/useFilter'
 import { forgeAPI } from '@/shared/api'
 
 function _SidebarItem({

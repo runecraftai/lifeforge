@@ -14,12 +14,12 @@ import {
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/shared/api'
-import CalendarComponent from '../Calendar'
-import Sidebar from '../Sidebar'
+import CalendarComponent from './components/Calendar'
+import Sidebar from './components/Sidebar'
 import ModifyEventModal from './modals/ModifyEventModal'
 import ScanImageModal from './modals/ScanImageModal'
-import { useCalendarStore } from '../model/useCalendarStore'
-import useFilter from '../model/useFilter'
+import { useCalendarStore } from './model/useCalendarStore'
+import useFilter from './model/useFilter'
 
 export function CalendarPage() {
   const { open } = useModalStore()

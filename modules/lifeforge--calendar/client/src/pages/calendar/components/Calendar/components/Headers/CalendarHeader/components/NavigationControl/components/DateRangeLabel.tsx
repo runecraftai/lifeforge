@@ -4,7 +4,7 @@ import type { NavigateAction } from 'react-big-calendar'
 
 import { Flex, Text, colorWithOpacity, useModalStore } from '@lifeforge/ui'
 
-import YearMonthSelector from '../modals/YearMonthSelector'
+import YearMonthSelector from '../../../../../../../../modals/YearMonthSelector'
 
 function DateRangeLabel({
   label,

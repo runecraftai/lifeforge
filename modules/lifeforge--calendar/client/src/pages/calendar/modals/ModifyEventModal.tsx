@@ -18,7 +18,7 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import type { CalendarEvent } from '../Calendar'
+import type { CalendarEvent } from '../components/Calendar'
 
 const schema = z.object({
   title: z.string().min(1, 'Event title is required'),
