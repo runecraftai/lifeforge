@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 
 import { Box, Button, Flex, Icon, Prose, Stack, Text } from '@lifeforge/ui'
 
-import type { CalendarEvent } from '@/pages/calendar/components/Calendar'
+import type { CalendarEvent } from '@/entities/calendar'
 import { forgeAPI } from '@/shared/api'
 
 function EventDetailsDescription({ event }: { event: CalendarEvent }) {

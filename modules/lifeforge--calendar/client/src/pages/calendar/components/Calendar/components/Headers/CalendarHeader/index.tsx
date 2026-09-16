@@ -11,7 +11,8 @@ import {
   useModuleSidebarState
 } from '@lifeforge/ui'
 
-import ModifyEventModal from '../../../../../modals/modify-event-modal'
+import ModifyEventModal from '@/features/modify-event'
+
 import ScanImageModal from '../../../../../modals/scan-image-modal'
 import NavigationControl from './components/NavigationControl'
 import ViewSelector from './components/ViewSelector'

@@ -13,14 +13,14 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
+import ModifyEventModal from '@/features/modify-event'
 import { forgeAPI } from '@/shared/api'
+import { useFilter } from '@/shared/model'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
-import ModifyEventModal from './modals/modify-event-modal'
 import ScanImageModal from './modals/scan-image-modal'
 import { useCalendarStore } from './model/use-calendar-store'
-import useFilter from './model/use-filter'
 
 export function CalendarPage() {
   const { open } = useModalStore()

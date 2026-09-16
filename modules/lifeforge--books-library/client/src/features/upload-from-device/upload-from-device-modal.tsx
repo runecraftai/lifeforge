@@ -9,7 +9,7 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import ModifyBookModal from '@/features/modify-book/modify-book-modal'
+import { ModifyBookModal } from '@/features/modify-book'
 import { forgeAPI } from '@/shared/api'
 
 function UploadFromDeviceModal({ onClose }: { onClose: () => void }) {

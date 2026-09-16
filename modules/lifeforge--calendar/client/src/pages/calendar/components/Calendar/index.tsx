@@ -16,10 +16,10 @@ import dragAndDropModule, {
 import type { InferOutput } from '@lifeforge/api'
 import { useModalStore } from '@lifeforge/ui'
 
+import ModifyEventModal from '@/features/modify-event'
 import { forgeAPI } from '@/shared/api'
+import { useFilter } from '@/shared/model'
 
-import ModifyEventModal from '../../modals/modify-event-modal'
-import useFilter from '../../model/use-filter'
 import AgendaDate from './components/AgendaView/agenda-date'
 import AgendaEventItem from './components/AgendaView/agenda-event-item'
 import EventItem from './components/EventItem'

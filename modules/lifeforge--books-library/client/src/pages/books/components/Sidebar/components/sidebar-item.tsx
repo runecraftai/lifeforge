@@ -14,7 +14,7 @@ import type {
   BooksLibraryFileType,
   BooksLibraryLanguage
 } from '@/entities/book'
-import ModifyModal from '@/features/modify-book/modify-modal'
+import { ModifyModal } from '@/features/modify-book'
 import { forgeAPI } from '@/shared/api'
 
 import useFilter from '../../../model/use-filter'

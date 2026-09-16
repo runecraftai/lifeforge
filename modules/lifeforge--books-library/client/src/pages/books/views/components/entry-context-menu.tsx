@@ -9,8 +9,8 @@ import {
 } from '@lifeforge/ui'
 
 import type { BooksLibraryEntry } from '@/entities/book'
-import ModifyBookModal from '@/features/modify-book/modify-book-modal'
-import SendToKindleModal from '@/features/send-to-kindle/send-to-kindle-modal'
+import { ModifyBookModal } from '@/features/modify-book'
+import SendToKindleModal from '@/features/send-to-kindle'
 import { forgeAPI } from '@/shared/api'
 
 export default function EntryContextMenu({

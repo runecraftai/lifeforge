@@ -14,13 +14,10 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import type {
-  CalendarCategory,
-  CalendarEvent
-} from '@/pages/calendar/components/Calendar'
-import ModifyEventModal from '@/pages/calendar/modals/modify-event-modal'
-import useFilter from '@/pages/calendar/model/use-filter'
+import type { CalendarCategory, CalendarEvent } from '@/entities/calendar'
+import ModifyEventModal from '@/features/modify-event'
 import { forgeAPI } from '@/shared/api'
+import { useFilter } from '@/shared/model'
 
 function EventDetailsHeader({
   event,

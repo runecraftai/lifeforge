@@ -10,9 +10,8 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
+import ModifyEventModal from '@/features/modify-event'
 import { forgeAPI } from '@/shared/api'
-
-import ModifyEventModal from './modify-event-modal'
 
 function ScanImageModal({ onClose }: { onClose: () => void }) {
   const { open } = useModalStore()

@@ -67,17 +67,14 @@ function MiniCalendarContent({
               .date()
 
             const actualIndex = (() => {
-              // filling the first week date that is not in this month
               if (firstDay > index) {
                 return lastDateOfPrevMonth - firstDay + index
               }
 
-              // filling the last week date that is not in this month
               if (index - firstDay + 1 > lastDate) {
                 return index - lastDate - firstDay
               }
 
-              // filling the date that is in this month
               return index - firstDay
             })()
 
