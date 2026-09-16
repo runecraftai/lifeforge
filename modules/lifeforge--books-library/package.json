@@ -11,7 +11,8 @@
     "typecheck:server": "cd server && tsc",
     "build": "pnpm run build:client && pnpm run build:server",
     "build:client": "cd client && vite build",
-    "build:server": "cd server && vite build"
+    "build:server": "cd server && vite build",
+    "lint": "find client/src -type f \\( -name '*.ts' -o -name '*.tsx' \\) -print0 | xargs -0 oxlint --config .oxlintrc.json"
   },
   "dependencies": {
     "epub-wordcount": "^2.1.3",
@@ -28,7 +29,8 @@
     "@types/human-number": "^1.0.2",
     "@types/jsdom": "^27.0.0",
     "@types/nodemailer": "^7.0.2",
-    "@types/react-virtualized": "^9.22.3"
+    "@types/react-virtualized": "^9.22.3",
+    "oxlint": "^1.82.0"
   },
   "lifeforge": {
     "icon": "tabler:book",

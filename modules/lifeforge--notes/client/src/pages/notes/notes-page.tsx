@@ -4,11 +4,11 @@ import { ModuleHeaderTailwind, useModalStore } from '@lifeforge/ui'
 
 import type { Note } from '@/entities/note'
 import { NoteFormModal } from '@/features/edit-note'
-import { useNoteFilter } from '@/hooks/use-note-filter'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import { NoteDetail } from './components/note-detail'
 import { NoteList } from './components/note-list'
+import { useNoteFilter } from './model/use-note-filter'
 
 function CreateNoteButton({ onClick }: { onClick: () => void }) {
   return (

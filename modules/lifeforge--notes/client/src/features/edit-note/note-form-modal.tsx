@@ -11,7 +11,7 @@ import {
 } from '@lifeforge/ui'
 
 import type { Note } from '@/entities/note'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 const schema = z.object({
   content: z.string(),
