@@ -4,8 +4,8 @@ import { SidebarDivider, SidebarItem, SidebarWrapper } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/shared/api'
 
-import useFilter from '../../model/useFilter'
-import SidebarSection from './components/SidebarSection'
+import useFilter from '../../model/use-filter'
+import SidebarSection from './components/sidebar-section'
 
 function Sidebar() {
   const { updateFilter, collection, favourite, fileType, language } =

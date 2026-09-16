@@ -2,7 +2,7 @@ import { Scrollbar, Stack } from '@lifeforge/ui'
 
 import type { BooksLibraryEntry } from '@/entities/book'
 
-import EntryItem from './components/EntryItem'
+import EntryItem from './components/entry-item'
 
 function ListView({ books }: { books: BooksLibraryEntry[] }) {
   return (

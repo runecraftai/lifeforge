@@ -11,10 +11,10 @@ import type {
   CalendarCategory,
   CalendarEvent
 } from '../../../../../components/Calendar'
-import { useInternalCategories } from '../../../../../model/useInternalCategories'
-import * as styles from './MiniCalendarDateItem.css'
-import MiniCalendarEventDetails from './MiniCalendarEventDetails'
-import MiniCalendarEventIndicator from './MiniCalendarEventIndicator'
+import { useInternalCategories } from '../../../../../model/use-internal-categories'
+import * as styles from './mini-calendar-date-item.css'
+import MiniCalendarEventDetails from './mini-calendar-event-details'
+import MiniCalendarEventIndicator from './mini-calendar-event-indicator'
 
 dayjs.extend(isBetween)
 

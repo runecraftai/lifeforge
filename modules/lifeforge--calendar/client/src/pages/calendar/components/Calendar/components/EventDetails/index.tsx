@@ -1,6 +1,6 @@
 import type { CalendarCategory, CalendarEvent } from '../..'
-import EventDetailsDescription from './components/EventDetailsDescription'
-import EventDetailsHeader from './components/EventDetailsHeader'
+import EventDetailsDescription from './components/event-details-description'
+import EventDetailsHeader from './components/event-details-header'
 
 function EventDetails({
   event,

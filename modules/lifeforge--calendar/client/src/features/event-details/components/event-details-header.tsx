@@ -18,8 +18,8 @@ import type {
   CalendarCategory,
   CalendarEvent
 } from '@/pages/calendar/components/Calendar'
-import ModifyEventModal from '@/pages/calendar/modals/ModifyEventModal'
-import useFilter from '@/pages/calendar/model/useFilter'
+import ModifyEventModal from '@/pages/calendar/modals/modify-event-modal'
+import useFilter from '@/pages/calendar/model/use-filter'
 import { forgeAPI } from '@/shared/api'
 
 function EventDetailsHeader({

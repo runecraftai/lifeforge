@@ -17,10 +17,10 @@ import { forgeAPI } from '@/shared/api'
 
 import CalendarComponent from './components/Calendar'
 import Sidebar from './components/Sidebar'
-import ModifyEventModal from './modals/ModifyEventModal'
-import ScanImageModal from './modals/ScanImageModal'
-import { useCalendarStore } from './model/useCalendarStore'
-import useFilter from './model/useFilter'
+import ModifyEventModal from './modals/modify-event-modal'
+import ScanImageModal from './modals/scan-image-modal'
+import { useCalendarStore } from './model/use-calendar-store'
+import useFilter from './model/use-filter'
 
 export function CalendarPage() {
   const { open } = useModalStore()

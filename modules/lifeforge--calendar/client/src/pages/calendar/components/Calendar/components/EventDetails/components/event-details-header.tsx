@@ -17,8 +17,8 @@ import {
 import { forgeAPI } from '@/shared/api'
 
 import type { CalendarCategory, CalendarEvent } from '../../..'
-import ModifyEventModal from '../../../../../modals/ModifyEventModal'
-import useFilter from '../../../../../model/useFilter'
+import ModifyEventModal from '../../../../../modals/modify-event-modal'
+import useFilter from '../../../../../model/use-filter'
 
 function EventDetailsHeader({
   event,

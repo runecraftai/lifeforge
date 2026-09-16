@@ -24,7 +24,7 @@ import {
 
 import type { CalendarCategory, CalendarEvent } from '@/entities/calendar'
 import EventDetails from '@/features/event-details'
-import { useInternalCategories } from '@/pages/calendar/model/useInternalCategories'
+import { useInternalCategories } from '@/pages/calendar/model/use-internal-categories'
 import { forgeAPI } from '@/shared/api'
 
 function EventItem({

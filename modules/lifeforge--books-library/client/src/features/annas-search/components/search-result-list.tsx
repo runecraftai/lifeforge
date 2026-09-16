@@ -1,7 +1,7 @@
 import { Flex, Pagination, Stack, Text } from '@lifeforge/ui'
 
 import type { AnnasSearchResult } from '..'
-import SearchResultItem from './SearchResultItem'
+import SearchResultItem from './search-result-item'
 
 function SearchResultList({
   data,

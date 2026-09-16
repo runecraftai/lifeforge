@@ -10,9 +10,9 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import ModifyCategoryModal from '../../../../modals/ModifyCategoryModal'
-import { useInternalCategories } from '../../../../model/useInternalCategories'
-import CategoryListItem from './components/CategoryListItem'
+import ModifyCategoryModal from '../../../../modals/modify-category-modal'
+import { useInternalCategories } from '../../../../model/use-internal-categories'
+import CategoryListItem from './components/category-list-item'
 
 function CategoryList({
   selectedCategory,

@@ -12,7 +12,7 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import ModifyEventModal from './ModifyEventModal'
+import ModifyEventModal from './modify-event-modal'
 
 function ScanImageModal({ onClose }: { onClose: () => void }) {
   const { open } = useModalStore()

@@ -6,8 +6,8 @@ import { Link } from 'react-router'
 import type { WidgetConfig } from '@lifeforge/configs'
 import { Button, Stack, Widget, WithQuery } from '@lifeforge/ui'
 
-import MiniCalendarContent from '@/pages/calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
-import MiniCalendarHeader from '@/pages/calendar/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
+import MiniCalendarContent from '@/pages/calendar/components/Sidebar/components/MiniCalendar/components/mini-calendar-content'
+import MiniCalendarHeader from '@/pages/calendar/components/Sidebar/components/MiniCalendar/components/mini-calendar-header'
 import { forgeAPI } from '@/shared/api'
 
 export default function MiniCalendar() {

@@ -3,7 +3,7 @@ import type { View } from 'react-big-calendar'
 
 import { Flex, surface } from '@lifeforge/ui'
 
-import ChangeViewButton from './components/ChangeViewButton'
+import ChangeViewButton from './components/change-view-button'
 
 function ViewSelector({
   currentView,

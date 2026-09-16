@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { Grid, Text, usePersonalization } from '@lifeforge/ui'
 
 import type { CalendarEvent } from '../../../../../components/Calendar'
-import MiniCalendarDateItem from './MiniCalendarDateItem'
+import MiniCalendarDateItem from './mini-calendar-date-item'
 
 function MiniCalendarContent({
   currentMonth,

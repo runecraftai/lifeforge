@@ -3,10 +3,10 @@ import { memo, useMemo } from 'react'
 
 import { forgeAPI } from '@/shared/api'
 
-import { useInternalCategories } from '../../../../model/useInternalCategories'
+import { useInternalCategories } from '../../../../model/use-internal-categories'
 import type { CalendarCategory, CalendarEvent } from '../../index.js'
-import EventItemButton from './components/EventItemButton.js'
-import EventItemTooltip from './components/EventItemTooltip.js'
+import EventItemButton from './components/event-item-button.js'
+import EventItemTooltip from './components/event-item-tooltip.js'
 
 function EventItem({ event }: { event: CalendarEvent }) {
   const categoriesQuery = useQuery(forgeAPI.categories.list.queryOptions())

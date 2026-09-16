@@ -13,9 +13,9 @@ import {
 import type { BooksLibraryEntry } from '@/entities/book'
 import { forgeAPI } from '@/shared/api'
 
-import BookMeta from '../../components/BookMeta'
-import EntryContextMenu from '../../components/EntryContextMenu'
-import ReadStatusChip from '../../components/ReadStatusChip'
+import BookMeta from '../../components/book-meta'
+import EntryContextMenu from '../../components/entry-context-menu'
+import ReadStatusChip from '../../components/read-status-chip'
 
 export default function EntryItem({ item }: { item: BooksLibraryEntry }) {
   const collectionsQuery = useQuery(forgeAPI.collections.list.queryOptions())

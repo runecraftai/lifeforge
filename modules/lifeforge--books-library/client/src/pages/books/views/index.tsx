@@ -9,7 +9,7 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import useFilter from '../model/useFilter'
+import useFilter from '../model/use-filter'
 import GridView from './GridView'
 import ListView from './ListView'
 

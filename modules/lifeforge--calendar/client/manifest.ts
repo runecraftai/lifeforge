@@ -9,8 +9,8 @@ const { forgeAPI, ...manifest } = createForgeModule({
     '/': lazy(() => import('@'))
   },
   widgets: [
-    () => import('@/widgets/MiniCalendar'),
-    () => import('@/widgets/TodaysEvent')
+    () => import('@/widgets/mini-calendar'),
+    () => import('@/widgets/todays-event')
   ],
   contract
 })

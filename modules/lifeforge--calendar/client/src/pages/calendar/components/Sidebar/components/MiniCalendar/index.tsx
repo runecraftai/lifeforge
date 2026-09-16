@@ -6,8 +6,8 @@ import { Flex, WithQuery } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/shared/api'
 
-import MiniCalendarContent from './components/MiniCalendarContent'
-import MiniCalendarHeader from './components/MiniCalendarHeader'
+import MiniCalendarContent from './components/mini-calendar-content'
+import MiniCalendarHeader from './components/mini-calendar-header'
 
 function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())

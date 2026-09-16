@@ -1,46 +1,40 @@
 import { useCallback, useMemo } from 'react'
 
 import { useForgeMutation } from '@lifeforge/api'
-import {
-  ConfirmationModal,
-  Flex,
-  Icon,
-  SidebarItem,
-  useModalStore
-} from '@lifeforge/ui'
+import { ConfirmationModal, SidebarItem, useModalStore } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/shared/api'
 
-import type { CalendarCalendar } from '../../../../../components/Calendar'
-import ModifyCalendarModal from '../../../../../modals/ModifyCalendarModal'
-import ActionMenu from './ActionMenu'
+import type { CalendarCategory } from '../../../../../components/Calendar'
+import ModifyCategoryModal from '../../../../../modals/modify-category-modal'
+import ActionMenu from './action-menu'
 
-function CalendarListItem({
+function CategoryListItem({
   item,
   isSelected,
   onSelect,
   onCancelSelect,
   modifiable = true
 }: {
-  item: CalendarCalendar
+  item: CalendarCategory
   isSelected: boolean
-  onSelect: (item: CalendarCalendar) => void
+  onSelect: (item: CalendarCategory) => void
   onCancelSelect: () => void
   modifiable?: boolean
 }) {
   const { open } = useModalStore()
 
   const deleteMutation = useForgeMutation(
-    forgeAPI.calendars.remove.input({ id: item.id }),
+    forgeAPI.categories.remove.input({ id: item.id }),
     {
       action: 'delete',
-      queryKey: [forgeAPI.calendars.list.key, forgeAPI.events.key],
+      queryKey: forgeAPI.categories.list.key,
       onSuccess: () => onCancelSelect()
     }
   )
 
   const handleEdit = useCallback(() => {
-    open(ModifyCalendarModal, {
+    open(ModifyCategoryModal, {
       initialData: item,
       type: 'update'
     })
@@ -48,8 +42,8 @@ function CalendarListItem({
 
   const handleDelete = useCallback(() => {
     open(ConfirmationModal, {
-      title: 'Delete Calendar',
-      description: `Are you sure you want to delete the calendar "${item.name}"?`,
+      title: 'Delete Category',
+      description: `Are you sure you want to delete the category "${item.name}"?`,
       onConfirm: async () => {
         await deleteMutation.mutateAsync(undefined)
       },
@@ -73,17 +67,8 @@ function CalendarListItem({
     <SidebarItem
       active={isSelected}
       contextMenuItems={contextMenuItems}
-      label={
-        <Flex align="center" gap="xs">
-          {item.name}
-          {item.link && (
-            <Icon
-              color={{ base: 'bg-400', dark: 'bg-600' }}
-              icon="tabler:bell"
-            />
-          )}
-        </Flex>
-      }
+      icon={item.icon}
+      label={item.name}
       namespace={false}
       sideStripColor={item.color}
       onCancelButtonClick={onCancelSelect}
@@ -92,4 +77,4 @@ function CalendarListItem({
   )
 }
 
-export default CalendarListItem
+export default CategoryListItem

@@ -3,8 +3,8 @@ import type { NavigateAction } from 'react-big-calendar'
 
 import { Button, Flex, Icon, Text } from '@lifeforge/ui'
 
-import { useCalendarStore } from '../../../../../../../model/useCalendarStore'
-import DateRangeLabel from './components/DateRangeLabel'
+import { useCalendarStore } from '../../../../../../../model/use-calendar-store'
+import DateRangeLabel from './components/date-range-label'
 
 function NavigationControl({
   label,

@@ -148,9 +148,12 @@ export const rules = {
           for (const comment of comments) {
             const isTypeScriptDirective =
               comment.type === 'Line' && /\/?\s*<reference/.test(comment.value)
+            const isTsDirective =
+              comment.type === 'Line' && /\/?\s*@ts-/.test(comment.value)
 
             if (
               !isTypeScriptDirective &&
+              !isTsDirective &&
               !isPublicApiJSDoc(comment, sourceCode)
             ) {
               context.report({

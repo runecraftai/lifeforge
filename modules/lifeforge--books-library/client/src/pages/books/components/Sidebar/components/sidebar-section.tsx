@@ -8,9 +8,9 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import ModifyModal from '@/features/modify-book/ModifyModal'
+import ModifyModal from '@/features/modify-book/modify-modal'
 
-import SidebarItem from './SidebarItem'
+import SidebarItem from './sidebar-item'
 
 function SidebarSection<T>({
   stuff,

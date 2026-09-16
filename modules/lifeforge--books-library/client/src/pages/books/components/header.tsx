@@ -10,7 +10,7 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import useFilter from '../model/useFilter'
+import useFilter from '../model/use-filter'
 
 function Header({ itemCount }: { itemCount: number }) {
   const { setIsSidebarOpen } = useModuleSidebarState()

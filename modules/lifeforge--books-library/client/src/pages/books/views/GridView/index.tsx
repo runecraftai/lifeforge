@@ -2,7 +2,7 @@ import { Grid, Scrollbar } from '@lifeforge/ui'
 
 import type { BooksLibraryEntry } from '@/entities/book'
 
-import EntryItem from './components/EntryItem'
+import EntryItem from './components/entry-item'
 
 function GridView({ books }: { books: BooksLibraryEntry[] }) {
   return (

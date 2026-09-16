@@ -3,8 +3,8 @@ import type {
   CalendarEvent
 } from '@/pages/calendar/components/Calendar'
 
-import EventDetailsDescription from './components/EventDetailsDescription'
-import EventDetailsHeader from './components/EventDetailsHeader'
+import EventDetailsDescription from './components/event-details-description'
+import EventDetailsHeader from './components/event-details-header'
 
 function EventDetails({
   event,

@@ -12,8 +12,8 @@ import {
 import { forgeAPI } from '@/shared/api'
 
 import type { CalendarCalendar } from '../../../../components/Calendar'
-import ModifyCalendarModal from '../../../../modals/ModifyCalendarModal'
-import CalendarListItem from './components/CalendarListItem'
+import ModifyCalendarModal from '../../../../modals/modify-calendar-modal'
+import CalendarListItem from './components/calendar-list-item'
 
 function CalendarList({
   selectedCalendar,

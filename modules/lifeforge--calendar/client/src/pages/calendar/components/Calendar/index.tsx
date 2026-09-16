@@ -18,13 +18,13 @@ import { useModalStore } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/shared/api'
 
-import ModifyEventModal from '../../modals/ModifyEventModal'
-import useFilter from '../../model/useFilter'
-import AgendaDate from './components/AgendaView/AgendaDate'
-import AgendaEventItem from './components/AgendaView/AgendaEventItem'
+import ModifyEventModal from '../../modals/modify-event-modal'
+import useFilter from '../../model/use-filter'
+import AgendaDate from './components/AgendaView/agenda-date'
+import AgendaEventItem from './components/AgendaView/agenda-event-item'
 import EventItem from './components/EventItem'
 import CalendarHeader from './components/Headers/CalendarHeader'
-import WeekHeader from './components/Headers/WeekHeader'
+import WeekHeader from './components/Headers/week-header'
 
 export type CalendarEvent = InferOutput<
   typeof forgeAPI.events.getByDateRange

@@ -16,9 +16,9 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import BookmarkedList from './components/BookmarkedList'
-import SearchResultList from './components/SearchResultList'
-import { useSearchResults } from './hooks/useSearchResults'
+import BookmarkedList from './components/bookmarked-list'
+import SearchResultList from './components/search-result-list'
+import { useSearchResults } from './hooks/use-search-results'
 
 export type AnnasSearchResult = InferOutput<typeof forgeAPI.annas.search>
 

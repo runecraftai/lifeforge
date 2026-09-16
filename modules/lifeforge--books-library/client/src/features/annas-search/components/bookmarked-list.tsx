@@ -2,7 +2,7 @@ import { useModuleTranslation } from '@lifeforge/localization'
 import { Flex, Icon, Stack, Text, colorWithOpacity } from '@lifeforge/ui'
 
 import type { AnnasSearchResult } from '..'
-import SearchResultItem from './SearchResultItem'
+import SearchResultItem from './search-result-item'
 
 function BookmarkedList({
   books

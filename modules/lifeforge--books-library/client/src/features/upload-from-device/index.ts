@@ -1,1 +1,1 @@
-export { default } from './UploadFromDeviceModal'
+export { default } from './upload-from-device-modal'
