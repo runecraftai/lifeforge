@@ -1,14 +1,17 @@
-import { readFileSync, existsSync } from 'fs'
-import { resolve } from 'path'
-import { describe, it } from 'node:test'
+import { existsSync, readFileSync } from 'fs'
 import assert from 'node:assert/strict'
+import { describe, it } from 'node:test'
+import { resolve } from 'path'
 
 const UI_ROOT = resolve(import.meta.dirname, '..')
 
 describe('S3 - Coexistence validation', () => {
   describe('dark mode', () => {
     it('C9: tailwind.css defines dark mode variant using shared CSS custom properties', () => {
-      const tailwindCss = readFileSync(resolve(UI_ROOT, 'tailwind.css'), 'utf-8')
+      const tailwindCss = readFileSync(
+        resolve(UI_ROOT, 'tailwind.css'),
+        'utf-8'
+      )
 
       assert.ok(
         tailwindCss.includes('@custom-variant dark'),
@@ -23,15 +26,14 @@ describe('S3 - Coexistence validation', () => {
 
     it('C9: ModuleHeaderTailwind uses shared CSS custom properties that respond to dark mode', () => {
       const moduleHeader = readFileSync(
-        resolve(UI_ROOT, 'src/components/layout/ModuleHeader/ModuleHeader.tailwind.tsx'),
+        resolve(
+          UI_ROOT,
+          'src/components/layout/ModuleHeader/ModuleHeader.tailwind.tsx'
+        ),
         'utf-8'
       )
 
-      const sharedVars = [
-        'bg-primary',
-        'text-muted',
-        'bg-lf-bg-100'
-      ]
+      const sharedVars = ['bg-primary', 'text-muted', 'bg-lf-bg-100']
 
       for (const cls of sharedVars) {
         assert.ok(
@@ -42,8 +44,14 @@ describe('S3 - Coexistence validation', () => {
     })
 
     it('C9: vanilla-extract dark mode uses same CSS custom properties as Tailwind', () => {
-      const tailwindCss = readFileSync(resolve(UI_ROOT, 'tailwind.css'), 'utf-8')
-      const varsSrc = readFileSync(resolve(UI_ROOT, 'src/system/vars.css.ts'), 'utf-8')
+      const tailwindCss = readFileSync(
+        resolve(UI_ROOT, 'tailwind.css'),
+        'utf-8'
+      )
+      const varsSrc = readFileSync(
+        resolve(UI_ROOT, 'src/system/vars.css.ts'),
+        'utf-8'
+      )
 
       const tailwindVars = new Set()
       const twVarRegex = /var\(--([\w-]+)\)/g
@@ -95,19 +103,30 @@ describe('S3 - Coexistence validation', () => {
     })
 
     it('C10: tailwind.css color tokens map to same CSS custom properties as vanilla-extract', () => {
-      const tailwindCss = readFileSync(resolve(UI_ROOT, 'tailwind.css'), 'utf-8')
+      const tailwindCss = readFileSync(
+        resolve(UI_ROOT, 'tailwind.css'),
+        'utf-8'
+      )
       const colorsSrc = readFileSync(
         resolve(UI_ROOT, 'src/system/colors/constants/colors.ts'),
         'utf-8'
       )
 
-      const twCustom500 = tailwindCss.match(/--color-lf-custom-500:\s*(var\(--color-custom-500\))/
+      const twCustom500 = tailwindCss.match(
+        /--color-lf-custom-500:\s*(var\(--color-custom-500\))/
       )
-      assert.ok(twCustom500, 'tailwind.css should map --color-lf-custom-500 to var(--color-custom-500)')
+      assert.ok(
+        twCustom500,
+        'tailwind.css should map --color-lf-custom-500 to var(--color-custom-500)'
+      )
 
-      const veCustom500 = colorsSrc.match(/'custom-500':\s*'(var\(--color-custom-500\))'/
+      const veCustom500 = colorsSrc.match(
+        /'custom-500':\s*'(var\(--color-custom-500\))'/
       )
-      assert.ok(veCustom500, 'COLORS should map custom-500 to var(--color-custom-500)')
+      assert.ok(
+        veCustom500,
+        'COLORS should map custom-500 to var(--color-custom-500)'
+      )
 
       assert.equal(
         twCustom500[1],
@@ -117,9 +136,15 @@ describe('S3 - Coexistence validation', () => {
     })
 
     it('C10: unified-kanban module uses both Tailwind and vanilla-extract coexistence pattern', () => {
-      const kanbanCssPath = resolve(UI_ROOT, '../../modules/lifeforge--unified-kanban/client/src/index.css')
+      const kanbanCssPath = resolve(
+        UI_ROOT,
+        '../../modules/lifeforge--unified-kanban/client/src/index.css'
+      )
 
-      assert.ok(existsSync(kanbanCssPath), 'unified-kanban index.css must exist at expected path')
+      assert.ok(
+        existsSync(kanbanCssPath),
+        'unified-kanban index.css must exist at expected path'
+      )
 
       const kanbanCss = readFileSync(kanbanCssPath, 'utf-8')
 

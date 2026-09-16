@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
-import { resolve } from 'path'
-import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
+import { describe, it } from 'node:test'
+import { resolve } from 'path'
 
 const UI_ROOT = resolve(import.meta.dirname, '..')
 const TAILWIND_CSS = readFileSync(resolve(UI_ROOT, 'tailwind.css'), 'utf-8')
@@ -23,7 +23,7 @@ function parseThemeBlock(css) {
 function readVanillaVars() {
   const src = readFileSync(resolve(UI_ROOT, 'src/system/vars.css.ts'), 'utf-8')
   const vars = {}
-  const parseSection = (sectionName) => {
+  const parseSection = sectionName => {
     const match = src.match(new RegExp(`${sectionName}:\\s*\\{([\\s\\S]*?)\\}`))
     if (!match) return {}
     const result = {}
@@ -43,7 +43,10 @@ function readVanillaVars() {
 }
 
 function readColors() {
-  const src = readFileSync(resolve(UI_ROOT, 'src/system/colors/constants/colors.ts'), 'utf-8')
+  const src = readFileSync(
+    resolve(UI_ROOT, 'src/system/colors/constants/colors.ts'),
+    'utf-8'
+  )
   const colors = {}
   const baseMatch = src.match(/BASE_COLORS\s*=\s*\{([\s\S]*?)\} as const/)
   if (baseMatch) {
@@ -63,7 +66,11 @@ describe('S1 - Token verification', () => {
   describe('spacing', () => {
     it('C1: p-4 spacing maps to calc(var(--spacing) * 4), matching vars.space.md', () => {
       const twSpacing = theme['spacing-lf']
-      assert.equal(twSpacing, 'var(--spacing)', 'spacing-lf should reference var(--spacing)')
+      assert.equal(
+        twSpacing,
+        'var(--spacing)',
+        'spacing-lf should reference var(--spacing)'
+      )
 
       const vanillaMd = vanillaVars['space.md']
       assert.ok(vanillaMd, 'vars.space.md should exist')
@@ -72,51 +79,87 @@ describe('S1 - Token verification', () => {
       assert.equal(vanillaMd, expected, `vars.space.md should be ${expected}`)
 
       const twValue = 'calc(var(--spacing) * 4)'
-      assert.equal(twValue, vanillaMd, 'Tailwind spacing calc should match vanilla-extract space.md')
+      assert.equal(
+        twValue,
+        vanillaMd,
+        'Tailwind spacing calc should match vanilla-extract space.md'
+      )
     })
   })
 
   describe('radius', () => {
     it('C2: rounded-lg maps to var(--radius-lg), matching vars.radii.lg', () => {
       const twRadiusLg = theme['radius-lf-lg']
-      assert.equal(twRadiusLg, 'var(--radius-lg)', 'radius-lf-lg should reference var(--radius-lg)')
+      assert.equal(
+        twRadiusLg,
+        'var(--radius-lg)',
+        'radius-lf-lg should reference var(--radius-lg)'
+      )
 
       const vanillaLg = vanillaVars['radii.lg']
       assert.ok(vanillaLg, 'vars.radii.lg should exist')
-      assert.equal(vanillaLg, 'var(--radius-lg)', 'vars.radii.lg should be var(--radius-lg)')
+      assert.equal(
+        vanillaLg,
+        'var(--radius-lg)',
+        'vars.radii.lg should be var(--radius-lg)'
+      )
     })
   })
 
   describe('fontSize', () => {
     it('C3: text-sm maps to var(--text-sm), matching vars.fontSize.sm', () => {
       const twTextSm = theme['text-lf-sm']
-      assert.equal(twTextSm, 'var(--text-sm)', 'text-lf-sm should reference var(--text-sm)')
+      assert.equal(
+        twTextSm,
+        'var(--text-sm)',
+        'text-lf-sm should reference var(--text-sm)'
+      )
 
       const vanillaSm = vanillaVars['fontSize.sm']
       assert.ok(vanillaSm, 'vars.fontSize.sm should exist')
-      assert.equal(vanillaSm, 'var(--text-sm)', 'vars.fontSize.sm should be var(--text-sm)')
+      assert.equal(
+        vanillaSm,
+        'var(--text-sm)',
+        'vars.fontSize.sm should be var(--text-sm)'
+      )
     })
   })
 
   describe('custom color', () => {
     it('C4: bg-lf-custom-500 maps to var(--color-custom-500), matching COLORS.custom-500', () => {
       const twCustom500 = theme['color-lf-custom-500']
-      assert.equal(twCustom500, 'var(--color-custom-500)', 'color-lf-custom-500 should reference var(--color-custom-500)')
+      assert.equal(
+        twCustom500,
+        'var(--color-custom-500)',
+        'color-lf-custom-500 should reference var(--color-custom-500)'
+      )
 
       const colorCustom500 = colors['custom-500']
       assert.ok(colorCustom500, 'COLORS.custom-500 should exist')
-      assert.equal(colorCustom500, 'var(--color-custom-500)', 'COLORS.custom-500 should be var(--color-custom-500)')
+      assert.equal(
+        colorCustom500,
+        'var(--color-custom-500)',
+        'COLORS.custom-500 should be var(--color-custom-500)'
+      )
     })
   })
 
   describe('bg color', () => {
     it('C5: bg-lf-bg-500 maps to var(--color-bg-500), matching COLORS.bg-500', () => {
       const twBg500 = theme['color-lf-bg-500']
-      assert.equal(twBg500, 'var(--color-bg-500)', 'color-lf-bg-500 should reference var(--color-bg-500)')
+      assert.equal(
+        twBg500,
+        'var(--color-bg-500)',
+        'color-lf-bg-500 should reference var(--color-bg-500)'
+      )
 
       const colorBg500 = colors['bg-500']
       assert.ok(colorBg500, 'COLORS.bg-500 should exist')
-      assert.equal(colorBg500, 'var(--color-bg-500)', 'COLORS.bg-500 should be var(--color-bg-500)')
+      assert.equal(
+        colorBg500,
+        'var(--color-bg-500)',
+        'COLORS.bg-500 should be var(--color-bg-500)'
+      )
     })
   })
 })
