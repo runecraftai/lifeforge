@@ -5,10 +5,13 @@
   "type": "module",
   "description": "Simple personal notes.",
   "author": "Personal OS",
-  "scripts": {"typecheck": "pnpm run typecheck:client && pnpm run typecheck:server", "typecheck:client": "cd client && tsc", "typecheck:server": "cd server && tsc", "build": "pnpm run build:client && pnpm run build:server", "build:client": "cd client && vite build", "build:server": "cd server && vite build"},
+  "scripts": {"typecheck": "pnpm run typecheck:client && pnpm run typecheck:server", "typecheck:client": "cd client && tsc", "typecheck:server": "cd server && tsc", "build": "pnpm run build:client && pnpm run build:server", "build:client": "cd client && vite build", "build:server": "cd server && vite build",
+    "lint": "find client/src -type f \\( -name '*.ts' -o -name '*.tsx' \\) -print0 | xargs -0 oxlint --config .oxlintrc.json"
+  },
   "dependencies": {},
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.13",
+    "oxlint": "^1.82.0",
     "tailwindcss": "^4.1.13"
   },
   "lifeforge": {"icon": "tabler:notebook", "category": "Productivity"},

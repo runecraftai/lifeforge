@@ -611,6 +611,9 @@ importers:
       '@types/react-virtualized':
         specifier: ^9.22.3
         version: 9.22.3
+      oxlint:
+        specifier: ^1.82.0
+        version: 1.82.0
 
   modules/lifeforge--calendar:
     dependencies:
@@ -657,6 +660,9 @@ importers:
       '@types/react-big-calendar':
         specifier: ^1.16.3
         version: 1.16.3
+      oxlint:
+        specifier: ^1.82.0
+        version: 1.82.0
 
   modules/lifeforge--code-time:
     dependencies:
@@ -935,6 +941,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.13
         version: 4.3.3(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+      oxlint:
+        specifier: ^1.82.0
+        version: 1.82.0
       tailwindcss:
         specifier: ^4.1.13
         version: 4.3.3
@@ -1027,6 +1036,10 @@ importers:
       express:
         specifier: ^4.21.2
         version: 4.22.2(supports-color@10.2.2)
+    devDependencies:
+      oxlint:
+        specifier: ^1.82.0
+        version: 1.82.0
 
   modules/lifeforge--todo-list:
     dependencies:
