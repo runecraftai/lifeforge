@@ -9,7 +9,7 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import ModifyBookModal from './ModifyBookModal'
 

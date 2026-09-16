@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { Button, Flex, TagsFilter, Text, useModuleSidebarState } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import useFilter from '../hooks/useFilter'
 

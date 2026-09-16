@@ -13,7 +13,7 @@ import {
   toast
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 function SendToKindleModal({
   data: { bookId },

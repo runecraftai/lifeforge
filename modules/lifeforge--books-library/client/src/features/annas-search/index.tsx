@@ -14,7 +14,7 @@ import {
   surface
 } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import BookmarkedList from './components/BookmarkedList'
 import SearchResultList from './components/SearchResultList'

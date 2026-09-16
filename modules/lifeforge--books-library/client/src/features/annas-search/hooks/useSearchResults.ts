@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { usePromiseLoading } from '@lifeforge/api'
 import { toast } from '@lifeforge/ui'
 
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import type { AnnasSearchResult } from '..'
 

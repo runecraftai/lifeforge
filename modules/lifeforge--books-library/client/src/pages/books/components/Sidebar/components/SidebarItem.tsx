@@ -15,8 +15,8 @@ import {
 } from '@lifeforge/ui'
 
 import ModifyModal from '@/components/modals/ModifyModal'
-import useFilter from '@/hooks/useFilter'
-import { forgeAPI } from '@/manifest'
+import useFilter from './model/useFilter'
+import { forgeAPI } from '@/shared/api'
 
 function _SidebarItem({
   item,
