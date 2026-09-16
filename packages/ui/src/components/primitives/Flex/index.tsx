@@ -1,4 +1,3 @@
-import { clsx } from 'clsx'
 import {
   type CSSProperties,
   type ComponentPropsWithRef,
@@ -13,16 +12,11 @@ import {
   type ResponsiveProp,
   type SpaceToken,
   type ThemeConditionProp,
-  type TokenizedCommonProps,
-  normalizeGridSpan,
-  normalizeResponsiveProp,
-  resolveCommonSprinkleProps,
-  resolveStyles,
-  shadowClass
+  type TokenizedCommonProps
 } from '@/system'
 
 import { Slot } from '../Slot'
-import { flexBase, flexSprinkles } from './Flex.css'
+import { tailwindStyles } from '../tailwind'
 
 type FlexDisplayValue = 'none' | 'flex' | 'inline-flex'
 
@@ -58,23 +52,6 @@ interface FlexOwnProps<T extends ElementType = 'div'>
 
 export type FlexProps<T extends ElementType = 'div'> = FlexOwnProps<T> &
   Omit<ComponentPropsWithRef<T>, keyof FlexOwnProps<T>>
-
-const alignMap = {
-  stretch: 'stretch',
-  center: 'center',
-  start: 'flex-start',
-  end: 'flex-end',
-  baseline: 'baseline'
-} as const satisfies Record<AlignValue, string>
-
-const justifyMap = {
-  start: 'flex-start',
-  center: 'center',
-  between: 'space-between',
-  around: 'space-around',
-  evenly: 'space-evenly',
-  end: 'flex-end'
-} as const satisfies Record<JustifyValue, string>
 
 export function Flex<T extends ElementType = 'div'>({
   as,
@@ -148,29 +125,40 @@ export function Flex<T extends ElementType = 'div'>({
 
   const Component = asChild ? Slot : (as ?? 'div')
 
-  const final = resolveStyles({
-    sprinkles: flexSprinkles,
-    sprinkleProps: {
-      display: normalizeResponsiveProp(display),
-      flexDirection: normalizeResponsiveProp(direction),
-      gap: normalizeResponsiveProp(gap),
-      rowGap: normalizeResponsiveProp(gapY),
-      columnGap: normalizeResponsiveProp(gapX),
-      alignItems: normalizeResponsiveProp(align, v => alignMap[v]),
-      justifyContent: normalizeResponsiveProp(justify, v => justifyMap[v]),
-      flexWrap: normalizeResponsiveProp(wrap),
-      ...resolveCommonSprinkleProps(
-        { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
-        {
-          position,
-          overflow,
-          overflowX,
-          overflowY
-        },
-        { r, rtl, rtr, rbl, rbr }
-      )
-    },
-    arbitraryProps: {
+  const final = tailwindStyles(
+    {
+      display,
+      direction,
+      gap,
+      gapX,
+      gapY,
+      alignItems: align,
+      justify,
+      wrap,
+      position,
+      overflow,
+      overflowX,
+      overflowY,
+      p,
+      px,
+      py,
+      pt,
+      pr,
+      pb,
+      pl,
+      m,
+      mx,
+      my,
+      mt,
+      mr,
+      mb,
+      ml,
+      r,
+      rtl,
+      rtr,
+      rbl,
+      rbr,
+      bg,
       width,
       minWidth,
       maxWidth,
@@ -189,16 +177,18 @@ export function Flex<T extends ElementType = 'div'>({
       flexGrow,
       flexShrink,
       gridArea,
-      gridColumnSpan: normalizeResponsiveProp(
-        gridColumnSpan,
-        normalizeGridSpan
-      ),
-      gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan)
+      gridColumnSpan,
+      gridRowSpan
     },
-    colorProps: { bg },
-    className: clsx(flexBase(), className, shadow && shadowClass),
     style
-  })
+  )
+  final.className = [
+    final.className,
+    className,
+    shadow && 'shadow-[var(--custom-shadow)]'
+  ]
+    .filter(Boolean)
+    .join(' ')
 
   return (
     <Component ref={ref as Ref<never>} {...final} {...rest}>
