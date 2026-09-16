@@ -40,7 +40,8 @@
     "dev": "storybook dev -p 6006",
     "build": "tsc -b && rimraf dist && vite build",
     "build-storybook": "tsc -b && storybook build",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "test": "vitest run && node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",

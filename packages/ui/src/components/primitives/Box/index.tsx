@@ -13,6 +13,7 @@ import {
   type ResponsiveProp,
   type ThemeConditionProp,
   type TokenizedCommonProps,
+  mergeStyle,
   normalizeResponsiveProp,
   resolveCommonSprinkleProps,
   resolveStyles
@@ -21,6 +22,7 @@ import { normalizeGridSpan } from '@/system/grid-utils'
 import { shadowClass } from '@/system/vars.css'
 
 import { Slot } from '../Slot'
+import { tailwindStyles } from '../tailwind'
 import { boxBase, boxSprinkles } from './Box.css'
 
 type DisplayValue = 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
@@ -103,22 +105,72 @@ export function Box<T extends ElementType = 'div'>({
 }: BoxProps<T>) {
   const Component = asChild ? Slot : (as ?? 'div')
 
-  const styles = resolveStyles({
-    sprinkles: boxSprinkles,
-    sprinkleProps: {
-      display: normalizeResponsiveProp(display),
-      ...resolveCommonSprinkleProps(
-        { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
-        {
-          position,
-          overflow,
-          overflowX,
-          overflowY
-        },
-        { r, rtl, rtr, rbl, rbr }
-      )
-    },
-    arbitraryProps: {
+  const styles = mergeStyle(
+    resolveStyles({
+      sprinkles: boxSprinkles,
+      sprinkleProps: {
+        display: normalizeResponsiveProp(display),
+        ...resolveCommonSprinkleProps(
+          { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
+          { position, overflow, overflowX, overflowY },
+          { r, rtl, rtr, rbl, rbr }
+        )
+      },
+      arbitraryProps: {
+        width,
+        minWidth,
+        maxWidth,
+        height,
+        minHeight,
+        maxHeight,
+        aspectRatio,
+        zIndex,
+        inset,
+        top,
+        right,
+        bottom,
+        left,
+        flex,
+        flexBasis,
+        flexGrow,
+        flexShrink,
+        gridArea,
+        gridColumnSpan: normalizeResponsiveProp(
+          gridColumnSpan,
+          normalizeGridSpan
+        ),
+        gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan)
+      },
+      colorProps: { bg },
+      className: clsx(boxBase(), shadow && shadowClass),
+      style
+    }),
+    tailwindStyles({
+      display,
+      position,
+      overflow,
+      overflowX,
+      overflowY,
+      p,
+      px,
+      py,
+      pt,
+      pr,
+      pb,
+      pl,
+      m,
+      mx,
+      my,
+      mt,
+      mr,
+      mb,
+      ml,
+      r,
+      rtl,
+      rtr,
+      rbl,
+      rbr,
+      bg,
       width,
       minWidth,
       maxWidth,
@@ -137,16 +189,15 @@ export function Box<T extends ElementType = 'div'>({
       flexGrow,
       flexShrink,
       gridArea,
-      gridColumnSpan: normalizeResponsiveProp(
-        gridColumnSpan,
-        normalizeGridSpan
-      ),
-      gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan)
-    },
-    colorProps: { bg },
-    className: clsx(boxBase(), className, shadow && shadowClass),
-    style
-  })
+      gridColumnSpan,
+      gridRowSpan
+    })
+  )
+  styles.className = clsx(
+    styles.className,
+    className,
+    shadow && 'shadow-[var(--custom-shadow)]'
+  )
 
   return (
     <Component ref={ref as Ref<never>} {...styles} {...rest}>
