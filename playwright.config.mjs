@@ -5,6 +5,7 @@ export default defineConfig({
   outputDir: './visual-results/test-output',
   timeout: 90_000,
   fullyParallel: false,
+  workers: 1,
   reporter: [
     ['list'],
     ['html', { outputFolder: 'visual-report', open: 'never' }]
