@@ -14,7 +14,10 @@ describe('primitives core Tailwind output', () => {
       borderWidth: '2',
       decoration: 'underline',
       direction: { base: 'column', sm: 'row' },
+      display: { base: 'none', sm: 'flex' },
       justify: 'between',
+      maxHeight: { md: 'calc(100vh - 8px)' },
+      overflow: { base: 'hidden', lg: 'auto' },
       p: 'md',
       position: 'absolute',
       width: 'calc(100% - 8px)',
@@ -30,23 +33,46 @@ describe('primitives core Tailwind output', () => {
       'decoration-underline',
       'flex-col',
       'sm:flex-row',
+      'hidden',
+      'sm:flex',
       'justify-between',
-      'p-[calc(var(--spacing)_*_4)]',
+      'overflow-hidden',
+      'lg:overflow-auto',
+      'p-[var(--lf-tw-p)]',
       'absolute',
-      'w-[calc(100%_-_8px)]',
-      'rounded-[var(--radius-lg)]',
+      'w-[var(--lf-w)]',
+      'md:max-h-[var(--lf-max-h-md)]',
+      'rounded-[var(--lf-tw-r)]',
       'uppercase'
     ]) {
       assert.ok(output.className.includes(className), className)
     }
+
+    assert.equal(output.style['--lf-tw-p'], 'calc(var(--spacing) * 4)')
+    assert.equal(output.style['--lf-w'], 'calc(100% - 8px)')
+    assert.equal(output.style['--lf-max-h-md'], 'calc(100vh - 8px)')
   })
 
-  it('C2 preserves opacity colors in rendered class and style output', () => {
+  it('C2 preserves conditional opacity colors in rendered output', () => {
     const output = tailwindStyles({
-      bg: colorWithOpacity('custom-500', '20%')
+      bg: {
+        base: colorWithOpacity('custom-500', '20%'),
+        hasBgImage: 'bg-500',
+        hasBgImageDarkHover: 'custom-500'
+      }
     })
 
     assert.ok(output.className.includes('bg-[var(--lf-bg)]'))
+    assert.ok(
+      output.className.includes(
+        '[.has-bg-image_&]:bg-[var(--lf-bg-has-bg-image)]'
+      )
+    )
+    assert.ok(
+      output.className.includes(
+        'dark:[.has-bg-image_&]:hover:bg-[var(--lf-bg-has-bg-image-dark-hover)]'
+      )
+    )
     assert.equal(
       output.style['--lf-bg'],
       'color-mix(in srgb, var(--color-custom-500) 20%, transparent)'
@@ -73,7 +99,14 @@ describe('primitives core Tailwind output', () => {
 
   it('C4 renders Flex mapped classes including centered behavior', () => {
     const markup = renderToStaticMarkup(
-      <Flex centered direction="column" gap="sm" justify="end" align="start">
+      <Flex
+        centered
+        direction="column"
+        gap="sm"
+        justify="end"
+        align="start"
+        wrap="wrap"
+      >
         child
       </Flex>
     )
@@ -83,5 +116,6 @@ describe('primitives core Tailwind output', () => {
     assert.match(markup, /class="[^"]*items-center/)
     assert.match(markup, /class="[^"]*justify-center/)
     assert.match(markup, /class="[^"]*gap-\[/)
+    assert.match(markup, /class="[^"]*flex-wrap/)
   })
 })

@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import {
   type CSSProperties,
   type ComponentPropsWithRef,
@@ -11,11 +12,18 @@ import {
   type ColorValue,
   type ResponsiveProp,
   type ThemeConditionProp,
-  type TokenizedCommonProps
+  type TokenizedCommonProps,
+  mergeStyle,
+  normalizeResponsiveProp,
+  resolveCommonSprinkleProps,
+  resolveStyles
 } from '@/system'
+import { normalizeGridSpan } from '@/system/grid-utils'
+import { shadowClass } from '@/system/vars.css'
 
 import { Slot } from '../Slot'
 import { tailwindStyles } from '../tailwind'
+import { boxBase, boxSprinkles } from './Box.css'
 
 type DisplayValue = 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
 
@@ -97,8 +105,47 @@ export function Box<T extends ElementType = 'div'>({
 }: BoxProps<T>) {
   const Component = asChild ? Slot : (as ?? 'div')
 
-  const styles = tailwindStyles(
-    {
+  const styles = mergeStyle(
+    resolveStyles({
+      sprinkles: boxSprinkles,
+      sprinkleProps: {
+        display: normalizeResponsiveProp(display),
+        ...resolveCommonSprinkleProps(
+          { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
+          { position, overflow, overflowX, overflowY },
+          { r, rtl, rtr, rbl, rbr }
+        )
+      },
+      arbitraryProps: {
+        width,
+        minWidth,
+        maxWidth,
+        height,
+        minHeight,
+        maxHeight,
+        aspectRatio,
+        zIndex,
+        inset,
+        top,
+        right,
+        bottom,
+        left,
+        flex,
+        flexBasis,
+        flexGrow,
+        flexShrink,
+        gridArea,
+        gridColumnSpan: normalizeResponsiveProp(
+          gridColumnSpan,
+          normalizeGridSpan
+        ),
+        gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan)
+      },
+      colorProps: { bg },
+      className: clsx(boxBase(), shadow && shadowClass),
+      style
+    }),
+    tailwindStyles({
       display,
       position,
       overflow,
@@ -144,16 +191,13 @@ export function Box<T extends ElementType = 'div'>({
       gridArea,
       gridColumnSpan,
       gridRowSpan
-    },
-    style
+    })
   )
-  styles.className = [
+  styles.className = clsx(
     styles.className,
     className,
     shadow && 'shadow-[var(--custom-shadow)]'
-  ]
-    .filter(Boolean)
-    .join(' ')
+  )
 
   return (
     <Component ref={ref as Ref<never>} {...styles} {...rest}>

@@ -1,3 +1,4 @@
+import { clsx } from 'clsx'
 import {
   type CSSProperties,
   type ComponentPropsWithRef,
@@ -12,11 +13,18 @@ import {
   type ResponsiveProp,
   type SpaceToken,
   type ThemeConditionProp,
-  type TokenizedCommonProps
+  type TokenizedCommonProps,
+  mergeStyle,
+  normalizeGridSpan,
+  normalizeResponsiveProp,
+  resolveCommonSprinkleProps,
+  resolveStyles,
+  shadowClass
 } from '@/system'
 
 import { Slot } from '../Slot'
 import { tailwindStyles } from '../tailwind'
+import { flexBase, flexSprinkles } from './Flex.css'
 
 type FlexDisplayValue = 'none' | 'flex' | 'inline-flex'
 
@@ -52,6 +60,23 @@ interface FlexOwnProps<T extends ElementType = 'div'>
 
 export type FlexProps<T extends ElementType = 'div'> = FlexOwnProps<T> &
   Omit<ComponentPropsWithRef<T>, keyof FlexOwnProps<T>>
+
+const alignMap = {
+  stretch: 'stretch',
+  center: 'center',
+  start: 'flex-start',
+  end: 'flex-end',
+  baseline: 'baseline'
+} as const satisfies Record<AlignValue, string>
+
+const justifyMap = {
+  start: 'flex-start',
+  center: 'center',
+  between: 'space-between',
+  around: 'space-around',
+  evenly: 'space-evenly',
+  end: 'flex-end'
+} as const satisfies Record<JustifyValue, string>
 
 export function Flex<T extends ElementType = 'div'>({
   as,
@@ -125,8 +150,57 @@ export function Flex<T extends ElementType = 'div'>({
 
   const Component = asChild ? Slot : (as ?? 'div')
 
-  const final = tailwindStyles(
-    {
+  const final = mergeStyle(
+    resolveStyles({
+      sprinkles: flexSprinkles,
+      sprinkleProps: {
+        display: normalizeResponsiveProp(display),
+        flexDirection: normalizeResponsiveProp(direction),
+        gap: normalizeResponsiveProp(gap),
+        rowGap: normalizeResponsiveProp(gapY),
+        columnGap: normalizeResponsiveProp(gapX),
+        alignItems: normalizeResponsiveProp(align, value => alignMap[value]),
+        justifyContent: normalizeResponsiveProp(
+          justify,
+          value => justifyMap[value]
+        ),
+        flexWrap: normalizeResponsiveProp(wrap),
+        ...resolveCommonSprinkleProps(
+          { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
+          { position, overflow, overflowX, overflowY },
+          { r, rtl, rtr, rbl, rbr }
+        )
+      },
+      arbitraryProps: {
+        width,
+        minWidth,
+        maxWidth,
+        height,
+        minHeight,
+        maxHeight,
+        aspectRatio,
+        zIndex,
+        inset,
+        top,
+        right,
+        bottom,
+        left,
+        flex,
+        flexBasis,
+        flexGrow,
+        flexShrink,
+        gridArea,
+        gridColumnSpan: normalizeResponsiveProp(
+          gridColumnSpan,
+          normalizeGridSpan
+        ),
+        gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan)
+      },
+      colorProps: { bg },
+      className: clsx(flexBase(), shadow && shadowClass),
+      style
+    }),
+    tailwindStyles({
       display,
       direction,
       gap,
@@ -179,16 +253,13 @@ export function Flex<T extends ElementType = 'div'>({
       gridArea,
       gridColumnSpan,
       gridRowSpan
-    },
-    style
+    })
   )
-  final.className = [
+  final.className = clsx(
     final.className,
     className,
     shadow && 'shadow-[var(--custom-shadow)]'
-  ]
-    .filter(Boolean)
-    .join(' ')
+  )
 
   return (
     <Component ref={ref as Ref<never>} {...final} {...rest}>
