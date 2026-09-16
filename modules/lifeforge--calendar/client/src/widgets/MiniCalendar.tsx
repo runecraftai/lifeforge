@@ -8,7 +8,7 @@ import { Button, Stack, Widget, WithQuery } from '@lifeforge/ui'
 
 import MiniCalendarContent from '@/components/Sidebar/components/MiniCalendar/components/MiniCalendarContent'
 import MiniCalendarHeader from '@/components/Sidebar/components/MiniCalendar/components/MiniCalendarHeader'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 export default function MiniCalendar() {
   const [currentMonth, setCurrentMonth] = useState(dayjs().month())

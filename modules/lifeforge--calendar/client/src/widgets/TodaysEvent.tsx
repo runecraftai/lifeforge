@@ -22,10 +22,10 @@ import {
   useMainSidebarState
 } from '@lifeforge/ui'
 
-import type { CalendarCategory, CalendarEvent } from '@/components/Calendar'
-import EventDetails from '@/components/Calendar/components/EventDetails'
-import { useInternalCategories } from '@/hooks/useInternalCategories'
-import { forgeAPI } from '@/manifest'
+import type { CalendarCategory, CalendarEvent } from '@/entities/calendar'
+import EventDetails from '@/features/event-details'
+import { useInternalCategories } from '@/shared/api/use-internal-categories'
+import { forgeAPI } from '@/shared/api'
 
 function EventItem({
   categories,
