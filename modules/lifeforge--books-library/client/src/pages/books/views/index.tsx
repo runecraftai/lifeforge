@@ -7,7 +7,7 @@ import {
   createViewMode
 } from '@lifeforge/ui'
 
-import useFilter from './model/useFilter'
+import useFilter from '../model/useFilter'
 import { forgeAPI } from '@/shared/api'
 
 import GridView from './GridView'

@@ -11,7 +11,7 @@ import {
 
 import { forgeAPI } from '@/shared/api'
 
-import ModifyBookModal from './ModifyBookModal'
+import ModifyBookModal from '@/features/modify-book/ModifyBookModal'
 
 function UploadFromDeviceModal({ onClose }: { onClose: () => void }) {
   const { open } = useModalStore()
