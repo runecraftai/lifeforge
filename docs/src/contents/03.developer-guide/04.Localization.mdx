@@ -38,7 +38,7 @@ LifeForge uses **[i18next](https://www.i18next.com/)** with **react-i18next** fo
     <Icon icon="tabler:folders" className="translate-y-1" />
     **Namespace Architecture**
   </div>
-  Modular organization with `apps.\*` and `common.*` namespaces for clean separation
+  Modular organization with `apps.@lifeforge/<module-name>` and `common.*` namespaces for clean separation
 
 - <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
     <Icon icon="tabler:alert-triangle" className="translate-y-1" />
@@ -51,18 +51,19 @@ LifeForge uses **[i18next](https://www.i18next.com/)** with **react-i18next** fo
 <section id="file-organization">
 ## File Organization
 
-### Module Locales (<code className='text-xl!'>apps.*</code> namespace)
+### Module Locales (<code className='text-xl!'>apps.@lifeforge/*</code> namespace)
 
 Each module has its own `locales/` directory containing a single JSON file for each supported language:
 
 ```plaintext
 apps/
-└── melvinchia3636--my-module/
-    └── locales/
-        ├── en.json      # English
-        ├── ms.json      # Bahasa Malaysia
-        ├── zh-CN.json   # Simplified Chinese
-        └── zh-TW.json   # Traditional Chinese
+└── @lifeforge/
+    └── lifeforge--my-module/
+        └── locales/
+            ├── en.json      # English
+            ├── ms.json      # Bahasa Malaysia
+            ├── zh-CN.json   # Simplified Chinese
+            └── zh-TW.json   # Traditional Chinese
 ```
 
 ### Core Locales (<code className='text-xl!'>common.*</code> namespace)
@@ -191,7 +192,7 @@ import { useTranslation } from 'react-i18next'
 
 function MyComponent() {
     // Load module-specific translations
-    const { t } = useTranslation('apps.myModule')
+    const { t } = useTranslation('apps.@lifeforge/lifeforge--my-module')
 
     return (
       <div>
@@ -208,12 +209,12 @@ When you need translations from multiple namespaces, pass an array to `useTransl
 
 ```tsx
 function MyComponent() {
-    const { t } = useTranslation(['apps.myModule', 'apps.anotherModule'])
+    const { t } = useTranslation(['apps.@lifeforge/lifeforge--my-module', 'apps.@lifeforge/lifeforge--another-module'])
     
     return (
       <>
-        <h1>{t('apps.myModule:title')}</h1>
-        <p>{t('apps.anotherModule:someText')}</p>
+        <h1>{t('apps.@lifeforge/lifeforge--my-module:title')}</h1>
+        <p>{t('apps.@lifeforge/lifeforge--another-module:someText')}</p>
       </>
     )
 }
@@ -303,7 +304,7 @@ Instead of manual `t()` calls, use the `namespace` prop on lifeforge-ui componen
 
 ```tsx
 // ✅ Good - automatic lookup
-<Button namespace="apps.myModule">saveEntry</Button>
+<Button namespace="apps.@lifeforge/lifeforge--my-module">saveEntry</Button>
 
 // ❌ Verbose - manual translation
 <Button>{t('buttons.saveEntry')}</Button>
@@ -426,7 +427,7 @@ pnpm forge locales publish <lang-code>
 Check server logs for "Missing locale" warnings. The i18n system automatically reports missing keys:
 
 ```plaintext
-Missing locale apps.myModule:buttons.newButton
+Missing locale apps.@lifeforge/lifeforge--my-module:buttons.newButton
 ```
 
 ### Translation Not Updating
