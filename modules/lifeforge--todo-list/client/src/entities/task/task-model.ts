@@ -1,6 +1,6 @@
 import type { InferOutput } from '@lifeforge/api'
 
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 export type Task = InferOutput<typeof forgeAPI.entries.getById>
 

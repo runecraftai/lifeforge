@@ -23,7 +23,7 @@ import {
 } from '@lifeforge/ui'
 
 import { useTodoListContext } from '@/entities/task'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import { ListSelector } from './components/list-selector'
 import { PrioritySelector } from './components/priority-selector'

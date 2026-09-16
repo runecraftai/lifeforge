@@ -26,14 +26,14 @@ const { forgeAPI, ...manifest } = createForgeModule({
     }
   ],
   routes: {
-    '/': lazy(() => import('@/pages/Dashboard')),
-    '/transactions': lazy(() => import('@/pages/Transactions')),
-    '/assets': lazy(() => import('@/pages/Assets')),
-    '/ledgers': lazy(() => import('@/pages/Ledgers')),
-    '/spending-heatmap': lazy(() => import('@/pages/SpendingHeatmap')),
-    '/statements': lazy(() => import('@/pages/Statements'))
+    '/': lazy(() => import('@/pages/dashboard')),
+    '/transactions': lazy(() => import('@/pages/transactions')),
+    '/assets': lazy(() => import('@/pages/assets')),
+    '/ledgers': lazy(() => import('@/pages/ledgers')),
+    '/spending-heatmap': lazy(() => import('@/pages/spending-heatmap')),
+    '/statements': lazy(() => import('@/pages/statements'))
   },
-  widgets: [() => import('@/widgets/AssetsBalance')],
+  widgets: [() => import('@/features/assets-balance/assets-balance')],
   contract
 })
 

@@ -4,12 +4,11 @@ import clsx from 'clsx'
 import { Box, Card, Checkbox, Flex, toast } from '@lifeforge/ui'
 
 import { type Task, useTodoListContext } from '@/entities/task'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import { TaskDueDate } from './components/task-due-date'
 import { TaskHeader } from './components/task-header'
 import { TaskTags } from './components/task-tags'
-import * as styles from './task-item.css'
 
 export function TaskItem({
   entry,
@@ -56,7 +55,7 @@ export function TaskItem({
       isInteractive
       align="center"
       as="li"
-      className={clsx(styles.item, className)}
+      className={clsx('isolate', className)}
       direction="row"
       gap="lg"
       justify="between"
@@ -87,7 +86,7 @@ export function TaskItem({
       <Box
         aria-label={`Edit ${entry.summary}`}
         as="button"
-        className={styles.overlay}
+        className="absolute inset-0 cursor-pointer appearance-none border-0 bg-transparent p-0"
         onClick={handleTaskClick}
       />
     </Card>

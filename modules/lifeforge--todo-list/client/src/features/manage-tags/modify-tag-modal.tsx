@@ -6,7 +6,7 @@ import { type InferInput, useForgeMutation } from '@lifeforge/api'
 import { FormModal, TextField, createDefaultValues } from '@lifeforge/ui'
 
 import type { TaskTag } from '@/entities/tag'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 const schema = z.object({
   name: z.string().min(1, 'Required')

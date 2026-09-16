@@ -1,3 +1,5 @@
+import './index.css'
+
 import { Flex, ModuleHeader } from '@lifeforge/ui'
 
 import { TodoListProvider } from '@/entities/task'

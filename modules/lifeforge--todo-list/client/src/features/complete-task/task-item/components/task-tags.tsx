@@ -2,8 +2,6 @@ import { Box, Flex, Text } from '@lifeforge/ui'
 
 import { type Task, useTodoListContext } from '@/entities/task'
 
-import * as styles from '../task-item.css'
-
 export function TaskTags({ entry }: { entry: Task }) {
   const { tagsListQuery } = useTodoListContext()
 
@@ -16,8 +14,8 @@ export function TaskTags({ entry }: { entry: Task }) {
     const tagName = tags.find(item => item.id === tag)?.name
 
     return (
-      <Text key={tag} className={styles.tag}>
-        <Box aria-hidden="true" as="span" className={styles.tagBackground} />#
+      <Text key={tag} className="relative isolate min-w-12 truncate rounded-full px-2 py-1 text-custom-500">
+        <Box aria-hidden="true" as="span" className="absolute inset-0 -z-10 rounded-full bg-custom-500/20" />#
         {tagName}
       </Text>
     )
@@ -27,7 +25,7 @@ export function TaskTags({ entry }: { entry: Task }) {
     <Flex align="center" gap="xs" minWidth="0" width="100%">
       {tagElements}
       {hasMoreTags && (
-        <Text className={styles.moreTags} size="xs">
+        <Text className="shrink-0 text-xs text-bg-500" size="xs">
           +{remainingTagCount} more
         </Text>
       )}

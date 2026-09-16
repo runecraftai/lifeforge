@@ -4,15 +4,13 @@ import { createForgeModule } from '@lifeforge/federation'
 
 import contract from './contract'
 
-const { forgeAPI, ...manifest } = createForgeModule({
-  provider: lazy(() => import('@/providers/MusicProvider')),
+export const { forgeAPI, ...manifest } = createForgeModule({
+  provider: lazy(() => import('@/pages/music/providers/music-provider')),
   routes: {
     '/': lazy(() => import('@'))
   },
-  widgets: [() => import('@/widgets/MusicPlayer')],
+  widgets: [() => import('@/pages/music/widgets/music-player')],
   contract
 })
 
 export default manifest
-
-export { forgeAPI }

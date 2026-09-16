@@ -14,7 +14,7 @@ import {
 import { filterTasksBySummary } from '@/entities/task'
 import { type Task, useTodoListContext } from '@/entities/task'
 import { ModifyTaskDrawer } from '@/features/edit-task'
-import { forgeAPI } from '@/manifest'
+import { forgeAPI } from '@/shared/api'
 
 import { Header } from './header'
 import { Sidebar } from './sidebar'

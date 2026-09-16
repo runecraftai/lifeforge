@@ -2,8 +2,6 @@ import { Box, Flex, Text } from '@lifeforge/ui'
 
 import { type Task, useTodoListContext } from '@/entities/task'
 
-import * as styles from '../task-item.css'
-
 export function TaskHeader({ entry }: { entry: Task }) {
   const { prioritiesQuery } = useTodoListContext()
 
@@ -14,7 +12,7 @@ export function TaskHeader({ entry }: { entry: Task }) {
 
   return (
     <Flex align="center" gap="sm" minWidth="0" width="100%">
-      <Text className={styles.summary} weight="semibold">
+      <Text className="min-w-0 truncate" weight="semibold">
         {entry.summary}
       </Text>
       {hasPriority && (
