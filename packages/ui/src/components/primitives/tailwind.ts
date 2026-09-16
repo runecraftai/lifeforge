@@ -29,10 +29,10 @@ const conditions: Record<string, string> = {
   dark: 'dark:',
   hover: 'hover:',
   darkHover: 'dark:hover:',
-  hasBgImage: 'has-bg-image:',
-  darkHasBgImage: 'dark:has-bg-image:',
-  hasBgImageHover: 'has-bg-image:hover:',
-  hasBgImageDarkHover: 'dark:has-bg-image:hover:',
+  hasBgImage: 'has-[.has-bg-image]:',
+  darkHasBgImage: 'dark:has-[.has-bg-image]:',
+  hasBgImageHover: 'has-[.has-bg-image]:hover:',
+  hasBgImageDarkHover: 'dark:has-[.has-bg-image]:hover:',
   print: 'print:'
 }
 
@@ -101,10 +101,17 @@ function colorClasses(
       continue
     }
     const token = String(entry)
-    const colorToken = token.startsWith('bg-') || token.startsWith('custom-')
-      ? `lf-${token}`
-      : token
-    classes.push(`${variant}${prefix}-${colorToken}`)
+    if (token.startsWith('bg-') || token.startsWith('custom-')) {
+      classes.push(`${variant}${prefix}-lf-${token}`)
+    } else if (
+      token in COLORS &&
+      !['transparent', 'inherit', 'primary', 'muted'].includes(token)
+    ) {
+      const cssValue = COLORS[token as keyof typeof COLORS]
+      classes.push(`${variant}${prefix}-[${cssValue}]`)
+    } else {
+      classes.push(`${variant}${prefix}-${token}`)
+    }
   }
 
   return { classes, style }
