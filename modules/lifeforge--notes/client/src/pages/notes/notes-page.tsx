@@ -2,10 +2,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { ModuleHeaderTailwind, useModalStore } from '@lifeforge/ui'
 
+import { forgeAPI } from '@/shared/api'
 import type { Note } from '@/entities/note'
 import { NoteFormModal } from '@/features/edit-note'
-import { useNoteFilter } from '@/hooks/use-note-filter'
-import { forgeAPI } from '@/manifest'
+import { useNoteFilter } from './model/use-note-filter'
 
 import { NoteDetail } from './components/note-detail'
 import { NoteList } from './components/note-list'

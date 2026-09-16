@@ -1,9 +1,9 @@
 import { useForgeMutation } from '@lifeforge/api'
 import { ConfirmationModal, Icon, useModalStore } from '@lifeforge/ui'
 
+import { forgeAPI } from '@/shared/api'
 import type { Note } from '@/entities/note'
 import { NoteFormModal } from '@/features/edit-note'
-import { forgeAPI } from '@/manifest'
 
 function NoteDetailEmpty() {
   return (
