@@ -1,0 +1,69 @@
+{
+  "captures": [
+    {
+      "filename": "01-notes-layout-light.png",
+      "description": "Notes module layout in light theme",
+      "usable": true
+    },
+    {
+      "filename": "02-notes-create-modal-light.png",
+      "description": "Notes create modal in light theme",
+      "usable": true
+    },
+    {
+      "filename": "01-task-list-dark.png",
+      "description": "To-Do List task list in dark theme with a created task",
+      "usable": true
+    },
+    {
+      "filename": "02-sidebar-dark.png",
+      "description": "To-Do List module sidebar in dark theme",
+      "usable": true
+    },
+    {
+      "filename": "03-notes-after-create-light.png",
+      "description": "Notes list after creating a note in light theme",
+      "usable": true
+    },
+    {
+      "filename": "05-task-edit-drawer-dark.png",
+      "description": "To-Do List edit drawer in dark theme with the Include Time field",
+      "usable": true
+    },
+    {
+      "filename": "04-notes-selected-light.png",
+      "description": "Notes detail view in light theme",
+      "usable": true
+    },
+    {
+      "filename": "05-notes-edit-modal-light.png",
+      "description": "Notes edit modal in light theme",
+      "usable": true
+    },
+    {
+      "filename": "03-task-list-light.png",
+      "description": "To-Do List task list in light theme with a created task",
+      "usable": true
+    },
+    {
+      "filename": "04-sidebar-light.png",
+      "description": "To-Do List module sidebar in light theme",
+      "usable": true
+    },
+    {
+      "filename": "06-task-edit-drawer-light.png",
+      "description": "To-Do List edit drawer in light theme with the Include Time field",
+      "usable": true
+    },
+    {
+      "filename": "06-notes-layout-dark.png",
+      "description": "Notes module layout in dark theme",
+      "usable": true
+    },
+    {
+      "filename": "07-notes-create-modal-dark.png",
+      "description": "Notes create modal in dark theme",
+      "usable": true
+    }
+  ]
+}
