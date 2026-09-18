@@ -12,7 +12,8 @@ import {
   Text,
   Widget,
   WithQuery,
-  surface
+  surface,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useWalletData } from '@/hooks/useWalletData'
@@ -21,6 +22,7 @@ import { useWalletStore } from '@/stores/useWalletStore'
 import numberToCurrency from '../../../utils/numberToCurrency'
 
 function AssetsBalanceCard() {
+  const { currency } = usePersonalization()
   const navigate = useNavigate()
   const { assetsQuery } = useWalletData()
   const { isAmountHidden } = useWalletStore()
@@ -65,7 +67,7 @@ function AssetsBalanceCard() {
                       mt={{ base: 'md', sm: 'none' }}
                     >
                       <Text color="muted" size="xl">
-                        RM
+                        {currency.symbol}
                       </Text>
                       {isAmountHidden ? (
                         <Flex align="center">
@@ -77,7 +79,10 @@ function AssetsBalanceCard() {
                         </Flex>
                       ) : (
                         <Text size="3xl" weight="medium">
-                          {numberToCurrency(asset.current_balance)}
+                          {numberToCurrency(
+                            asset.current_balance,
+                            currency.locale
+                          )}
                         </Text>
                       )}
                     </Flex>

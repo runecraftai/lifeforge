@@ -12,9 +12,13 @@
   },
   "dependencies": {
     "@iconify/react": "^5.2.0",
+    "quill": "^2.0.3",
     "react-quilljs": "^2.0.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  },
   "displayName": "Blog",
   "author": "LifeForge",
   "type": "module",

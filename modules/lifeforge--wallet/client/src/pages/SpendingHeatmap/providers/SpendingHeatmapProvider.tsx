@@ -4,10 +4,9 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { type InferOutput } from '@lifeforge/api'
-import { TAILWIND_PALETTE } from '@lifeforge/ui'
+import { TAILWIND_PALETTE, usePersonalization } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
-import numberToCurrency from '@/utils/numberToCurrency'
 
 export type SpendingLocationData = InferOutput<
   typeof forgeAPI.analytics.getSpendingByLocation
@@ -28,6 +27,7 @@ export interface SpendingHeatmapPreferences {
 }
 
 function useSpendingHeatmapState() {
+  const { currency } = usePersonalization()
   const navigate = useNavigate()
 
   const [preferences, setPreferences] = useState<SpendingHeatmapPreferences>({
@@ -67,9 +67,9 @@ function useSpendingHeatmapState() {
       return String(cluster.count)
     }
 
-    const formatted = numberToCurrency(cluster.amount)
-
-    return formatted.endsWith('.00') ? formatted.slice(0, -3) : formatted
+    return new Intl.NumberFormat(currency.locale, {
+      maximumFractionDigits: 2
+    }).format(Math.abs(cluster.amount) < 0.001 ? 0 : cluster.amount)
   }
 
   function getClusterWidth(cluster: Cluster) {

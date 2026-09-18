@@ -68,6 +68,7 @@ services:
       - '${API_PORT:-3636}:3636'
     volumes:
       - ./locales:/lifeforge/locales
+      - ./.temp:/lifeforge/apps/api/.temp
     depends_on:
       db:
         condition: service_healthy

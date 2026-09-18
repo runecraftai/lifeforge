@@ -2,7 +2,16 @@ import { useContext, useMemo } from 'react'
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
 
 import { useModuleTranslation } from '@lifeforge/localization'
-import { Bordered, Box, Flex, Icon, Stack, Text, surface } from '@lifeforge/ui'
+import {
+  Bordered,
+  Box,
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  surface,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import { useWalletStore } from '@/stores/useWalletStore'
 import numberToCurrency from '@/utils/numberToCurrency'
@@ -10,6 +19,7 @@ import numberToCurrency from '@/utils/numberToCurrency'
 import { CategoriesBreakdownContext } from '..'
 
 function BreakdownDoughnutChart() {
+  const { currency } = usePersonalization()
   const { t } = useModuleTranslation()
   const { isAmountHidden } = useWalletStore()
   const { breakdown, categories, type } = useContext(CategoriesBreakdownContext)
@@ -57,7 +67,8 @@ function BreakdownDoughnutChart() {
             <Flex align="center" gap="lg" justify="between" mt="sm">
               <Text color="muted">Amount:</Text>
               <Text style={{ color: data.payload.color }} weight="semibold">
-                RM {numberToCurrency(data.value)}
+                {currency.symbol}{' '}
+                {numberToCurrency(data.value, currency.locale)}
               </Text>
             </Flex>
             <Flex align="center" gap="lg" justify="between">
@@ -102,7 +113,7 @@ function BreakdownDoughnutChart() {
         <Flex asChild align={isAmountHidden ? 'center' : 'end'}>
           <Text weight="medium">
             <Text color="muted" mr="xs" size="xl">
-              RM
+              {currency.symbol}
             </Text>
             {isAmountHidden ? (
               <Flex align="center">
@@ -118,7 +129,7 @@ function BreakdownDoughnutChart() {
               </Flex>
             ) : (
               <Text size="3xl" weight="medium">
-                {numberToCurrency(totalAmount)}
+                {numberToCurrency(totalAmount, currency.locale)}
               </Text>
             )}
           </Text>

@@ -12,7 +12,7 @@ import {
 import { HeatmapLayer } from './HeatmapLayer'
 
 function SpendingHeatmapMap({ googleMapAPIKey }: { googleMapAPIKey: string }) {
-  const { derivedTheme } = usePersonalization()
+  const { currency, derivedTheme } = usePersonalization()
 
   const {
     center,
@@ -90,8 +90,8 @@ function SpendingHeatmapMap({ googleMapAPIKey }: { googleMapAPIKey: string }) {
                     }}
                     title={
                       cluster.points.length === 1
-                        ? `${cluster.points[0].locationName}: ${numberToCurrency(cluster.amount)}`
-                        : `${cluster.points.length} locations: ${numberToCurrency(cluster.amount)}`
+                        ? `${cluster.points[0].locationName}: ${numberToCurrency(cluster.amount, currency.locale)}`
+                        : `${cluster.points.length} locations: ${numberToCurrency(cluster.amount, currency.locale)}`
                     }
                     width={`${getClusterWidth(cluster)}px`}
                   >

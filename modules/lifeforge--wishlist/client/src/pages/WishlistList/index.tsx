@@ -19,9 +19,7 @@ import { forgeAPI } from '@/manifest'
 import WishlistListItem from './components/WishlistListItem'
 import ModifyWishlistListModal from './modals/ModifyWishlistModal'
 
-export type WishlistList = InferOutput<
-  typeof forgeAPI.lists.list
->[number]
+export type WishlistList = InferOutput<typeof forgeAPI.lists.list>[number]
 
 function Wishlist() {
   const { open } = useModalStore()
@@ -89,7 +87,7 @@ function Wishlist() {
             }
 
             return (
-              <div className="mt-6 mb-14 grid grid-cols-1 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
+              <div className="mt-10! mb-14! grid grid-cols-1 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(24rem,1fr))]">
                 {filteredLists.map(list => (
                   <WishlistListItem key={list.id} list={list} />
                 ))}

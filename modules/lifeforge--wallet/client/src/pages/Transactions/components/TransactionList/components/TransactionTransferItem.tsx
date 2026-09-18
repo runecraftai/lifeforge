@@ -7,7 +7,8 @@ import {
   Stack,
   Text,
   ViewImageModal,
-  useModalStore
+  useModalStore,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useWalletData } from '@/hooks/useWalletData'
@@ -21,6 +22,7 @@ function TransactionTransferItem({
 }: {
   transaction: WalletTransaction
 }) {
+  const { currency } = usePersonalization()
   const { open } = useModalStore()
   const { assetsQuery } = useWalletData()
 
@@ -97,7 +99,7 @@ function TransactionTransferItem({
         </Stack>
       </Flex>
       <Text color="blue-500" size="lg" weight="medium">
-        {numberToCurrency(transaction.amount)}
+        {numberToCurrency(transaction.amount, currency.locale)}
       </Text>
     </Flex>
   )

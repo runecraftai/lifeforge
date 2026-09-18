@@ -13,7 +13,8 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
-  useModalStore
+  useModalStore,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
@@ -25,6 +26,7 @@ dayjs.extend(relativeTime)
 
 function EntryItem({ entry }: { entry: WishlistEntry }) {
   const { open } = useModalStore()
+  const { currency } = usePersonalization()
   const queryClient = useQueryClient()
   const [bought, setBought] = useState(entry.bought)
 
@@ -86,13 +88,13 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
   return (
     <Card
       as="li"
-      className="flex flex-col justify-between gap-3 sm:pr-8 md:flex-row md:items-center"
+      className="flex flex-col justify-between gap-3 sm:pr-8! md:flex-row md:items-center"
     >
-      <div className="flex-between gap-8">
+      <div className="flex items-center justify-between gap-8">
         <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
-          <div className="component-bg-lighter relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20">
+          <div className="bg-lf-bg-200 relative isolate aspect-square h-auto w-full shrink-0 overflow-hidden rounded-md sm:w-20">
             <Icon
-              className="text-bg-200 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
+              className="text-lf-bg-200 dark:text-lf-bg-700 absolute top-1/2 left-1/2 z-[-1] size-8 -translate-x-1/2 -translate-y-1/2"
               icon="tabler:shopping-bag"
             />
             {entry.image !== '' && (
@@ -112,12 +114,17 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
             )}
           </div>
           <div className="w-full min-w-0">
-            <h2 className="text-bg-500 line-clamp-2 w-full min-w-0 text-lg font-medium">
+            <h2 className="text-lf-bg-500 line-clamp-2 w-full min-w-0 text-lg font-medium">
               {entry.name}
             </h2>
-            <p className="mt-2 text-2xl">RM {entry.price.toFixed(2)}</p>
+            <p className="mt-2! text-2xl">
+              {new Intl.NumberFormat(currency.locale, {
+                style: 'currency',
+                currency: currency.currency
+              }).format(entry.price)}
+            </p>
             {entry.bought && (
-              <p className="text-bg-500 mt-2 text-sm">
+              <p className="text-lf-bg-500 mt-2! text-sm">
                 Bought {dayjs(entry.bought_at).fromNow()}
               </p>
             )}
@@ -132,7 +139,7 @@ function EntryItem({ entry }: { entry: WishlistEntry }) {
           }}
         />
       </div>
-      <div className="flex-between gap-3">
+      <div className="flex items-center justify-between gap-3">
         <Button
           as="a"
           className="w-auto px-0! sm:px-4!"

@@ -1,12 +1,12 @@
-export default function numberToCurrency(number: number): string {
-  if (!number) {
-    return '0.00'
-  }
+export default function numberToCurrency(
+  number: number,
+  locale: string
+): string {
+  const normalizedNumber =
+    !Number.isFinite(number) || Math.abs(number) < 0.001 ? 0 : number
 
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  })
-    .format(Math.abs(number) < 0.001 ? 0 : number)
-    .replace('$', '')
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(normalizedNumber)
 }

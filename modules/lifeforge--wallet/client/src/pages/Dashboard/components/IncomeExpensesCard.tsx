@@ -1,6 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { Flex, Icon, Text, Widget, WithQuery } from '@lifeforge/ui'
+import {
+  Flex,
+  Icon,
+  Text,
+  Widget,
+  WithQuery,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
 import { useWalletStore } from '@/stores/useWalletStore'
@@ -8,6 +15,8 @@ import { useWalletStore } from '@/stores/useWalletStore'
 import numberToCurrency from '../../../utils/numberToCurrency'
 
 function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
+  const { currency } = usePersonalization()
+
   const isIncome = title.toLowerCase() === 'income'
 
   const { isAmountHidden } = useWalletStore()
@@ -35,7 +44,7 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
               <Flex asChild align="baseline" gap="sm" height="auto">
                 <Text size={{ base: '4xl', xl: '5xl' }} weight="medium">
                   <Text color="muted" size={{ base: '2xl', xl: '3xl' }}>
-                    RM
+                    {currency.symbol}
                   </Text>
                   {isAmountHidden ? (
                     <Flex align="center">
@@ -51,7 +60,8 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
                     </Flex>
                   ) : (
                     numberToCurrency(
-                      +data[`total${title}` as 'totalIncome' | 'totalExpenses']
+                      +data[`total${title}` as 'totalIncome' | 'totalExpenses'],
+                      currency.locale
                     )
                   )}
                 </Text>
@@ -63,7 +73,7 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
                   color={isIncome ? 'green-500' : 'red-500'}
                   whiteSpace="nowrap"
                 >
-                  {isIncome ? '+' : '-'} RM
+                  {isIncome ? '+' : '-'} {currency.symbol}
                   {isAmountHidden ? (
                     <Flex align="center" display="inline-flex" ml="sm">
                       {Array(4)
@@ -76,7 +86,8 @@ function IncomeExpenseCard({ title, icon }: { title: string; icon: string }) {
                     numberToCurrency(
                       +data[
                         `monthly${title}` as 'monthlyIncome' | 'monthlyExpenses'
-                      ]
+                      ],
+                      currency.locale
                     )
                   )}
                 </Text>

@@ -44,6 +44,7 @@ const DEFAULT_VALUE: IPersonalizationData = {
   },
   dashboardLayout: {},
   language: 'en',
+  currency: { locale: 'en-MY', currency: 'MYR', symbol: 'RM' },
   setDashboardLayout: () => {},
   setRawThemeColor: () => {},
   setFontFamily: () => {},
@@ -61,12 +62,18 @@ const PersonalizationContext = createContext<IPersonalizationData | undefined>(
   DEFAULT_VALUE
 )
 
+export function getCurrencyConfig(language: string) {
+  return language === 'pt-BR'
+    ? { locale: 'pt-BR', currency: 'BRL', symbol: 'R$' }
+    : { locale: 'en-MY', currency: 'MYR', symbol: 'RM' }
+}
+
 export function PersonalizationProvider({
   forgeAPI,
   defaultValueOverride = {},
   children
 }: {
-  forgeAPI: ProxyTree<any>
+  forgeAPI: ProxyTree<unknown>
   defaultValueOverride?: Partial<IPersonalizationData>
   children: React.ReactNode
 }) {
@@ -109,6 +116,7 @@ export function PersonalizationProvider({
 
   const [bgImage, setBgImage] = useState(defaultValue.bgImage)
   const [language, setLanguage] = useState(defaultValue.language)
+  const currency = useMemo(() => getCurrencyConfig(language), [language])
 
   const [dashboardLayout, setDashboardLayout] = useState<IDashboardLayout>(
     defaultValue.dashboardLayout
@@ -184,6 +192,7 @@ export function PersonalizationProvider({
       bgImage,
       backdropFilters,
       language,
+      currency,
       dashboardLayout,
       setDashboardLayout,
       setRawThemeColor,
@@ -212,6 +221,7 @@ export function PersonalizationProvider({
       bgImage,
       backdropFilters,
       language,
+      currency,
       dashboardLayout
     ]
   )

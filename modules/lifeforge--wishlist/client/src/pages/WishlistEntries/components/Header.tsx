@@ -46,7 +46,7 @@ function Header({
           navigate('/wishlist')
         }}
       />
-      <div className="flex-between w-full min-w-0 gap-8">
+      <div className="flex items-center justify-between w-full min-w-0 gap-8">
         <h1
           className={clsx(
             'flex w-full min-w-0 items-center gap-3 font-semibold',
@@ -56,7 +56,7 @@ function Header({
           )}
         >
           <div
-            className="rounded-lg p-3"
+            className="rounded-lg p-3!"
             style={{
               backgroundColor: wishlistListDetails.color + '20'
             }}
@@ -72,11 +72,11 @@ function Header({
           <div className="w-full min-w-0">
             <div className="flex items-end gap-2 text-2xl font-medium sm:text-3xl">
               <span>{wishlistListDetails.name}</span>
-              <div className="text-bg-500 text-lg!">
+              <div className="text-lf-bg-500 text-lg!">
                 ({wishlistListDetails.total_count} items)
               </div>
             </div>
-            <span className="text-bg-500 block w-full min-w-0 truncate text-base">
+            <span className="text-lf-bg-500 block w-full min-w-0 truncate text-base">
               {wishlistListDetails.description}
             </span>
           </div>

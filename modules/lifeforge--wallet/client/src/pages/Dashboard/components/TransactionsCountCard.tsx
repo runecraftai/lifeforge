@@ -11,7 +11,8 @@ import {
   Stack,
   Text,
   Widget,
-  surface
+  surface,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useWalletData } from '@/hooks/useWalletData'
@@ -20,6 +21,7 @@ import { useWalletStore } from '@/stores/useWalletStore'
 import numberToCurrency from '../../../utils/numberToCurrency'
 
 function TransactionsCountCard() {
+  const { currency } = usePersonalization()
   const { typesCountQuery } = useWalletData()
   const { isAmountHidden } = useWalletStore()
   const { t } = useModuleTranslation()
@@ -80,7 +82,7 @@ function TransactionsCountCard() {
                       expenses: '-',
                       transfer: ' '
                     }[type] || ''}{' '}
-                    RM{' '}
+                    {currency.symbol}{' '}
                     {isAmountHidden ? (
                       <Flex asChild align="center">
                         <Text>
@@ -92,7 +94,10 @@ function TransactionsCountCard() {
                         </Text>
                       </Flex>
                     ) : (
-                      numberToCurrency(typesCount[type]?.accumulatedAmount)
+                      numberToCurrency(
+                        typesCount[type]?.accumulatedAmount,
+                        currency.locale
+                      )
                     )}
                   </Text>
                 </Flex>

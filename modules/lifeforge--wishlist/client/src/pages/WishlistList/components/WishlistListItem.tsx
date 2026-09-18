@@ -9,7 +9,8 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
-  useModalStore
+  useModalStore,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { forgeAPI } from '@/manifest'
@@ -20,6 +21,7 @@ import ModifyWishlistListModal from '../modals/ModifyWishlistModal'
 function WishlistListItem({ list }: { list: WishlistList }) {
   const queryClient = useQueryClient()
   const { open } = useModalStore()
+  const { currency } = usePersonalization()
 
   const deleteMutation = useMutation(
     forgeAPI.lists.remove
@@ -63,7 +65,7 @@ function WishlistListItem({ list }: { list: WishlistList }) {
       to={`/wishlist/${list.id}`}
     >
       <div
-        className="w-min rounded-md p-4"
+        className="w-min rounded-md p-4!"
         style={{
           backgroundColor: list.color + '20',
           color: list.color
@@ -73,15 +75,15 @@ function WishlistListItem({ list }: { list: WishlistList }) {
       </div>
       <div className="w-full min-w-0 flex-1 space-y-2">
         <h2 className="truncate text-2xl font-semibold">{list.name}</h2>
-        <p className="text-bg-500 min-w-0">{list.description}</p>
+        <p className="text-lf-bg-500 min-w-0">{list.description}</p>
       </div>
       <div className="text-right">
-        <div className="flex-between text-bg-500 text-sm whitespace-nowrap">
+        <div className="flex items-center justify-between text-lf-bg-500 text-sm whitespace-nowrap">
           <p>{list.bought_count} bought</p>
           <p>{list.total_count} items</p>
         </div>
         <progress
-          className="progress bg-bg-200 dark:bg-bg-700 h-2 w-full rounded-lg"
+          className="progress bg-lf-bg-200 dark:bg-lf-bg-700 h-2 w-full rounded-lg"
           max="100"
           value={
             list.bought_count !== 0
@@ -89,19 +91,19 @@ function WishlistListItem({ list }: { list: WishlistList }) {
               : 0
           }
         ></progress>
-        <div className="flex-between text-bg-500 text-sm">
+        <div className="flex items-center justify-between text-lf-bg-500 text-sm">
           <p>
             Spent{' '}
-            {new Intl.NumberFormat('en-MY', {
+            {new Intl.NumberFormat(currency.locale, {
               style: 'currency',
-              currency: 'MYR'
+              currency: currency.currency
             }).format(list.bought_amount)}
           </p>
           <p>
             Total{' '}
-            {new Intl.NumberFormat('en-MY', {
+            {new Intl.NumberFormat(currency.locale, {
               style: 'currency',
-              currency: 'MYR'
+              currency: currency.currency
             }).format(list.total_amount)}
           </p>
         </div>

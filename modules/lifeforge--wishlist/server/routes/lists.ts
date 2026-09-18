@@ -19,9 +19,7 @@ export const getById = forge
     }
   })
   .callback(async ({ pb, query: { id }, response }) =>
-    response.ok(
-      await pb.getOne.collection('lists_aggregated').id(id).execute()
-    )
+    response.ok(await pb.getOne.collection('lists_aggregated').id(id).execute())
   )
 
 export const validate = forge
@@ -55,7 +53,10 @@ export const list = forge
   })
   .callback(async ({ pb, response }) =>
     response.ok(
-      await pb.getFullList.collection('lists_aggregated').execute()
+      await pb.getFullList
+        .collection('lists_aggregated')
+        .sort(['name'])
+        .execute()
     )
   )
 
@@ -70,9 +71,7 @@ export const create = forge
     }
   })
   .callback(async ({ pb, body, response }) =>
-    response.created(
-      await pb.create.collection('lists').data(body).execute()
-    )
+    response.created(await pb.create.collection('lists').data(body).execute())
   )
 
 export const update = forge
@@ -92,9 +91,7 @@ export const update = forge
     }
   })
   .callback(async ({ pb, query: { id }, body, response }) =>
-    response.ok(
-      await pb.update.collection('lists').id(id).data(body).execute()
-    )
+    response.ok(await pb.update.collection('lists').id(id).data(body).execute())
   )
 
 export const remove = forge

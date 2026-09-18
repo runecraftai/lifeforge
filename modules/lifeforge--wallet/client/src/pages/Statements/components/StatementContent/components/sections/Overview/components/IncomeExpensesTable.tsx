@@ -2,7 +2,13 @@ import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import { Flex, Icon, Text, colorWithOpacity } from '@lifeforge/ui'
+import {
+  Flex,
+  Icon,
+  Text,
+  colorWithOpacity,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import { useWalletData } from '@/hooks/useWalletData'
 import { forgeAPI } from '@/manifest'
@@ -17,6 +23,7 @@ function IncomeExpensesTable({
   year: number
   type: 'income' | 'expenses'
 }) {
+  const { currency } = usePersonalization()
   const { categoriesQuery } = useWalletData()
 
   const categories = categoriesQuery.data ?? []
@@ -155,7 +162,7 @@ function IncomeExpensesTable({
                 fontWeight: '500'
               }}
             >
-              RM
+              {currency.symbol}
             </th>
             <th
               style={{
@@ -164,7 +171,7 @@ function IncomeExpensesTable({
                 fontWeight: '500'
               }}
             >
-              RM
+              {currency.symbol}
             </th>
             <th
               style={{
@@ -173,7 +180,7 @@ function IncomeExpensesTable({
                 fontWeight: '500'
               }}
             >
-              RM
+              {currency.symbol}
             </th>
             <th
               style={{
@@ -224,7 +231,7 @@ function IncomeExpensesTable({
                     whiteSpace: 'nowrap'
                   }}
                 >
-                  {numberToCurrency(prevAmount)}
+                  {numberToCurrency(prevAmount, currency.locale)}
                 </td>
                 <td
                   style={{
@@ -234,7 +241,7 @@ function IncomeExpensesTable({
                     whiteSpace: 'nowrap'
                   }}
                 >
-                  {numberToCurrency(currentAmount)}
+                  {numberToCurrency(currentAmount, currency.locale)}
                 </td>
                 <td
                   style={{
@@ -246,8 +253,8 @@ function IncomeExpensesTable({
                   }}
                 >
                   {change < 0
-                    ? `(${numberToCurrency(Math.abs(change))})`
-                    : numberToCurrency(change)}
+                    ? `(${numberToCurrency(Math.abs(change), currency.locale)})`
+                    : numberToCurrency(change, currency.locale)}
                 </td>
                 <td
                   style={{
@@ -288,7 +295,7 @@ function IncomeExpensesTable({
                     borderBottom: '6px double'
                   }}
                 >
-                  {numberToCurrency(prevTotal)}
+                  {numberToCurrency(prevTotal, currency.locale)}
                 </td>
                 <td
                   style={{
@@ -301,7 +308,7 @@ function IncomeExpensesTable({
                     borderBottom: '6px double'
                   }}
                 >
-                  {numberToCurrency(currentTotal)}
+                  {numberToCurrency(currentTotal, currency.locale)}
                 </td>
                 <td
                   style={{
@@ -316,8 +323,8 @@ function IncomeExpensesTable({
                   }}
                 >
                   {change < 0
-                    ? `(${numberToCurrency(Math.abs(change))})`
-                    : numberToCurrency(change)}
+                    ? `(${numberToCurrency(Math.abs(change), currency.locale)})`
+                    : numberToCurrency(change, currency.locale)}
                 </td>
                 <td
                   style={{

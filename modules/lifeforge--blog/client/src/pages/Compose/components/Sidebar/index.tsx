@@ -6,6 +6,7 @@ import { Icon } from '@iconify/react'
 import {
   Button,
   FileInput,
+  type FileValue,
   ListboxInput,
   ListboxOption,
   SidebarWrapper,
@@ -31,12 +32,21 @@ const VISIBILITY_OPTIONS = [
   }
 ]
 
+export type BlogPostData = {
+  title: string
+  excerpt: string
+  visibility: string
+  featuredImage: FileValue
+  category: string | null
+  labels: string[]
+}
+
 function Sidebar({
   data,
   setData
 }: {
-  data: any
-  setData: React.Dispatch<React.SetStateAction<any>>
+  data: BlogPostData
+  setData: React.Dispatch<React.SetStateAction<BlogPostData>>
 }) {
   return (
     <SidebarWrapper>
@@ -137,11 +147,16 @@ function Sidebar({
           <Button
             className="mt-6 w-full"
             icon="tabler:file"
+            namespace={BLOG_NAMESPACE}
             variant="secondary"
           >
             Save to Drafts
           </Button>
-          <Button className="w-full" icon="tabler:send">
+          <Button
+            className="w-full"
+            icon="tabler:send"
+            namespace={BLOG_NAMESPACE}
+          >
             Publish
           </Button>
         </div>

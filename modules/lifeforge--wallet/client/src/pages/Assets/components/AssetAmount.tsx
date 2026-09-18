@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react'
 
-import { Flex, Icon, Text } from '@lifeforge/ui'
+import { Flex, Icon, Text, usePersonalization } from '@lifeforge/ui'
 
 import { useWalletStore } from '@/stores/useWalletStore'
 import numberToCurrency from '@/utils/numberToCurrency'
@@ -12,13 +12,14 @@ function AssetAmount({
   amount: number
   display?: ComponentProps<typeof Flex>['display']
 }) {
+  const { currency } = usePersonalization()
   const { isAmountHidden } = useWalletStore()
 
   return (
     <Flex asChild align={isAmountHidden ? 'center' : 'end'} display={display}>
       <Text size="2xl" weight="medium">
         <Text color="muted" mr="sm" size="xl">
-          RM
+          {currency.symbol}
         </Text>
         {isAmountHidden ? (
           <Flex align="center">
@@ -29,7 +30,7 @@ function AssetAmount({
               ))}
           </Flex>
         ) : (
-          <Text truncate>{numberToCurrency(amount)}</Text>
+          <Text truncate>{numberToCurrency(amount, currency.locale)}</Text>
         )}
       </Text>
     </Flex>

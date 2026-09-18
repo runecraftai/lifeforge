@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import CurrencyInputField from 'react-currency-input-field'
 
 import { Box, Flex, Text } from '@/components/primitives'
+import { usePersonalization } from '@/providers/PersonalizationProvider'
 
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
@@ -42,7 +43,7 @@ export type CurrencyInputProps = {
 
 /** CurrencyInputComponent for entering currency values with two decimal places and comma-separated thousands. */
 export function CurrencyInput({
-  prefix: currency,
+  prefix,
   variant = 'classic',
   label,
   icon,
@@ -56,6 +57,7 @@ export function CurrencyInput({
   errorMsg,
   onEnter
 }: CurrencyInputProps) {
+  const { currency: currencyConfig } = usePersonalization()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const [innerValue, setInnerValue] = useState(
@@ -93,14 +95,14 @@ export function CurrencyInput({
           variant={variant}
           gap={variant === 'classic' ? 'sm' : 'md'}
         >
-          {currency && (focused || !!innerValue) && (
+          {(prefix ?? currencyConfig.symbol) && (focused || !!innerValue) && (
             <Text
               color={{
                 base: 'bg-400',
                 dark: 'bg-600'
               }}
             >
-              {currency}
+              {prefix ?? currencyConfig.symbol}
             </Text>
           )}
           <Placeholder
@@ -112,8 +114,14 @@ export function CurrencyInput({
                 <CurrencyInputField
                   ref={autoFocusableRef(autoFocus, inputRef)}
                   decimalsLimit={2}
+                  decimalSeparator={
+                    currencyConfig.locale === 'pt-BR' ? ',' : '.'
+                  }
+                  groupSeparator={currencyConfig.locale === 'pt-BR' ? '.' : ','}
                   name={label}
-                  placeholder="48.96"
+                  placeholder={
+                    currencyConfig.locale === 'pt-BR' ? '48,96' : '48.96'
+                  }
                   onFocus={() => setFocused(true)}
                   onBlur={() => {
                     setFocused(false)

@@ -16,13 +16,15 @@ import {
   Widget,
   WithQuery,
   surface,
-  useDivSize
+  useDivSize,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useWalletData } from '../hooks/useWalletData'
 import numberToCurrency from '../utils/numberToCurrency'
 
 export default function AssetsBalance() {
+  const { currency } = usePersonalization()
   const { assetsQuery } = useWalletData()
   const ref = useRef<HTMLDivElement>(null)
   const { width } = useDivSize(ref)
@@ -94,11 +96,14 @@ export default function AssetsBalance() {
                         </Text>
                         <Flex align="center" color="muted" gap="xs">
                           <Text color="muted" size="sm">
-                            RM{' '}
+                            {currency.symbol}{' '}
                           </Text>
                           {showBalance ? (
                             <Text color="muted" size="sm">
-                              {numberToCurrency(asset.current_balance)}
+                              {numberToCurrency(
+                                asset.current_balance,
+                                currency.locale
+                              )}
                             </Text>
                           ) : (
                             <Flex align="center">

@@ -64,7 +64,7 @@ function NoteResults({
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto pr-1">
+    <div className="mt-3 flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto pr-1">
       {notes.map(note => (
         <NoteListItem
           key={note.id}

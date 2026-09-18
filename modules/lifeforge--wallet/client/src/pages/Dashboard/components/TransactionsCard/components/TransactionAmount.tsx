@@ -1,4 +1,4 @@
-import { Text } from '@lifeforge/ui'
+import { Text, usePersonalization } from '@lifeforge/ui'
 
 import numberToCurrency from '../../../../../utils/numberToCurrency'
 import type { WalletTransaction } from '../../../../Transactions'
@@ -10,6 +10,8 @@ function TransactionAmount({
   type: WalletTransaction['type']
   amount: number
 }) {
+  const { currency } = usePersonalization()
+
   return (
     <Text
       color={
@@ -27,7 +29,7 @@ function TransactionAmount({
           transfer: ''
         }[type]
       }
-      {numberToCurrency(amount)}
+      {numberToCurrency(amount, currency.locale)}
     </Text>
   )
 }

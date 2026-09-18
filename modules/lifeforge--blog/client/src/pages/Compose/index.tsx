@@ -8,7 +8,7 @@ import {
   LayoutWithSidebar
 } from '@lifeforge/ui'
 
-import Sidebar from './components/Sidebar'
+import Sidebar, { type BlogPostData } from './components/Sidebar'
 
 function Compose() {
   const navigate = useNavigate()
@@ -27,7 +27,7 @@ function Compose() {
     }
   })
 
-  const [blogPost, setBlogPost] = useState({
+  const [blogPost, setBlogPost] = useState<BlogPostData>({
     title: '',
     excerpt: '',
     visibility: 'private',

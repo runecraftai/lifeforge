@@ -2,7 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-import { Flex, Icon, TagChip, Text, colorWithOpacity } from '@lifeforge/ui'
+import {
+  Flex,
+  Icon,
+  TagChip,
+  Text,
+  colorWithOpacity,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import { useWalletData } from '@/hooks/useWalletData'
 import { forgeAPI } from '@/manifest'
@@ -17,6 +24,7 @@ function TransactionList({
   month: number
   year: number
 }) {
+  const { currency } = usePersonalization()
   const { assetsQuery, categoriesQuery } = useWalletData()
 
   const transactionsQuery = useQuery(
@@ -166,7 +174,7 @@ function TransactionList({
                 whiteSpace: 'nowrap'
               }}
             >
-              RM
+              {currency.symbol}
             </th>
           </tr>
         </thead>
@@ -263,8 +271,8 @@ function TransactionList({
                 }}
               >
                 {type === 'expenses'
-                  ? `(${numberToCurrency(transaction.amount)})`
-                  : numberToCurrency(transaction.amount)}
+                  ? `(${numberToCurrency(transaction.amount, currency.locale)})`
+                  : numberToCurrency(transaction.amount, currency.locale)}
               </td>
             </tr>
           ))}
@@ -293,8 +301,8 @@ function TransactionList({
               }}
             >
               {total < 0
-                ? `(${numberToCurrency(Math.abs(total))})`
-                : numberToCurrency(total)}
+                ? `(${numberToCurrency(Math.abs(total), currency.locale)})`
+                : numberToCurrency(total, currency.locale)}
             </td>
           </tr>
         </tbody>

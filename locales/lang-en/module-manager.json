@@ -16,7 +16,8 @@
     "uninstall": "Uninstall",
     "addTranslation": "Add Translation",
     "addCategory": "Add Category",
-    "add category": "Add Category"
+    "add category": "Add Category",
+    "createAll": "Create All"
   },
   "items": {
     "category": "Category"

@@ -1,13 +1,21 @@
 import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 
-import { Flex, Icon, Text, WithQuery, colorWithOpacity } from '@lifeforge/ui'
+import {
+  Flex,
+  Icon,
+  Text,
+  WithQuery,
+  colorWithOpacity,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import { useWalletData } from '@/hooks/useWalletData'
 import { forgeAPI } from '@/manifest'
 import numberToCurrency from '@/utils/numberToCurrency'
 
 function AssetsTable({ month, year }: { month: number; year: number }) {
+  const { currency } = usePersonalization()
   const { assetsQuery } = useWalletData()
 
   const balancesQuery = useQuery(
@@ -101,7 +109,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       fontWeight: '500'
                     }}
                   >
-                    RM
+                    {currency.symbol}
                   </th>
                   <th
                     style={{
@@ -110,7 +118,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       fontWeight: '500'
                     }}
                   >
-                    RM
+                    {currency.symbol}
                   </th>
                   <th
                     style={{
@@ -119,7 +127,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                       fontWeight: '500'
                     }}
                   >
-                    RM
+                    {currency.symbol}
                   </th>
                   <th
                     style={{
@@ -199,7 +207,10 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                             >
                               {balancesQuery.isLoading
                                 ? '...'
-                                : numberToCurrency(assetBalance.last)}
+                                : numberToCurrency(
+                                    assetBalance.last,
+                                    currency.locale
+                                  )}
                             </td>
                             <td
                               style={{
@@ -211,7 +222,10 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                             >
                               {balancesQuery.isLoading
                                 ? '...'
-                                : numberToCurrency(assetBalance.current)}
+                                : numberToCurrency(
+                                    assetBalance.current,
+                                    currency.locale
+                                  )}
                             </td>
                             <td
                               style={{
@@ -225,8 +239,8 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                               {balancesQuery.isLoading
                                 ? '...'
                                 : change < 0
-                                  ? `(${numberToCurrency(Math.abs(change))})`
-                                  : numberToCurrency(change)}
+                                  ? `(${numberToCurrency(Math.abs(change), currency.locale)})`
+                                  : numberToCurrency(change, currency.locale)}
                             </td>
                             <td
                               style={{
@@ -270,7 +284,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                         >
                           {balancesQuery.isLoading
                             ? '...'
-                            : numberToCurrency(totals.last)}
+                            : numberToCurrency(totals.last, currency.locale)}
                         </td>
                         <td
                           style={{
@@ -285,7 +299,7 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                         >
                           {balancesQuery.isLoading
                             ? '...'
-                            : numberToCurrency(totals.current)}
+                            : numberToCurrency(totals.current, currency.locale)}
                         </td>
                         <td
                           style={{
@@ -302,8 +316,8 @@ function AssetsTable({ month, year }: { month: number; year: number }) {
                           {balancesQuery.isLoading
                             ? '...'
                             : totalChange < 0
-                              ? `(${numberToCurrency(Math.abs(totalChange))})`
-                              : numberToCurrency(totalChange)}
+                              ? `(${numberToCurrency(Math.abs(totalChange), currency.locale)})`
+                              : numberToCurrency(totalChange, currency.locale)}
                         </td>
                         <td
                           style={{

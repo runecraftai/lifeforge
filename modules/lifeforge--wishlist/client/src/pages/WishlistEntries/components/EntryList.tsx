@@ -29,8 +29,10 @@ function EntryList({
           icon: 'tabler:plus'
         }}
         icon="tabler:shopping-cart-off"
-        name="entries"
-        namespace="apps.@lifeforge/lifeforge--wishlist"
+        message={{
+          id: 'entries',
+          namespace: 'apps.@lifeforge/lifeforge--wishlist'
+        }}
       />
     )
   }
@@ -39,15 +41,17 @@ function EntryList({
     return (
       <EmptyStateScreen
         icon="tabler:search-off"
-        name="search"
-        namespace="apps.@lifeforge/lifeforge--wishlist"
+        message={{
+          id: 'search',
+          namespace: 'apps.@lifeforge/lifeforge--wishlist'
+        }}
       />
     )
   }
 
   return (
     <Scrollbar>
-      <ul className="mb-14 flex flex-col space-y-2 sm:mb-6">
+      <ul className="mb-14! flex flex-col space-y-2! sm:mb-6!">
         {filteredEntries.map(entry => (
           <EntryItem key={entry.id} entry={entry} />
         ))}

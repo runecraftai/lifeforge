@@ -19,6 +19,12 @@ interface IBackdropFilters {
   overlayOpacity: number
 }
 
+interface CurrencyConfig {
+  locale: string
+  currency: string
+  symbol: string
+}
+
 interface IPersonalizationData {
   rootElement: HTMLElement | null
   fontFamily: string
@@ -35,6 +41,7 @@ interface IPersonalizationData {
   backdropFilters: IBackdropFilters
   bgImage: string
   language: string
+  currency: CurrencyConfig
   dashboardLayout: IDashboardLayout
 
   setFontFamily: React.Dispatch<React.SetStateAction<string>>

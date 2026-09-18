@@ -31,8 +31,8 @@ import numberToCurrency from '@/utils/numberToCurrency'
 import RangeSelector from './components/RangeSelector'
 
 function StatisticChardCard() {
+  const { currency, bgTempPalette, derivedTheme } = usePersonalization()
   const { t } = useModuleTranslation()
-  const { bgTempPalette, derivedTheme } = usePersonalization()
   const [range, setRange] = useState<'week' | 'month' | 'ytd'>('week')
 
   const chartDataQuery = useQuery(
@@ -82,7 +82,8 @@ function StatisticChardCard() {
                     <Text color="muted">{entry.name}:</Text>
                   </Flex>
                   <Text style={{ color: entry.stroke }} weight="semibold">
-                    RM {numberToCurrency(Math.abs(entry.value))}
+                    {currency.symbol}{' '}
+                    {numberToCurrency(Math.abs(entry.value), currency.locale)}
                   </Text>
                 </Flex>
               ))}
@@ -93,12 +94,13 @@ function StatisticChardCard() {
                 Difference:
               </Text>
               <Text weight="semibold">
-                RM{' '}
+                {currency.symbol}{' '}
                 {(payload[0]?.value ?? 0) + (payload[1]?.value ?? 0) < 0
                   ? '('
                   : ''}
                 {numberToCurrency(
-                  Math.abs((payload[0]?.value ?? 0) + (payload[1]?.value ?? 0))
+                  Math.abs((payload[0]?.value ?? 0) + (payload[1]?.value ?? 0)),
+                  currency.locale
                 )}
                 {(payload[0]?.value ?? 0) + (payload[1]?.value ?? 0) < 0
                   ? ')'
@@ -167,7 +169,7 @@ function StatisticChardCard() {
                     scale={chartScale}
                     tick={{ fill: 'currentColor', fontSize: 12 }}
                     tickFormatter={value =>
-                      `${numberToCurrency(Math.abs(value))}`
+                      `${numberToCurrency(Math.abs(value), currency.locale)}`
                     }
                     tickLine={false}
                   />

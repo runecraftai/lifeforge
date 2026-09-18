@@ -1,9 +1,13 @@
+import { lazy } from 'react'
+
 import { createForgeModule } from '@lifeforge/federation'
 
 import contract from './contract'
 
 const { forgeAPI, ...manifest } = createForgeModule({
-  routes: {},
+  routes: {
+    '/': lazy(() => import('@'))
+  },
   hidden: true,
   contract,
   widgets: [

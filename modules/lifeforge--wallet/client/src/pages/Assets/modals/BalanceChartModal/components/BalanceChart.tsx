@@ -39,7 +39,7 @@ function BalanceChart({
   startDate: Date | null
   endDate: Date | null
 }) {
-  const { derivedThemeColor } = usePersonalization()
+  const { currency, derivedThemeColor } = usePersonalization()
 
   const assetBalanceQuery = useQuery(
     forgeAPI.assets.getAssetAccumulatedBalance
@@ -126,7 +126,8 @@ function BalanceChart({
           <Flex align="baseline" gap="xs">
             <Text color="muted">Balance:</Text>
             <Text size="lg" weight="semibold">
-              RM {numberToCurrency(payload[0].value)}
+              {currency.symbol}{' '}
+              {numberToCurrency(payload[0].value, currency.locale)}
             </Text>
           </Flex>
         </Card>
@@ -175,7 +176,9 @@ function BalanceChart({
                   domain={chartDomain}
                   scale={chartScale}
                   tick={{ fill: 'currentColor' }}
-                  tickFormatter={value => `${numberToCurrency(value)}`}
+                  tickFormatter={value =>
+                    `${numberToCurrency(value, currency.locale)}`
+                  }
                   tickLine={false}
                 />
                 <Tooltip content={<CustomTooltip />} />

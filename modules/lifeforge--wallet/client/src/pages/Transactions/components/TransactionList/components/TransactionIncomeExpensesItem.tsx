@@ -8,7 +8,8 @@ import {
   Stack,
   Text,
   ViewImageModal,
-  useModalStore
+  useModalStore,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useWalletData } from '@/hooks/useWalletData'
@@ -22,6 +23,7 @@ function TransactionIncomeExpensesItem({
 }: {
   transaction: WalletTransaction
 }) {
+  const { currency } = usePersonalization()
   const { open } = useModalStore()
   const { categoriesQuery, ledgersQuery, assetsQuery } = useWalletData()
 
@@ -166,7 +168,7 @@ function TransactionIncomeExpensesItem({
         weight="medium"
       >
         {transaction.type === 'income' ? '+' : '-'}
-        {numberToCurrency(transaction.amount)}
+        {numberToCurrency(transaction.amount, currency.locale)}
       </Text>
     </Flex>
   )

@@ -3,7 +3,15 @@ import { useContext, useMemo } from 'react'
 import { Link } from 'react-router'
 
 import { useModuleTranslation } from '@lifeforge/localization'
-import { Box, Flex, Icon, Stack, Text, WithDivide } from '@lifeforge/ui'
+import {
+  Box,
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  WithDivide,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import type { WalletCategory } from '@/hooks/useWalletData'
 import { useWalletStore } from '@/stores/useWalletStore'
@@ -12,8 +20,10 @@ import { CategoriesBreakdownContext } from '..'
 import numberToCurrency from '../../../../../utils/numberToCurrency'
 
 function BreakdownCategoryItem({ category }: { category: WalletCategory }) {
+  const { currency } = usePersonalization()
   const { t } = useModuleTranslation()
   const { isAmountHidden } = useWalletStore()
+
   const { breakdown, type, year, month } = useContext(
     CategoriesBreakdownContext
   )
@@ -82,7 +92,7 @@ function BreakdownCategoryItem({ category }: { category: WalletCategory }) {
               weight="medium"
               whiteSpace="nowrap"
             >
-              {type === 'income' ? '+' : '-'} RM{' '}
+              {type === 'income' ? '+' : '-'} {currency.symbol}{' '}
               {isAmountHidden ? (
                 <Flex align="center" display="inline-flex">
                   {Array(4)
@@ -92,7 +102,10 @@ function BreakdownCategoryItem({ category }: { category: WalletCategory }) {
                     ))}
                 </Flex>
               ) : (
-                numberToCurrency(breakdown[category.id]?.amount)
+                numberToCurrency(
+                  breakdown[category.id]?.amount,
+                  currency.locale
+                )
               )}
             </Text>
           </Flex>
