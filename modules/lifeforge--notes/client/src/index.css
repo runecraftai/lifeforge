@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import 'tailwindcss' important;
 @import '@lifeforge/ui/tailwind.css';
 
 :root {
